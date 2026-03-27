@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title', config('app.name', 'Whiterock'))</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+</head>
 
-        <!-- Scripts -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <script type="module" src="{{ asset('js/app.js') }}"></script>
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+<body class="app-body">
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+@include('layouts.sidebar')
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+<div class="sidebar-backdrop d-lg-none" id="sidebarBackdrop" aria-hidden="true"></div>
+
+<div class="app-main" id="appMain">
+
+    @include('layouts.navigation')
+
+    <main class="app-content flex-grow-1">
+        <div class="container-fluid py-3 py-lg-4 px-3 px-lg-4">
+            @yield('content')
         </div>
-    </body>
+    </main>
+
+</div>
+
+<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/script.js') }}"></script>
+
+</body>
 </html>

@@ -9,9 +9,12 @@
     <title>{{ config('app.name', 'Whiterock') }}</title>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login-register.css') }}">
+
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 </head>
 
-<body style="background:#f5f5f5;">
+<body class="login-register-background">
 
     <div class="container">
         <div class="row justify-content-center align-items-center min-vh-100">
@@ -30,14 +33,14 @@
                     <div class="card-body">
                         @yield('content')
                     </div>
+                </div>
 
             </div>
-
         </div>
-    </div>
 
-    <!-- Bootstrap JS -->
-    <script src="{{ asset('js/app.js') }}"></script>
+        <!-- Bootstrap JS -->
+        <script type="module" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+
 
 </body>
 

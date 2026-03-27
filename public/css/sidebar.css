@@ -1,0 +1,149 @@
+/* App shell: sidebar + main (header + content) */
+
+.app-body {
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    background: #111827;
+    color: #fff;
+    transition: transform 0.3s ease, width 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    color: #9ca3af;
+    text-decoration: none;
+}
+
+.sidebar.collapsed .sidebar-nav a {
+    justify-content: center;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+    background: #1f2937;
+    color: #fff;
+}
+
+.sidebar.collapsed .nav-label {
+    display: none;
+}
+
+.sidebar .logo {
+    flex-shrink: 0;
+}
+
+/* Logo scales when the rail collapses (desktop); inline height overridden here */
+@media (min-width: 992px) {
+    .sidebar .logo .sorath-logo-img {
+        height: 40px !important;
+        transition: height 0.3s ease;
+    }
+
+    .sidebar.collapsed .logo {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+    }
+
+    .sidebar.collapsed .logo .sorath-logo-img {
+        height: 28px !important;
+    }
+}
+
+.sidebar-nav {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.sidebar-footer {
+    flex-shrink: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Main column: offset by sidebar width */
+.app-main {
+    min-height: 100vh;
+    margin-left: 250px;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s ease;
+    background-color: #f8f9fa;
+    min-width: 0;
+}
+
+.app-main.sidebar-collapsed {
+    margin-left: 80px;
+}
+
+.app-header {
+    flex-shrink: 0;
+    top: 0;
+    z-index: 1020;
+}
+
+.app-content {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+/* Mobile: full-width main, sidebar off-canvas */
+@media (max-width: 991.98px) {
+    .sidebar {
+        width: 260px;
+        transform: translateX(-100%);
+        box-shadow: 0 0 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .sidebar.collapsed {
+        width: 260px;
+    }
+
+    .sidebar.collapsed .nav-label {
+        display: inline;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .app-main {
+        margin-left: 0 !important;
+    }
+
+    .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 1030;
+        background: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .sidebar-backdrop.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    body.sidebar-open {
+        overflow: hidden;
+    }
+}
