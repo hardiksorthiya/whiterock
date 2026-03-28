@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Backend\ProductCategoryController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\SettingController;
+use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +28,12 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('product-categories', ProductCategoryController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('sliders', SliderController::class)->except(['show']);
+    Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit');
+    Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
+    Route::post('product-categories/bulk-action', [ProductCategoryController::class, 'bulkAction'])->name('product-categories.bulk-action');
+    Route::post('products/bulk-action', [ProductController::class, 'bulkAction'])->name('products.bulk-action');
 });
 
 require __DIR__.'/auth.php';

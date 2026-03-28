@@ -25,9 +25,6 @@ return new class extends Migration
             $table->text('meta_description')->nullable();
             $table->text('keywords')->nullable();
 
-            // Price
-            $table->decimal('price', 10, 2)->default(0);
-
             // Status
             $table->boolean('is_active')->default(true);
 
@@ -43,7 +40,6 @@ return new class extends Migration
 
             // Indexes
             $table->index('name');
-            $table->index('price');
             $table->index('is_active');
         });
     }

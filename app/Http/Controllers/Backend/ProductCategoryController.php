@@ -5,42 +5,54 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductCategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-       $productCategories = ProductCategory::latest()->get();
-       return view('backend.product_categories.index', compact('productCategories'));
+        $search = request('search');
+        $productCategories = ProductCategory::query()
+            ->latest()
+            ->when($search, function ($query, $search) {
+                $s = addcslashes($search, '%_\\');
+                $query->where(function ($q) use ($s) {
+                    $q->where('name', 'like', '%'.$s.'%')
+                        ->orWhere('slug', 'like', '%'.$s.'%');
+                });
+            })
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('backend.product_categories.index', compact('productCategories', 'search'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
-{
-        return view('backend.product_categories.create_edit');
+    {
+        return view('backend.product_categories.create_edit', ['productCategory' => null]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:product_categories,slug',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'is_active' => 'boolean',
         ]);
 
         $data = $request->only(['name', 'slug']);
+        $data['is_active'] = $request->boolean('is_active', true);
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('product_categories', 'public');
-            $data['image'] = $imagePath;
+            $data['image'] = $request->file('image')->store('product_categories', 'public');
+        }
+
+        $isDefault = $request->boolean('is_default');
+        $data['is_default'] = $isDefault;
+
+        if ($isDefault) {
+            ProductCategory::query()->update(['is_default' => false]);
         }
 
         ProductCategory::create($data);
@@ -48,37 +60,39 @@ class ProductCategoryController extends Controller
         return redirect()->route('backend.product-categories.index')->with('success', 'Product category created successfully.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $productCategory = ProductCategory::findOrFail($id);
+
         return view('backend.product_categories.create_edit', compact('productCategory'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $productCategory = ProductCategory::findOrFail($id);
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:product_categories,slug,' . $productCategory->id,
+            'slug' => 'required|string|max:255|unique:product_categories,slug,'.$productCategory->id,
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'is_active' => 'boolean',
         ]);
 
         $data = $request->only(['name', 'slug']);
+        $data['is_active'] = $request->boolean('is_active', true);
 
         if ($request->hasFile('image')) {
-            // Delete old image if exists
             if ($productCategory->image) {
-                \Storage::disk('public')->delete($productCategory->image);
+                Storage::disk('public')->delete($productCategory->image);
             }
-            $imagePath = $request->file('image')->store('product_categories', 'public');
-            $data['image'] = $imagePath;
+            $data['image'] = $request->file('image')->store('product_categories', 'public');
+        }
+
+        $isDefault = $request->boolean('is_default');
+        $data['is_default'] = $isDefault;
+
+        if ($isDefault) {
+            ProductCategory::where('id', '!=', $productCategory->id)->update(['is_default' => false]);
         }
 
         $productCategory->update($data);
@@ -86,20 +100,52 @@ class ProductCategoryController extends Controller
         return redirect()->route('backend.product-categories.index')->with('success', 'Product category updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $productCategory = ProductCategory::findOrFail($id);
 
-        // Delete associated image if exists
         if ($productCategory->image) {
-            \Storage::disk('public')->delete($productCategory->image);
+            Storage::disk('public')->delete($productCategory->image);
         }
 
         $productCategory->delete();
 
         return redirect()->route('backend.product-categories.index')->with('success', 'Product category deleted successfully.');
+    }
+
+    public function bulkAction(Request $request)
+    {
+        $validated = $request->validate([
+            'action' => 'required|in:activate,deactivate,delete',
+            'category_ids' => 'required|array|min:1',
+            'category_ids.*' => 'integer|exists:product_categories,id',
+        ]);
+
+        $action = $validated['action'];
+        $ids = $validated['category_ids'];
+
+        switch ($action) {
+            case 'activate':
+                ProductCategory::whereIn('id', $ids)->update(['is_active' => true]);
+
+                return redirect()->route('backend.product-categories.index')->with('success', 'Selected categories activated successfully.');
+            case 'deactivate':
+                ProductCategory::whereIn('id', $ids)->update(['is_active' => false]);
+                ProductCategory::whereIn('id', $ids)->where('is_default', true)->update(['is_default' => false]);
+
+                return redirect()->route('backend.product-categories.index')->with('success', 'Selected categories deactivated successfully.');
+            case 'delete':
+                $categories = ProductCategory::whereIn('id', $ids)->get();
+                foreach ($categories as $category) {
+                    if ($category->image) {
+                        Storage::disk('public')->delete($category->image);
+                    }
+                    $category->delete();
+                }
+
+                return redirect()->route('backend.product-categories.index')->with('success', 'Selected categories deleted successfully.');
+            default:
+                return redirect()->route('backend.product-categories.index')->with('error', 'Invalid action selected.');
+        }
     }
 }

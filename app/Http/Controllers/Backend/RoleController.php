@@ -9,31 +9,39 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    
-
     public function index()
     {
-        $roles = Role::all();
-        return view('backend.roles.index', compact('roles'));
+        $search = request('search');
+        $roles = Role::query()
+            ->withCount('permissions')
+            ->orderBy('name')
+            ->when($search, function ($query, $search) {
+                $s = addcslashes($search, '%_\\');
+                $query->where('name', 'like', '%'.$s.'%');
+            })
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('backend.roles.index', compact('roles', 'search'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $permissions = Permission::all();
-        return view('backend.roles.create_edit', compact('permissions'));
+        $permissions = Permission::orderBy('name')->get();
+
+        return view('backend.roles.create_edit', [
+            'permissions' => $permissions,
+            'role' => null,
+            'rolePermissionNames' => [],
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:roles,name',
+            'name' => 'required|string|max:255|unique:roles,name',
             'permissions' => 'required|array',
+            'permissions.*' => 'string|exists:permissions,name',
         ]);
 
         $role = Role::create(['name' => $request->name]);
@@ -42,40 +50,33 @@ class RoleController extends Controller
         return redirect()->route('backend.roles.index')->with('success', 'Role created successfully.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $role = Role::findById($id);
-        $permissions = Permission::all();
-        $rolePermissions = $role->permissions->pluck('id')->toArray();
-        return view('backend.roles.create_edit', compact('role', 'permissions', 'rolePermissions'));
+        $role = Role::findById((int) $id);
+        $permissions = Permission::orderBy('name')->get();
+        $rolePermissionNames = $role->permissions->pluck('name')->all();
+
+        return view('backend.roles.create_edit', compact('role', 'permissions', 'rolePermissionNames'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|unique:roles,name,' . $id,
+            'name' => 'required|string|max:255|unique:roles,name,'.$id,
             'permissions' => 'required|array',
+            'permissions.*' => 'string|exists:permissions,name',
         ]);
 
-        $role = Role::findById($id);
+        $role = Role::findById((int) $id);
         $role->update(['name' => $request->name]);
         $role->syncPermissions($request->permissions);
 
         return redirect()->route('backend.roles.index')->with('success', 'Role updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $role = Role::findById($id);
+        $role = Role::findById((int) $id);
         $role->delete();
 
         return redirect()->route('backend.roles.index')->with('success', 'Role deleted successfully.');

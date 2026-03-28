@@ -1,58 +1,70 @@
 @extends('layouts.app')
 
+@php
+    $edit = (bool) $user;
+@endphp
+
+@section('page_title', $edit ? 'Edit user' : 'New user')
+@section('page_subtitle', $edit ? 'Update account and role' : 'Create a backend account')
+
 @section('content')
 
-<h4>{{ isset($user) ? 'Edit User' : 'Create User' }}</h4>
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+    @if ($errors->any())
+        <div class="adm-alert adm-alert--err">@foreach ($errors->all() as $e)<div>{{ $e }}</div>@endforeach</div>
+    @endif
 
-<form method="POST" 
-      action="{{ isset($user) ? route('backend.users.update',$user->id) : route('backend.users.store') }}">
-    
-    @csrf
-    @if(isset($user)) @method('PUT') @endif
+    <form method="POST" action="{{ $edit ? route('backend.users.update', $user->id) : route('backend.users.store') }}" class="row g-4">
+        @csrf
+        @if ($edit) @method('PUT') @endif
 
-    <!-- Name -->
-    <input type="text" name="name" 
-        value="{{ old('name', $user->name ?? '') }}" 
-        class="form-control mb-3" placeholder="Name">
+        <div class="col-lg-8">
+            <section class="adm-card">
+                <h2 class="adm-card__title">Account</h2>
+                <div class="adm-card__body">
+                    <div class="adm-fld">
+                        <label for="user-name">Name</label>
+                        <input id="user-name" type="text" name="name" class="form-control" required
+                            value="{{ old('name', data_get($user, 'name')) }}" autocomplete="name">
+                    </div>
+                    <div class="adm-fld">
+                        <label for="user-email">Email</label>
+                        <input id="user-email" type="email" name="email" class="form-control" required
+                            value="{{ old('email', data_get($user, 'email')) }}" autocomplete="email">
+                    </div>
+                    <div class="adm-fld">
+                        <label for="user-password">Password @if($edit)<span class="adm-muted fw-normal">(optional)</span>@endif</label>
+                        <input id="user-password" type="password" name="password" class="form-control"
+                            autocomplete="new-password" @if(!$edit) required @endif placeholder="{{ $edit ? 'Leave blank to keep current' : 'Min. 6 characters' }}">
+                    </div>
+                    <div class="adm-fld">
+                        <label for="user-password-confirm">Confirm password</label>
+                        <input id="user-password-confirm" type="password" name="password_confirmation" class="form-control"
+                            autocomplete="new-password" @if(!$edit) required @endif placeholder="{{ $edit ? 'Leave blank if not changing' : 'Repeat password' }}">
+                    </div>
+                </div>
+            </section>
+        </div>
 
-    <!-- Email -->
-    <input type="email" name="email" 
-        value="{{ old('email', $user->email ?? '') }}" 
-        class="form-control mb-3" placeholder="Email">
+        <div class="col-lg-4 adm-sidebar-col">
+            <section class="adm-card">
+                <h2 class="adm-card__title">Role</h2>
+                <div class="adm-card__body">
+                    <label class="visually-hidden" for="user-role">Role</label>
+                    <select id="user-role" name="role" class="form-select" required>
+                        <option value="">Select role…</option>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->name }}" @selected(old('role', $edit ? ($user->roles->first()?->name ?? '') : '') === $role->name)>
+                                {{ $role->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </section>
 
-    <!-- Password -->
-    <input type="password" name="password" 
-        class="form-control mb-3" placeholder="Password">
-
-    <!-- Confirm Password -->
-    <input type="password" name="password_confirmation"
-        class="form-control mb-3" placeholder="Confirm Password">
-
-    <!-- Role -->
-    <select name="role" class="form-control mb-3">
-        <option value="">Select Role</option>
-        @foreach($roles as $role)
-            <option value="{{ $role->name }}"
-                {{ old('role', isset($user) ? $user->roles->pluck('name')->first() : '') == $role->name ? 'selected' : '' }}>
-                {{ $role->name }}
-            </option>
-        @endforeach
-    </select>
-
-    <button class="btn btn-dark">
-        {{ isset($user) ? 'Update' : 'Save' }}
-    </button>
-
-</form>
-
+            <button type="submit" class="adm-btn adm-btn--primary adm-btn--block">
+                <i class="bi bi-check-lg"></i> {{ $edit ? 'Update user' : 'Save user' }}
+            </button>
+        </div>
+    </form>
 @endsection

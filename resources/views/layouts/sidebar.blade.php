@@ -16,12 +16,6 @@
             <span class="nav-label">Dashboard</span>
         </a>
 
-        <!-- Enquiries -->
-        <a href="#">
-            <i class="bi bi-people"></i>
-            <span class="nav-label">Enquiries</span>
-        </a>
-
         <!-- Products Dropdown -->
         <a href="#productMenu" data-bs-toggle="collapse" class="d-flex justify-content-between align-items-center">
             <div>
@@ -37,18 +31,20 @@
                 <span class="nav-label">Categories</span>
             </a>
 
-            <a href="{{ route('dashboard') }}" class="ps-5">
-                <span class="nav-label">Product List</span>
+            <a href="{{ route('backend.products.index') }}" class="ps-5">
+                <span class="nav-label">Products</span>
             </a>
 
         </div>
 
         {{-- users --}}
-       
-            <a href="{{ route('backend.users.index') }}" class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
+       @can('user-list')
+           <a href="{{ route('backend.users.index') }}" class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
                 <i class="bi bi-person"></i>
                 <span class="nav-label">Users</span>
             </a>
+       @endcan
+            
       
 
        
@@ -62,9 +58,14 @@
             </a>
         @endcan
 
+        {{-- sliders --}}
+        
+            <a href="{{ route('backend.sliders.index') }}" class="{{ request()->routeIs('backend.sliders.*') ? 'active' : '' }}">
+                <i class="bi bi-images"></i>
+                <span class="nav-label">Sliders</span>
+            </a>
 
-        <!-- Settings -->
-        <a href="#">
+        <a href="{{ route('backend.settings.edit') }}" class="{{ request()->routeIs('backend.settings.*') ? 'active' : '' }}">
             <i class="bi bi-gear"></i>
             <span class="nav-label">Settings</span>
         </a>

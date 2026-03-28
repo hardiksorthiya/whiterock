@@ -9,7 +9,6 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Models\Role;
 
-
 class UserController extends Controller implements HasMiddleware
 {
     public static function middleware(): array
@@ -21,27 +20,35 @@ class UserController extends Controller implements HasMiddleware
             new Middleware('permission:user-delete', only: ['destroy']),
         ];
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        $users = User::with('roles')->get();
-        return view('backend.users.index', compact('users'));
+        $search = request('search');
+        $users = User::with('roles')
+            ->latest()
+            ->when($search, function ($query, $search) {
+                $s = addcslashes($search, '%_\\');
+                $query->where(function ($q) use ($s) {
+                    $q->where('name', 'like', '%'.$s.'%')
+                        ->orWhere('email', 'like', '%'.$s.'%');
+                });
+            })
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('backend.users.index', compact('users', 'search'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $roles = Role::all();
-        return view('backend.users.create_edit', compact('roles'));
+        $roles = Role::orderBy('name')->get();
+
+        return view('backend.users.create_edit', [
+            'roles' => $roles,
+            'user' => null,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -62,25 +69,19 @@ class UserController extends Controller implements HasMiddleware
         return redirect()->route('backend.users.index')->with('success', 'User created successfully.');
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::all();
+        $roles = Role::orderBy('name')->get();
+
         return view('backend.users.create_edit', compact('user', 'roles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'nullable|min:6|confirmed',
             'role' => 'required|exists:roles,name',
         ]);
@@ -96,19 +97,16 @@ class UserController extends Controller implements HasMiddleware
         }
 
         $user->update($data);
-
         $user->syncRoles([$request->role]);
 
         return redirect()->route('backend.users.index')->with('success', 'User updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
         $user->delete();
+
         return redirect()->route('backend.users.index')->with('success', 'User deleted successfully.');
     }
 }

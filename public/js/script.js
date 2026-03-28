@@ -56,3 +56,40 @@
         }
     });
 })();
+
+
+
+
+// Slug from product name (product create/edit only)
+(function () {
+    var slugInput = document.querySelector('input[name="slug"]');
+    var nameInput = document.querySelector('input[name="name"]');
+    if (!slugInput || !nameInput) return;
+
+    var isSlugEdited = false;
+    slugInput.addEventListener('input', function () {
+        isSlugEdited = true;
+    });
+
+    nameInput.addEventListener('keyup', function () {
+        if (isSlugEdited) return;
+        var name = this.value;
+        var slug = name
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        slugInput.value = slug;
+    });
+})();
+
+// Product list: select all checkboxes on this page
+(function () {
+    var selectAll = document.getElementById('select-all');
+    if (!selectAll) return;
+    selectAll.addEventListener('change', function () {
+        document.querySelectorAll('.select-item').forEach(function (cb) {
+            cb.checked = selectAll.checked;
+        });
+    });
+})();

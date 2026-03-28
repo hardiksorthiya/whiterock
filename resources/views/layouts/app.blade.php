@@ -7,9 +7,12 @@
 
     <title>@yield('title', config('app.name', 'Whiterock'))</title>
 
+    {{-- css --}}
+    <link rel="stylesheet" href="{{ asset('css/admin-theme.css') }}">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    @stack('styles')
 </head>
 
 <body class="app-body">
@@ -23,7 +26,7 @@
     @include('layouts.navigation')
 
     <main class="app-content flex-grow-1">
-        <div class="container-fluid py-3 py-lg-4 px-3 px-lg-4">
+        <div class="container-fluid py-3 py-lg-4">
             @yield('content')
         </div>
     </main>
@@ -32,6 +35,7 @@
 
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('js/script.js') }}"></script>
+@stack('scripts')
 
 </body>
 </html>

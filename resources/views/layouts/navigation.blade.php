@@ -7,7 +7,11 @@
                     aria-label="Toggle navigation">
                 <i class="bi bi-list fs-4"></i>
             </button>
-            <h1 class="h5 mb-0 text-truncate fw-semibold">@yield('page_title', config('app.name'))</h1>
+            <div class="d-flex flex-column">
+                <h1 class="h5 mb-0 fw-semibold">@yield('page_title', config('app.name'))</h1>
+            <small class="text-muted">@yield('page_subtitle')</small>
+            </div>
+            
         </div>
 
          <!-- Right Side (User Dropdown) -->
