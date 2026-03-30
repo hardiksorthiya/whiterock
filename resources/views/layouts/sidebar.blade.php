@@ -65,6 +65,19 @@
                 <span class="nav-label">Sliders</span>
             </a>
 
+        {{-- gallery --}}
+        <a href="{{ route('backend.gallery.index') }}" class="{{ request()->routeIs('backend.gallery.*') ? 'active' : '' }}">
+            <i class="bi bi-image"></i>
+            <span class="nav-label">Gallery</span>
+        </a>
+
+        {{-- pages --}}
+        <a href="{{ route('backend.pages.index') }}" class="{{ request()->routeIs('backend.pages.*') ? 'active' : '' }}">
+            <i class="bi bi-file-earmark-text"></i>
+            <span class="nav-label">Pages</span>
+        </a>
+
+
         <a href="{{ route('backend.settings.edit') }}" class="{{ request()->routeIs('backend.settings.*') ? 'active' : '' }}">
             <i class="bi bi-gear"></i>
             <span class="nav-label">Settings</span>
