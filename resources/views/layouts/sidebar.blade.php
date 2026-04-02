@@ -37,48 +37,71 @@
 
         </div>
 
-        {{-- users --}}
-       @can('user-list')
-           <a href="{{ route('backend.users.index') }}" class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
+
+        <a href="#userMenu" data-bs-toggle="collapse" class="d-flex justify-content-between align-items-center">
+            <div>
                 <i class="bi bi-person"></i>
                 <span class="nav-label">Users</span>
-            </a>
-       @endcan
-            
-      
+            </div>
+            <i class="bi bi-chevron-down small"></i>
+        </a>
 
-       
+        <div class="collapse {{ request()->routeIs('users.*') || request()->routeIs('roles.*') ? 'show' : '' }}" id="userMenu">
 
+            @can('user-list')
+                <a href="{{ route('backend.users.index') }}" class="ps-5">
+                    <i class="bi bi-people"></i>
+                    <span class="nav-label">Users List</span>
+                </a>
+            @endcan
 
-        {{-- roles --}}
-        @can('role-list')
-            <a href="{{ route('backend.roles.index') }}" class="{{ request()->routeIs('roles.*') ? 'active' : '' }}">
-                <i class="bi bi-shield"></i>
-                <span class="nav-label">Roles</span>
-            </a>
-        @endcan
+            @can('role-list')
+                <a href="{{ route('backend.roles.index') }}" class="ps-5">
+                    <i class="bi bi-shield"></i>
+                    <span class="nav-label">Roles</span>
+                </a>
+            @endcan
+        </div>
 
-        {{-- sliders --}}
-        
-            <a href="{{ route('backend.sliders.index') }}" class="{{ request()->routeIs('backend.sliders.*') ? 'active' : '' }}">
+        <a href="#apperanceMenu" data-bs-toggle="collapse" class="d-flex justify-content-between align-items-center">
+            <div>
+                <i class="bi bi-palette"></i>
+                <span class="nav-label">Apperance</span>
+            </div>
+            <i class="bi bi-chevron-down small"></i>
+        </a>
+
+        <div class="collapse {{ request()->routeIs('appearance.*') ? 'show' : '' }}" id="apperanceMenu">
+
+            <a href="{{ route('backend.sliders.index') }}"
+                class="{{ request()->routeIs('backend.sliders.*') ? 'active' : '' }} ps-5">
                 <i class="bi bi-images"></i>
                 <span class="nav-label">Sliders</span>
             </a>
 
-        {{-- gallery --}}
-        <a href="{{ route('backend.gallery.index') }}" class="{{ request()->routeIs('backend.gallery.*') ? 'active' : '' }}">
-            <i class="bi bi-image"></i>
-            <span class="nav-label">Gallery</span>
-        </a>
+            <a href="{{ route('backend.services.index') }}"
+                class="{{ request()->routeIs('backend.services.*') ? 'active' : '' }} ps-5">
+                <i class="bi bi-gear"></i>
+                <span class="nav-label">Services</span>
+            </a>
 
-        {{-- pages --}}
-        <a href="{{ route('backend.pages.index') }}" class="{{ request()->routeIs('backend.pages.*') ? 'active' : '' }}">
-            <i class="bi bi-file-earmark-text"></i>
-            <span class="nav-label">Pages</span>
-        </a>
+            <a href="{{ route('backend.gallery.index') }}"
+                class="{{ request()->routeIs('backend.gallery.*') ? 'active' : '' }} ps-5">
+                <i class="bi bi-image"></i>
+                <span class="nav-label">Gallery</span>
+            </a>
+
+            <a href="{{ route('backend.pages.index') }}"
+                class="{{ request()->routeIs('backend.pages.*') ? 'active' : '' }} ps-5">
+                <i class="bi bi-file-earmark-text"></i>
+                <span class="nav-label">Pages</span>
+            </a>
+
+        </div>
 
 
-        <a href="{{ route('backend.settings.edit') }}" class="{{ request()->routeIs('backend.settings.*') ? 'active' : '' }}">
+        <a href="{{ route('backend.settings.edit') }}"
+            class="{{ request()->routeIs('backend.settings.*') ? 'active' : '' }}">
             <i class="bi bi-gear"></i>
             <span class="nav-label">Settings</span>
         </a>

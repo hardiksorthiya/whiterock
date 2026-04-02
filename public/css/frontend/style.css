@@ -441,3 +441,92 @@ body.menu-open {
         margin-top: 20px;
     }
 }
+
+
+/* services section */
+
+.sorath-services {
+    background: #f8f8f8;
+}
+
+.sorath-services-intro h2 {
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.sorath-services-intro p {
+    color: #666;
+}
+
+/* Card Style */
+.sorath-service-card {
+    background: #fff;
+    padding: 30px;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.sorath-service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.sorath-icon img {
+    width: 40px;
+    margin-bottom: 15px;
+}
+
+.sorath-service-card h4 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.sorath-service-card p {
+    color: #777;
+}
+
+/* Image Card */
+.sorath-service-img {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.sorath-service-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Overlay */
+.sorath-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.sorath-service-img:hover .sorath-overlay {
+    opacity: 1;
+}
+
+.sorath-overlay h4 {
+    font-weight: 600;
+}
+
+.sorath-overlay p {
+    font-size: 14px;
+}
+
+/* Responsive */
+@media(max-width:991px){
+    .sorath-services-intro {
+        margin-bottom: 20px;
+    }
+}

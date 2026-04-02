@@ -3,4 +3,5 @@
     {{-- Page content --}}
     @include('frontend.components.slider')
     @include('frontend.components.home.about')
+    @include('frontend.components.home.services')
 @endsection

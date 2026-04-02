@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\ProductCategoryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\UserController;
@@ -31,6 +32,7 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::resource('sliders', SliderController::class)->except(['show']);
     Route::resource('gallery', GalleryController::class)->except(['show']);
     Route::resource('pages', PageController::class)->except(['show']);
+    Route::resource('services', ServiceController::class)->except(['show']);
     Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit');
     Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
     Route::post('product-categories/bulk-action', [ProductCategoryController::class, 'bulkAction'])->name('product-categories.bulk-action');
