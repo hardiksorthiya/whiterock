@@ -1,15 +1,11 @@
-
-
-
-
 /* ——— Global Styles ——— */
 @import url('../bootstrap.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-   --adm-sorath-color: #1e40af;
-   --adm-sorath-color-dark: #1e3a8a;
-   --adm-sorath-color-soft: rgba(30, 64, 175, 0.08);
+    --adm-sorath-color: #1e40af;
+    --adm-sorath-color-dark: #1e3a8a;
+    --adm-sorath-color-soft: rgba(30, 64, 175, 0.08);
     --adm-sorath-secondary: #0f172a;
     --adm-sorath-secondary-soft: rgba(15, 23, 42, 0.06);
     --adm-sorath-accent: #0369a1;
@@ -28,7 +24,19 @@
     --adm-primary-sorath-font: 'Poppins', sans-serif;
 }
 
-body, h1, h2, h3, h4, h5, h6, p, label, a, button,small, div {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label,
+a,
+button,
+small,
+div {
     font-family: var(--adm-primary-sorath-font);
 }
 
@@ -140,16 +148,17 @@ body.menu-open {
 
 /* Only show hamburger on smaller screens */
 @media (min-width: 992px) {
+
     .mobile-menu,
     .menu-overlay {
-        display: none  ;
+        display: none;
     }
 }
 
 /* ——— Sticky Header (transparent at top) ——— */
 .site-header {
-    background: transparent  ;
-    box-shadow: none ;
+    background: transparent;
+    box-shadow: none;
     transition: background-color 0.25s ease, box-shadow 0.25s ease;
     will-change: transform;
     z-index: 2000;
@@ -158,20 +167,20 @@ body.menu-open {
 
 
 .site-header .nav-link {
-    color: rgba(255, 255, 255, 0.95) ;
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .site-header .navbar-brand {
-    color: rgba(255, 255, 255, 0.95) ;
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .site-header.is-scrolled {
-    background: #fff ;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08) ;
+    background: #fff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .site-header.is-scrolled .nav-link {
-    color: #111  ;
+    color: #111;
 }
 
 .site-header.is-scrolled .hamburger,
@@ -192,7 +201,7 @@ body.menu-open {
     padding-bottom: 0;
 }
 
-.site-footer__brand-link img{
+.site-footer__brand-link img {
     width: 260px;
 }
 
@@ -371,10 +380,6 @@ body.menu-open {
 
 /* about us section */
 
-.sorath-section {
-    background: #f8f8f8;
-}
-
 .sorath-content-box {
     background: #fff;
     padding: 40px;
@@ -391,7 +396,7 @@ body.menu-open {
 }
 
 .sorath-title {
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 15px;
 }
 
@@ -428,7 +433,7 @@ body.menu-open {
 }
 
 /* Responsive */
-@media(max-width:991px){
+@media(max-width:991px) {
     .sorath-content-box {
         margin-left: 0;
         margin-top: 30px;
@@ -441,7 +446,6 @@ body.menu-open {
         margin-top: 20px;
     }
 }
-
 
 /* services section */
 
@@ -458,34 +462,85 @@ body.menu-open {
     color: #666;
 }
 
+/* ========================= */
 /* Card Style */
+/* ========================= */
+
 .sorath-service-card {
+    position: relative;
     background: #fff;
     padding: 30px;
     height: 100%;
+    overflow: hidden;
     transition: all 0.3s ease;
+    z-index: 1;
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* Dark overlay */
+.sorath-service-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgb(255, 255, 255);
+    opacity: 1;
+    transition: 0.4s ease;
+    z-index: 1;
+}
+
+.sorath-service-card:hover::before {
+    opacity: 0.5;
+    background: black;
 }
 
 .sorath-service-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
+/* Content always on top */
+.sorath-service-card>* {
+    position: relative;
+    z-index: 2;
+}
+
+/* Icon */
 .sorath-icon img {
     width: 40px;
     margin-bottom: 15px;
+    transition: 0.3s;
 }
 
+/* Title */
 .sorath-service-card h4 {
     font-weight: 600;
     margin-bottom: 10px;
+    transition: 0.3s;
 }
 
+/* Description */
 .sorath-service-card p {
     color: #777;
+    transition: 0.3s;
 }
 
-/* Image Card */
+/* Change text color on hover */
+.sorath-service-card:hover h4,
+.sorath-service-card:hover p {
+    color: #fff;
+}
+
+/* Icon white effect on hover */
+.sorath-service-card:hover .sorath-icon img {
+    filter: brightness(0) invert(1);
+}
+
+/* ========================= */
+/* OLD IMAGE CARD (KEEP SAFE) */
+/* ========================= */
+
 .sorath-service-img {
     position: relative;
     overflow: hidden;
@@ -498,35 +553,313 @@ body.menu-open {
     object-fit: cover;
 }
 
-/* Overlay */
-.sorath-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px;
-    opacity: 0;
-    transition: 0.3s;
-}
-
-.sorath-service-img:hover .sorath-overlay {
-    opacity: 1;
-}
-
-.sorath-overlay h4 {
-    font-weight: 600;
-}
-
-.sorath-overlay p {
-    font-size: 14px;
-}
-
-/* Responsive */
-@media(max-width:991px){
+@media(max-width:991px) {
     .sorath-services-intro {
         margin-bottom: 20px;
     }
+}
+
+/* portfolio section */
+
+.portfolio-text-line {
+    font-size: 98px;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabs */
+.sorath-tabs .nav-link {
+    border: none;
+    background: transparent;
+    margin: 5px 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #555;
+    padding: 8px 18px;
+    transition: 0.3s;
+}
+
+.sorath-tabs .nav-link.active,
+.sorath-tabs .nav-link:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* Gallery Card */
+.sorath-gallery-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.sorath-gallery-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    transition: 0.4s;
+}
+
+/* Overlay */
+.sorath-gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.sorath-gallery-overlay h5 {
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Hover */
+.sorath-gallery-card:hover img {
+    transform: scale(1.1);
+}
+
+.sorath-gallery-card:hover .sorath-gallery-overlay {
+    opacity: 1;
+}
+
+.sorath-gallery-overlay p {
+    color: #fff;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+
+
+
+
+/* Testimonials (sorath-t) */
+.sorath-t {
+    background: #fff;
+}
+
+.sorath-t__row {
+    min-height: min(480px, 88vh);
+}
+
+@media (min-width: 992px) {
+    .sorath-t__row {
+        min-height: 520px;
+    }
+}
+
+.sorath-t__img-wrap {
+    position: relative;
+    min-height: 240px;
+}
+
+.sorath-t__img {
+    width: 100%;
+    height: 100%;
+    min-height: 240px;
+    object-fit: cover;
+    display: block;
+}
+
+@media (min-width: 992px) {
+    .sorath-t__img-wrap {
+        min-height: 0;
+    }
+
+    .sorath-t__img {
+        position: absolute;
+        inset: 0;
+        min-height: 100%;
+    }
+}
+
+.sorath-t__img--ph {
+    position: relative;
+    background: linear-gradient(135deg, #e8e4df, #c9c2ba);
+}
+
+.sorath-t__img--ph::after {
+    content: "public/images/testimonials-bg.jpg";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.35);
+}
+
+.sorath-t__panel {
+    background: #fff;
+}
+
+
+.sorath-t__h {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #000;
+    margin: 0 0 0.5rem;
+}
+
+.sorath-t__text {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #555;
+    margin: 0;
+}
+
+.sorath-t__av {
+    width: 48px;
+    height: 48px;
+    background: #f1f5f9;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.sorath-t__q {
+    font-family: Georgia, serif;
+    font-size: 3.5rem;
+    line-height: 0.7;
+    color: #c5a47e;
+}
+
+.sorath-t__dots [data-bs-target] {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #d1d5db;
+    border: 0;
+}
+
+.sorath-t__dots .active {
+    background: #000;
+}
+
+.sorath-t .carousel-control-prev,
+.sorath-t .carousel-control-next {
+    width: 2.5rem;
+    opacity: 1;
+}
+
+@media (max-width: 991.98px) {
+
+    .sorath-t .carousel-control-prev,
+    .sorath-t .carousel-control-next {
+        display: none;
+    }
+}
+
+
+
+/* product section */
+
+.product-card {
+    transition: 0.3s;
+    overflow: hidden;
+    box-shadow: 2px 2px 10px #80808033;
+}
+
+.product-img {
+    overflow: hidden;
+}
+
+.product-img img {
+    transition: 0.4s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.1); /* zoom effect */
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+
+/* why us section */
+
+.why-modern {
+    /* background: linear-gradient(135deg, #f7b267, #f94144); */
+    background: #f8f8f8;
+    padding: 80px 0;
+}
+
+.why-card {
+    background: #fff;
+    padding: 50px;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+/* Item */
+.why-item {
+    margin-bottom: 25px;
+}
+
+.why-item h5 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Icon */
+.why-item .icon {
+    color: #28a745;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+/* List */
+.why-list {
+    list-style: none;
+    padding: 0;
+}
+
+.why-list li {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 6px;
+    position: relative;
+    padding-left: 22px;
+}
+
+.why-list li::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    color: #28a745;
+    font-size: 13px;
+}
+
+/* Image */
+.why-img-box {
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.why-img-box img {
+    border-radius: 10px;
+    max-height: 250px;
+    object-fit: cover;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Button */
+.why-btn {
+    background: #8B4513;
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 25px;
+}
+
+.why-btn:hover {
+    background: #6e3610;
+    color: #fff;
 }

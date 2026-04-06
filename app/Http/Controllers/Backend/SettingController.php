@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
@@ -41,6 +42,8 @@ class SettingController extends Controller
             'contact_locations.*.call' => 'nullable|string|max:255',
             'contact_locations.*.email' => 'nullable|email|max:255',
             'contact_locations.*.map_iframe' => 'nullable|string|max:65535',
+            'google_api_key' => 'nullable|string|max:255',
+            'google_place_id' => 'nullable|string|max:255',
         ]);
 
         $data = $request->only([
@@ -51,6 +54,9 @@ class SettingController extends Controller
             'phone',
             'email',
             'footer_text',
+            'google_api_key',
+            'google_place_id',
+
         ]);
 
         $locations = collect($request->input('contact_locations', []))
@@ -98,7 +104,12 @@ class SettingController extends Controller
             $data['favicon_path'] = $request->file('favicon')->store('settings', 'public');
         }
 
+        $oldPlaceId = (string) ($setting->google_place_id ?? '');
+        $oldApiKey = (string) ($setting->google_api_key ?? '');
         $setting->update($data);
+        $setting->refresh();
+        Cache::forget('google_place_reviews_v2_'.md5($oldPlaceId.'|'.$oldApiKey));
+        Cache::forget('google_place_reviews_v2_'.md5((string) ($setting->google_place_id ?? '').'|'.(string) ($setting->google_api_key ?? '')));
 
         return redirect()->route('backend.settings.edit')
             ->with('success', __('Settings saved successfully.'));

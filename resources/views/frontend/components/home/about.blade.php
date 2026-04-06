@@ -25,8 +25,7 @@
                         STYLISH DESIGNS,<br>INNOVATIVE IDEAS
                     </h2>
                     <p class="sorath-desc">
-                        Far far away, behind the word mountains, far from the countries
-                        Vokalia and Consonantia, there live the blind texts.
+                        We are specialized in PVC based wall and ceiling panels that can be installed within just 3 days, helping customers save up to 50% of their interior budget. Operating from branches in Surat, Ahmedabad, and Mumbai, we proudly transform over 1,000 premises every month, we have cover more than 2 crore square feet of space.
                     </p>
                     <a href="{{ route('about') }}" class="btn btn-dark mt-3">READ MORE</a>
                 </div>

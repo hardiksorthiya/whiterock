@@ -39,11 +39,12 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::post('products/bulk-action', [ProductController::class, 'bulkAction'])->name('products.bulk-action');
 });
 
-
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/gallery', [FrontendController::class, 'gallery'])->name('gallery');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
+Route::get('/products', [FrontendController::class, 'products'])->name('products');
 Route::get('/pages/{slug}', [FrontendController::class, 'page'])->name('pages.show');
+Route::get('google-reviews', [FrontendController::class, 'googleReviews'])->name('google-reviews');
 
 require __DIR__.'/auth.php';

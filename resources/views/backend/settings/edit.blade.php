@@ -196,6 +196,22 @@
             </section>
 
             <section class="adm-card mt-3">
+                <h2 class="adm-card__title">Google Maps</h2>
+                <div class="adm-card__body">
+                    <div class="mb-3">
+                        <label class="form-label">Google API Key</label>
+                        <input type="text" name="google_api_key" class="form-control"
+                            value="{{ old('google_api_key', $setting->google_api_key) }}" placeholder="Your Google API key">
+                    </div>
+                    <div class="mb-0">
+                        <label class="form-label">Google Place ID</label>
+                        <input type="text" name="google_place_id" class="form-control"
+                            value="{{ old('google_place_id', $setting->google_place_id) }}" placeholder="Google Place ID for your business/location">
+                    </div>
+                </div>  
+            </section>
+
+            <section class="adm-card mt-3">
                 <h2 class="adm-card__title">Footer</h2>
                 <div class="adm-card__body">
                     <label class="form-label">Footer text</label>
