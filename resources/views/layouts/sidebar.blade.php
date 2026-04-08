@@ -97,6 +97,12 @@
                 <span class="nav-label">Pages</span>
             </a>
 
+            <a href="{{ route('backend.about.edit') }}"
+                class="{{ request()->routeIs('backend.about.*') ? 'active' : '' }} ps-5">
+                <i class="bi bi-info-circle"></i>
+                <span class="nav-label">About Page</span>
+            </a>
+
         </div>
 
 
@@ -105,6 +111,8 @@
             <i class="bi bi-gear"></i>
             <span class="nav-label">Settings</span>
         </a>
+
+            
 
     </nav>
 </aside>

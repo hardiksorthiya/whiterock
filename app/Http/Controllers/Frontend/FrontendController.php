@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\About;
 use App\Models\GalleryCategory;
 use App\Models\GalleryImage;
 use App\Models\Page;
@@ -39,8 +40,9 @@ class FrontendController extends Controller
         $setting = Setting::site();
         $latestGalleryImages = GalleryImage::query()->latest()->take(6)->get();
         $footerPages = Page::query()->where('is_active', true)->latest()->get();
+        $about = About::first();
 
-        return view('frontend.pages.about', compact('setting', 'latestGalleryImages', 'footerPages'));
+        return view('frontend.pages.about', compact('setting', 'latestGalleryImages', 'footerPages', 'about'));
     }
 
     public function contact()

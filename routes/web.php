@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\GalleryController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\ProductCategoryController;
@@ -37,6 +38,8 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
     Route::post('product-categories/bulk-action', [ProductCategoryController::class, 'bulkAction'])->name('product-categories.bulk-action');
     Route::post('products/bulk-action', [ProductController::class, 'bulkAction'])->name('products.bulk-action');
+    Route::get('about', [AboutController::class, 'edit'])->name('about.edit');
+    Route::post('about', [AboutController::class, 'update'])->name('about.update');
 });
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
