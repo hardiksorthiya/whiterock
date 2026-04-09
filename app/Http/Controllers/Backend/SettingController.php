@@ -27,6 +27,7 @@ class SettingController extends Controller
 
         $request->validate([
             'logo' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:4096',
+            'light_logo' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:4096',
             'favicon' => 'nullable|file|mimes:ico,png,jpg,jpeg,gif,webp|max:1024',
             'facebook_url' => 'nullable|string|max:2048',
             'instagram_url' => 'nullable|string|max:2048',
@@ -95,6 +96,13 @@ class SettingController extends Controller
                 Storage::disk('public')->delete($setting->logo_path);
             }
             $data['logo_path'] = $request->file('logo')->store('settings', 'public');
+        }
+
+        if ($request->hasFile('light_logo')) {
+            if ($setting->light_logo_path) {
+                Storage::disk('public')->delete($setting->light_logo_path);
+            }
+            $data['light_logo_path'] = $request->file('light_logo')->store('settings', 'public');
         }
 
         if ($request->hasFile('favicon')) {

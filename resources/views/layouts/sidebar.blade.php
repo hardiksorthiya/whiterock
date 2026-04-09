@@ -35,6 +35,11 @@
                 <span class="nav-label">Products</span>
             </a>
 
+            <a href="{{ route('backend.enquiery-entries.index') }}"
+                class="{{ request()->routeIs('backend.enquiery-entries.*') ? 'active' : '' }} ps-5">
+                <span class="nav-label">Enquiery Entries</span>
+            </a>
+
         </div>
 
 

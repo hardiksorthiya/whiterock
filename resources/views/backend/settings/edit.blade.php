@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('page_title', 'Site settings')
-@section('page_subtitle', 'Logo, favicon, social links, contact & footer')
+@section('page_subtitle', 'Logo, light logo, favicon, social links, contact & footer')
 
 @php
     $locations = old('contact_locations', $setting->contact_locations ?? []);
@@ -41,6 +41,16 @@
                         @if ($setting->logo_path)
                             <div class="mt-2">
                                 <img src="{{ asset('storage/'.$setting->logo_path) }}" alt="Current logo" style="max-height: 64px;">
+                            </div>
+                        @endif
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Light logo</label>
+                        <p class="text-muted small mb-2">Optional. Use a light or white version for the transparent header over dark areas; the main logo is shown when the header has a solid background (e.g. after scroll).</p>
+                        <input type="file" name="light_logo" class="form-control" accept="image/*,.svg">
+                        @if ($setting->light_logo_path)
+                            <div class="mt-2 p-3 rounded" style="background: #2a2a2a;">
+                                <img src="{{ asset('storage/'.$setting->light_logo_path) }}" alt="Current light logo" style="max-height: 64px;">
                             </div>
                         @endif
                     </div>

@@ -72,7 +72,8 @@
                                 <th>#</th>
                                 <th>Image</th>
                                 <th>Name</th>
-                                <th>Category</th>
+                                <th>Categories</th>
+                                <th>Featured</th>
                                 <th>Status</th>
                                 <th class="text-end">Action</th>
                             </tr>
@@ -96,7 +97,14 @@
                                         @endif
                                     </td>
                                     <td><strong>{{ $product->name }}</strong></td>
-                                    <td>{{ $product->category->name ?? '—' }}</td>
+                                    <td>{{ $product->categories->pluck('name')->join(', ') ?: '—' }}</td>
+                                    <td>
+                                        @if ($product->is_featured)
+                                            <span class="adm-badge" title="Featured product">★ Featured</span>
+                                        @else
+                                            <span class="adm-muted small">—</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($product->is_active)
                                             <span class="adm-badge adm-badge-success">Active</span>

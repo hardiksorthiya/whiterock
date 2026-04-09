@@ -62,9 +62,9 @@
                         @foreach ($sliders as $slider)
                             <tr>
                                 <td>{{ $slider->id }}</td>
-                                <td>{{ $slider->title }}</td>
-                                <td>{{ $slider->description }}</td>
-                                <td><img src="{{ asset('storage/' . $slider->image) }}" alt="{{ $slider->title }}"
+                                <td>{{ $slider->title ?: '—' }}</td>
+                                <td>{{ $slider->description ?: '—' }}</td>
+                                <td><img src="{{ asset('storage/' . $slider->image) }}" alt="{{ $slider->title ?: 'Slider' }}"
                                         style="max-width: 150px;"></td>
                                         <td>
                                         @if ($slider->is_active)

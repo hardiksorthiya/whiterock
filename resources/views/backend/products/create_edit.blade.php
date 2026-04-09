@@ -2,6 +2,11 @@
 
 @php
     $edit = (bool) $product;
+    $selectedCategoryIds = old('category_ids', $edit ? $product->categories->pluck('id')->all() : []);
+    if (! is_array($selectedCategoryIds)) {
+        $selectedCategoryIds = [];
+    }
+    $selectedCategoryIds = array_map('intval', $selectedCategoryIds);
 @endphp
 
 @section('page_title', $edit ? 'Edit product' : 'New product')
@@ -54,23 +59,61 @@
             </div>
 
             <div class="col-lg-4 adm-sidebar-col">
-                <section class="adm-card">
-                    <h2 class="adm-card__title">Category</h2>
+                <section class="adm-card adm-card--overflow-visible">
+                    <h2 class="adm-card__title">Categories</h2>
                     <div class="adm-card__body">
-                        <select name="category_id" class="form-select">
-                            <option value="">
-                                @if($defaultCategory ?? null)
-                                    Optional — default: “{{ $defaultCategory->name }}”
+                        <p class="small adm-muted mb-3">
+                            @if($defaultCategory ?? null)
+                                If none selected, “{{ $defaultCategory->name }}” is applied (★).
+                            @else
+                                If none selected, set a default under Product Categories.
+                            @endif
+                        </p>
+
+                        <label class="visually-hidden" for="adm-cat-dd-btn">Product categories</label>
+                        <div id="adm-product-cat-dd" class="dropdown adm-cat-dd w-100" data-bs-auto-close="outside">
+                            <button type="button" id="adm-cat-dd-btn"
+                                class="dropdown-toggle adm-cat-dd__toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false" aria-haspopup="true" aria-controls="adm-cat-dd-panel">
+                                <span class="adm-cat-dd__label-text is-placeholder" data-adm-cat-label>Select categories…</span>
+                                <i class="bi bi-chevron-down adm-cat-dd__chev" aria-hidden="true"></i>
+                            </button>
+                            <div id="adm-cat-dd-panel" class="dropdown-menu adm-cat-dd__menu w-100">
+                                <div class="adm-cat-dd__head border-bottom py-2 px-3">
+                                    Choose one or more
+                                </div>
+                                @if ($categories->isEmpty())
+                                    <div class="adm-cat-dd__empty">No categories yet. Create some under Product Categories.</div>
                                 @else
-                                    Select category (set a default in Categories)
+                                    <div class="adm-cat-dd__scroll">
+                                        @foreach ($categories as $cat)
+                                            <div class="adm-cat-dd__item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input adm-cat-dd__cb" type="checkbox"
+                                                        name="category_ids[]" value="{{ $cat->id }}"
+                                                        id="adm-cat-{{ $cat->id }}"
+                                                        data-adm-cat-name="{{ e($cat->name) }}"
+                                                        @checked(in_array((int) $cat->id, $selectedCategoryIds, true))>
+                                                    <label class="form-check-label" for="adm-cat-{{ $cat->id }}">
+                                                        {{ $cat->name }}
+                                                        @if (($defaultCategory ?? null) && $defaultCategory->id === $cat->id)
+                                                            <span class="text-muted small">★</span>
+                                                        @endif
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="adm-cat-dd__foot border-top py-2 px-3 d-flex justify-content-end">
+                                        <button type="button" class="btn btn-link btn-sm text-decoration-none p-0 adm-muted"
+                                            id="adm-cat-dd-clear" style="font-size: 0.8125rem;">
+                                            Clear selection
+                                        </button>
+                                    </div>
                                 @endif
-                            </option>
-                            @foreach($categories as $cat)
-                                <option value="{{ $cat->id }}" @selected((string) old('category_id', $edit ? $product->category_id : '') === (string) $cat->id)>
-                                    {{ $cat->name }}{{ ($defaultCategory ?? null) && $defaultCategory->id === $cat->id ? ' ★' : '' }}
-                                </option>
-                            @endforeach
-                        </select>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -118,6 +161,15 @@
                             <option value="1" @selected((int) old('is_active', $edit ? $product->is_active : 1) === 1)>Active</option>
                             <option value="0" @selected((int) old('is_active', $edit ? $product->is_active : 1) === 0)>Inactive</option>
                         </select>
+                        <div class="form-check mt-3 pt-2 border-top border-light">
+                            <input type="hidden" name="is_featured" value="0">
+                            <input class="form-check-input" type="checkbox" name="is_featured" id="f-is-featured" value="1"
+                                @checked((int) old('is_featured', $edit && $product->is_featured ? 1 : 0) === 1)>
+                            <label class="form-check-label" for="f-is-featured">
+                                <span class="fw-semibold">Featured product</span>
+                                <span class="d-block small adm-muted mt-1">Show in featured spots (e.g. homepage highlights). Uncheck for a normal listing.</span>
+                            </label>
+                        </div>
                     </div>
                 </section>
 
@@ -128,3 +180,57 @@
         </div>
     </form>
 @endsection
+
+@push('scripts')
+    <script>
+        (function() {
+            var root = document.getElementById('adm-product-cat-dd');
+            if (!root) return;
+            var label = root.querySelector('[data-adm-cat-label]');
+            var boxes = root.querySelectorAll('.adm-cat-dd__cb');
+            var clearBtn = document.getElementById('adm-cat-dd-clear');
+
+            function updateLabel() {
+                var names = [];
+                boxes.forEach(function(cb) {
+                    if (cb.checked) names.push(cb.getAttribute('data-adm-cat-name') || '');
+                });
+                if (!label) return;
+                label.classList.toggle('is-placeholder', names.length === 0);
+                if (names.length === 0) {
+                    label.textContent = 'Select categories…';
+                    return;
+                }
+                if (names.length <= 3) {
+                    label.textContent = names.join(', ');
+                    return;
+                }
+                label.textContent = names.length + ' categories selected';
+            }
+
+            boxes.forEach(function(cb) {
+                cb.addEventListener('change', updateLabel);
+            });
+            root.querySelectorAll('.adm-cat-dd__item').forEach(function(item) {
+                item.addEventListener('click', function(e) {
+                    if (e.target.closest('input[type="checkbox"], label')) return;
+                    var cb = item.querySelector('.adm-cat-dd__cb');
+                    if (!cb) return;
+                    cb.checked = !cb.checked;
+                    updateLabel();
+                });
+            });
+            if (clearBtn) {
+                clearBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    boxes.forEach(function(cb) {
+                        cb.checked = false;
+                    });
+                    updateLabel();
+                });
+            }
+            updateLabel();
+        })();
+    </script>
+@endpush

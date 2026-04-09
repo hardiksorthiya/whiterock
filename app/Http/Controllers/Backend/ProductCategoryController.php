@@ -13,6 +13,17 @@ class ProductCategoryController extends Controller
     {
         $search = request('search');
         $productCategories = ProductCategory::query()
+            ->select('product_categories.*')
+            ->selectRaw('(
+                SELECT COUNT(DISTINCT p.id)
+                FROM products p
+                WHERE p.category_id = product_categories.id
+                   OR EXISTS (
+                       SELECT 1 FROM product_product_category ppc
+                       WHERE ppc.product_id = p.id
+                         AND ppc.product_category_id = product_categories.id
+                   )
+            ) as products_count')
             ->latest()
             ->when($search, function ($query, $search) {
                 $s = addcslashes($search, '%_\\');
@@ -48,13 +59,6 @@ class ProductCategoryController extends Controller
             $data['image'] = $request->file('image')->store('product_categories', 'public');
         }
 
-        $isDefault = $request->boolean('is_default');
-        $data['is_default'] = $isDefault;
-
-        if ($isDefault) {
-            ProductCategory::query()->update(['is_default' => false]);
-        }
-
         ProductCategory::create($data);
 
         return redirect()->route('backend.product-categories.index')->with('success', 'Product category created successfully.');
@@ -86,13 +90,6 @@ class ProductCategoryController extends Controller
                 Storage::disk('public')->delete($productCategory->image);
             }
             $data['image'] = $request->file('image')->store('product_categories', 'public');
-        }
-
-        $isDefault = $request->boolean('is_default');
-        $data['is_default'] = $isDefault;
-
-        if ($isDefault) {
-            ProductCategory::where('id', '!=', $productCategory->id)->update(['is_default' => false]);
         }
 
         $productCategory->update($data);
@@ -131,7 +128,6 @@ class ProductCategoryController extends Controller
                 return redirect()->route('backend.product-categories.index')->with('success', 'Selected categories activated successfully.');
             case 'deactivate':
                 ProductCategory::whereIn('id', $ids)->update(['is_active' => false]);
-                ProductCategory::whereIn('id', $ids)->where('is_default', true)->update(['is_default' => false]);
 
                 return redirect()->route('backend.product-categories.index')->with('success', 'Selected categories deactivated successfully.');
             case 'delete':

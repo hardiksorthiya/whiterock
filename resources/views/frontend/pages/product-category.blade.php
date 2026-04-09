@@ -1,19 +1,26 @@
 @extends('frontend.layouts.app')
+
 @section('content')
     @include('frontend.components.breadcrumb', [
-        'title' => 'PRODUCTS',
+        'title' => $category->name,
+        'subtitle' => 'Products in this category',
         'image' => asset('frontend/images/products-banner.jpg'),
+        'crumbs' => [
+            ['label' => 'Home', 'url' => route('home')],
+            ['label' => 'Products', 'url' => route('products')],
+            ['label' => $category->name, 'url' => null],
+        ],
     ])
 
     @include('frontend.components.products.category-nav', [
         'productCategories' => $productCategories,
-        'activeSlug' => null,
+        'activeSlug' => $category->slug,
     ])
 
     <section class="products-page-main py-4 py-lg-5 bg-white">
         <div class="container">
             @include('frontend.components.products.products-toolbar', [
-                'toolbarLabel' => 'All products',
+                'toolbarLabel' => $category->name,
                 'sort' => $sort,
                 'perPage' => $perPage,
             ])

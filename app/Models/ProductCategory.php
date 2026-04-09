@@ -2,26 +2,32 @@
 
 namespace App\Models;
 
-use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ProductCategory extends Model
 {
-    protected $fillable = ['name', 'slug', 'image', 'is_default', 'is_active'];
+    protected $fillable = ['name', 'slug', 'image', 'is_active'];
 
     protected $casts = [
-        'is_default' => 'boolean',
         'is_active' => 'boolean',
     ];
 
-    public function products()
+    public function products(): BelongsToMany
     {
-        return $this->hasMany(Product::class, 'category_id');
+        return $this->belongsToMany(
+            Product::class,
+            'product_product_category',
+            'product_category_id',
+            'product_id'
+        )->withTimestamps();
     }
-    public static function getDefaultId()
-    {
-        $defaultCategory = self::where('is_default', true)->where('is_active', true)->first();
 
-        return $defaultCategory?->id;
+    /**
+     * First active category by id (used when product form sends no categories).
+     */
+    public static function getDefaultId(): ?int
+    {
+        return self::query()->where('is_active', true)->orderBy('id')->value('id');
     }
 }

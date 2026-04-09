@@ -44,9 +44,10 @@ class SliderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:255',
             'image' => 'required|image|max:5120',
+            'image_mobile' => 'nullable|image|max:5120',
             'is_active' => ['required', Rule::in(['0', '1'])],
             'show_button' => 'boolean',
             'button_text' => 'nullable|string|max:255',
@@ -58,6 +59,7 @@ class SliderController extends Controller
         $data = $request->only([
             'title', 'description', 'button_text', 'button_link', 'video_link',
         ]);
+        $data = $this->nullableStringFields($data, ['title', 'description']);
 
         $data['is_active'] = $request->input('is_active') === '1';
         $data['show_button'] = $request->boolean('show_button');
@@ -65,6 +67,10 @@ class SliderController extends Controller
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('sliders', 'public');
+        }
+
+        if ($request->hasFile('image_mobile')) {
+            $data['image_mobile'] = $request->file('image_mobile')->store('sliders', 'public');
         }
 
         Slider::create($data);
@@ -91,9 +97,10 @@ class SliderController extends Controller
         $slider = Slider::findOrFail($id);
 
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:255',
             'image' => 'nullable|image|max:5120',
+            'image_mobile' => 'nullable|image|max:5120',
             'is_active' => ['required', Rule::in(['0', '1'])],
             'show_button' => 'boolean',
             'button_text' => 'nullable|string|max:255',
@@ -105,6 +112,7 @@ class SliderController extends Controller
         $data = $request->only([
             'title', 'description', 'button_text', 'button_link', 'video_link',
         ]);
+        $data = $this->nullableStringFields($data, ['title', 'description']);
 
         $data['is_active'] = $request->input('is_active') === '1';
         $data['show_button'] = $request->boolean('show_button');
@@ -115,6 +123,13 @@ class SliderController extends Controller
                 Storage::disk('public')->delete($slider->image);
             }
             $data['image'] = $request->file('image')->store('sliders', 'public');
+        }
+
+        if ($request->hasFile('image_mobile')) {
+            if ($slider->image_mobile) {
+                Storage::disk('public')->delete($slider->image_mobile);
+            }
+            $data['image_mobile'] = $request->file('image_mobile')->store('sliders', 'public');
         }
 
         $slider->update($data);
@@ -132,9 +147,26 @@ class SliderController extends Controller
         if ($slider->image) {
             Storage::disk('public')->delete($slider->image);
         }
+        if ($slider->image_mobile) {
+            Storage::disk('public')->delete($slider->image_mobile);
+        }
         $slider->delete();
 
         return redirect()->route('backend.sliders.index')
             ->with('success', __('Slider deleted successfully.'));
+    }
+
+    /**
+     * @param  list<string>  $keys
+     * @return array<string, mixed>
+     */
+    private function nullableStringFields(array $data, array $keys): array
+    {
+        foreach ($keys as $key) {
+            $v = $data[$key] ?? null;
+            $data[$key] = ($v !== null && trim((string) $v) !== '') ? trim((string) $v) : null;
+        }
+
+        return $data;
     }
 }

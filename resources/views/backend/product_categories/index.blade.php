@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('page_title', 'Product categories')
-@section('page_subtitle', 'Organize products and default assignment')
+@section('page_subtitle', 'Organize products by category')
 
 @section('content')
 @php($bulkFormId = 'category-bulk-form')
@@ -73,7 +73,7 @@
                             <th>Image</th>
                             <th>Name</th>
                             <th>Slug</th>
-                            <th>Default</th>
+                            <th>Products</th>
                             <th>Status</th>
                             <th class="text-end">Action</th>
                         </tr>
@@ -99,11 +99,7 @@
                                 <td><strong>{{ $productCategory->name }}</strong></td>
                                 <td><span class="adm-muted small">{{ $productCategory->slug }}</span></td>
                                 <td>
-                                    @if ($productCategory->is_default)
-                                        <span class="adm-badge adm-badge-success">Default</span>
-                                    @else
-                                        <span class="adm-muted small">—</span>
-                                    @endif
+                                    <span class="adm-badge">{{ (int) ($productCategory->products_count ?? 0) }}</span>
                                 </td>
                                 <td>
                                     @if ($productCategory->is_active)

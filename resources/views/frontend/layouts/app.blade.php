@@ -10,6 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/frontend/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <link rel="icon" href="{{ asset('storage/'.$settings->favicon_path) }}">
 </head>
 <body>
     @include('frontend.partials.header')
@@ -19,6 +21,7 @@
     </div>
 
     @include('frontend.partials.footer')
+    @include('frontend.partials.floating-whatsapp')
     @stack('scripts')
 </body>
 </html>

@@ -4,10 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
+    protected $casts = [
+        'is_featured' => 'boolean',
+    ];
+
     protected $fillable = [
         'name',
         'slug',
@@ -18,9 +23,10 @@ class Product extends Model
         'meta_description',
         'keywords',
         'is_active',
+        'is_featured',
         'image',
         'category_id',
-        'featured_image'
+        'featured_image',
     ];
 
     public function category(): BelongsTo
@@ -28,9 +34,18 @@ class Product extends Model
         return $this->belongsTo(ProductCategory::class, 'category_id');
     }
 
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            ProductCategory::class,
+            'product_product_category',
+            'product_id',
+            'product_category_id'
+        )->withTimestamps();
+    }
+
     public function images(): HasMany
     {
         return $this->hasMany(ProductImage::class)->orderBy('sort_order')->orderBy('id');
     }
 }
-

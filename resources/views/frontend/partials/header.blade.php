@@ -9,7 +9,18 @@
 
         <!-- Logo -->
         <a class="navbar-brand" href="/">
-        <img src="{{ asset('storage/' . $setting->logo_path) }}" alt="Whiterock" class="logo">
+            @php
+                $hasMainLogo = !empty($setting->logo_path);
+                $hasLightLogo = !empty($setting->light_logo_path);
+            @endphp
+            @if ($hasMainLogo && $hasLightLogo)
+                <img src="{{ asset('storage/'.$setting->light_logo_path) }}" alt="Whiterock" class="logo logo--header-light">
+                <img src="{{ asset('storage/'.$setting->logo_path) }}" alt="" class="logo logo--header-dark" aria-hidden="true">
+            @elseif ($hasMainLogo)
+                <img src="{{ asset('storage/'.$setting->logo_path) }}" alt="Whiterock" class="logo">
+            @elseif ($hasLightLogo)
+                <img src="{{ asset('storage/'.$setting->light_logo_path) }}" alt="Whiterock" class="logo">
+            @endif
         </a>
 
         <!-- Desktop Menu -->
@@ -31,6 +42,7 @@
     <ul class="list-unstyled">
         <li><a href="{{ route('home') }}">Home</a></li>
         <li><a href="{{ route('about') }}">About</a></li>
+        <li><a href="{{ route('products') }}">Products</a></li>
         <li><a href="{{ route('gallery') }}">Gallery</a></li>
         <li><a href="{{ route('contact') }}">Contact</a></li>
     </ul>

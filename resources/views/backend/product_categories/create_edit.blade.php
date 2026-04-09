@@ -33,14 +33,6 @@
                         <input id="cat-slug" type="text" name="slug" class="form-control"
                             value="{{ old('slug', data_get($productCategory, 'slug')) }}" required>
                     </div>
-                    <div class="adm-fld">
-                        <input type="hidden" name="is_default" value="0">
-                        <div class="form-check">
-                            <input type="checkbox" name="is_default" value="1" class="form-check-input" id="defaultCategory"
-                                @checked(old('is_default', data_get($productCategory, 'is_default') ? '1' : '0') == '1')>
-                            <label class="form-check-label" for="defaultCategory">Default category (used when a product has no category)</label>
-                        </div>
-                    </div>
                 </div>
             </section>
 

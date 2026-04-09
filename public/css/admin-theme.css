@@ -62,6 +62,11 @@ body, h1, h2, h3, h4, h5, h6, p, label, a, button,small, div {
     overflow: hidden;
 }
 
+/* Allow nested dropdowns (e.g. category multiselect) to paint outside the card */
+.adm-card.adm-card--overflow-visible {
+    overflow: visible;
+}
+
 .adm-card__title {
     margin: 0;
     padding: 0.85rem 1.25rem;
@@ -346,4 +351,139 @@ body, h1, h2, h3, h4, h5, h6, p, label, a, button,small, div {
         top: 1rem;
         align-self: flex-start;
     }
+}
+
+/* —— Multi-select category dropdown (product form) —— */
+.adm-cat-dd {
+    position: relative;
+}
+
+.adm-cat-dd .dropdown-toggle::after {
+    display: none;
+}
+
+.adm-cat-dd__toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--adm-sorath-text);
+    background: #fff;
+    border: 1px solid var(--adm-sorath-border);
+    border-radius: var(--adm-sorath-radius-sm);
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.adm-cat-dd__toggle:hover,
+.adm-cat-dd.show > .adm-cat-dd__toggle {
+    border-color: var(--adm-sorath-color);
+    box-shadow: 0 0 0 3px var(--adm-sorath-color-soft);
+}
+
+.adm-cat-dd__toggle:focus {
+    outline: none;
+    border-color: var(--adm-sorath-color);
+    box-shadow: 0 0 0 3px var(--adm-sorath-color-soft);
+}
+
+.adm-cat-dd__label-text {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+    line-height: 1.35;
+}
+
+.adm-cat-dd__label-text.is-placeholder {
+    color: var(--adm-sorath-muted);
+    font-weight: 400;
+}
+
+.adm-cat-dd__chev {
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    color: var(--adm-sorath-muted);
+    transition: transform 0.2s ease;
+}
+
+.adm-cat-dd.show .adm-cat-dd__chev {
+    transform: rotate(180deg);
+    color: var(--adm-sorath-color);
+}
+
+.adm-cat-dd__menu {
+    margin-top: 0.35rem !important;
+    border: 1px solid var(--adm-sorath-border);
+    border-radius: var(--adm-sorath-radius-sm);
+    box-shadow: var(--adm-sorath-shadow);
+    overflow: hidden;
+}
+
+.adm-cat-dd__head {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--adm-sorath-color);
+    background: linear-gradient(90deg, var(--adm-sorath-color-soft), transparent);
+}
+
+.adm-cat-dd__scroll {
+    max-height: 220px;
+    overflow-y: auto;
+    padding: 0.35rem 0;
+}
+
+.adm-cat-dd__item {
+    margin: 0;
+    padding: 0.45rem 1rem 0.45rem 0.85rem;
+    transition: background 0.12s ease;
+    cursor: pointer;
+}
+
+.adm-cat-dd__item:hover {
+    background: var(--adm-sorath-surface);
+}
+
+.adm-cat-dd__item .form-check-input {
+    width: 1.05em;
+    height: 1.05em;
+    margin-top: 0.2em;
+    border-color: var(--adm-sorath-border);
+    cursor: pointer;
+}
+
+.adm-cat-dd__item .form-check-input:checked {
+    background-color: var(--adm-sorath-color);
+    border-color: var(--adm-sorath-color);
+}
+
+.adm-cat-dd__item .form-check-label {
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding-left: 0.35rem;
+    width: 100%;
+}
+
+.adm-cat-dd__item .form-check {
+    min-height: 0;
+    margin-bottom: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.35rem;
+}
+
+.adm-cat-dd__foot {
+    background: var(--adm-sorath-surface);
+}
+
+.adm-cat-dd__empty {
+    padding: 1rem 1.25rem;
+    font-size: 0.875rem;
+    color: var(--adm-sorath-muted);
+    text-align: center;
 }

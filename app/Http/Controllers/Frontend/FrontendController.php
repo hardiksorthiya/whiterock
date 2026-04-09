@@ -12,6 +12,8 @@ use App\Models\ProductCategory;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Slider;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -26,14 +28,14 @@ class FrontendController extends Controller
         $galleryCategories = GalleryCategory::with('images')->get();
         $latestGalleryImages = GalleryImage::query()->latest()->take(6)->get();
         $products = Product::query()->where('is_active', true)->latest()->take(8)->get();
+        $ceilingProducts = $this->featuredProductsForCategorySlugPrefix('ceiling');
+        $panelProducts = $this->featuredProductsForCategorySlugPrefix('panel');
         $productCategories = ProductCategory::query()->where('is_active', true)->latest()->get();
         $footerPages = Page::query()->where('is_active', true)->latest()->get();
         $googleReviewsData = $this->fetchGooglePlaceReviews($setting);
 
-        return view('frontend.pages.home', compact('sliders', 'setting', 'services', 'latestGalleryImages', 'galleryCategories', 'footerPages', 'products', 'productCategories', 'googleReviewsData'));
+        return view('frontend.pages.home', compact('sliders', 'setting', 'services', 'latestGalleryImages', 'galleryCategories', 'footerPages', 'products', 'ceilingProducts', 'panelProducts', 'productCategories', 'googleReviewsData'));
     }
-
-    
 
     public function about()
     {
@@ -57,12 +59,99 @@ class FrontendController extends Controller
     public function products()
     {
         $setting = Setting::site();
-        $products = Product::query()->where('is_active', true)->latest()->get();
-        $productCategories = ProductCategory::query()->where('is_active', true)->latest()->get();
+        $sort = $this->requestedProductSort();
+        $perPage = $this->requestedProductPerPage();
+        $query = Product::query()->where('is_active', true);
+        $this->applyProductListingSort($query, $sort);
+        $products = $query->paginate($perPage)->withQueryString();
+        $productCategories = ProductCategory::query()->where('is_active', true)->orderBy('name')->get();
         $latestGalleryImages = GalleryImage::query()->latest()->take(6)->get();
         $footerPages = Page::query()->where('is_active', true)->latest()->get();
 
-        return view('frontend.pages.products', compact('setting', 'products', 'productCategories', 'latestGalleryImages', 'footerPages'));
+        return view('frontend.pages.products', compact(
+            'setting',
+            'products',
+            'productCategories',
+            'latestGalleryImages',
+            'footerPages',
+            'sort',
+            'perPage'
+        ));
+    }
+
+    public function productCategory(string $slug)
+    {
+        $setting = Setting::site();
+        $category = ProductCategory::query()
+            ->where('is_active', true)
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $sort = $this->requestedProductSort();
+        $perPage = $this->requestedProductPerPage();
+        $query = Product::query()
+            ->where('is_active', true)
+            ->where(function ($q) use ($category) {
+                $q->whereHas('categories', function ($qq) use ($category) {
+                    $qq->where('product_categories.id', $category->id);
+                })->orWhere('category_id', $category->id);
+            });
+        $this->applyProductListingSort($query, $sort);
+        $products = $query->paginate($perPage)->withQueryString();
+
+        $productCategories = ProductCategory::query()->where('is_active', true)->orderBy('name')->get();
+        $latestGalleryImages = GalleryImage::query()->latest()->take(6)->get();
+        $footerPages = Page::query()->where('is_active', true)->latest()->get();
+
+        return view('frontend.pages.product-category', compact(
+            'setting',
+            'category',
+            'products',
+            'productCategories',
+            'latestGalleryImages',
+            'footerPages',
+            'sort',
+            'perPage'
+        ));
+    }
+
+    public function productShow(string $slug)
+    {
+        $setting = Setting::site();
+        $product = Product::query()
+            ->where('is_active', true)
+            ->where('slug', $slug)
+            ->with(['categories', 'images', 'category'])
+            ->firstOrFail();
+
+        $categoryIds = $product->categories->pluck('id');
+        if ($categoryIds->isEmpty() && $product->category_id) {
+            $categoryIds = collect([(int) $product->category_id]);
+        }
+
+        $relatedProducts = collect();
+        if ($categoryIds->isNotEmpty()) {
+            $relatedProducts = Product::query()
+                ->where('is_active', true)
+                ->where('id', '!=', $product->id)
+                ->whereHas('categories', function ($q) use ($categoryIds) {
+                    $q->whereIn('product_categories.id', $categoryIds);
+                })
+                ->latest()
+                ->take(8)
+                ->get();
+        }
+
+        $latestGalleryImages = GalleryImage::query()->latest()->take(6)->get();
+        $footerPages = Page::query()->where('is_active', true)->latest()->get();
+
+        return view('frontend.pages.product-show', compact(
+            'setting',
+            'product',
+            'relatedProducts',
+            'latestGalleryImages',
+            'footerPages'
+        ));
     }
 
     public function gallery()
@@ -210,5 +299,58 @@ class FrontendController extends Controller
         Cache::put($cacheKey, $data, 3600);
 
         return $data;
+    }
+
+    private function requestedProductSort(): string
+    {
+        $sort = (string) request('sort', 'latest');
+
+        return in_array($sort, ['latest', 'name_asc', 'name_desc'], true) ? $sort : 'latest';
+    }
+
+    private function requestedProductPerPage(): int
+    {
+        $perPage = (int) request('per_page', 12);
+
+        return in_array($perPage, [12, 24, 48], true) ? $perPage : 12;
+    }
+
+    private function applyProductListingSort(Builder $query, string $sort): void
+    {
+        match ($sort) {
+            'name_asc' => $query->orderBy('name'),
+            'name_desc' => $query->orderByDesc('name'),
+            default => $query->latest(),
+        };
+    }
+
+    /**
+     * Active, featured products linked to the newest matching product category (by slug).
+     * Match: exact slug or slug starting with "{prefix}-" so admins can use e.g. ceiling, ceiling-tiles.
+     */
+    private function featuredProductsForCategorySlugPrefix(string $slugPrefix): Collection
+    {
+        $category = ProductCategory::query()
+            ->where('is_active', true)
+            ->where(function ($q) use ($slugPrefix) {
+                $q->where('slug', $slugPrefix)
+                    ->orWhere('slug', 'like', $slugPrefix.'-%');
+            })
+            ->orderByDesc('id')
+            ->first();
+
+        if ($category === null) {
+            return collect();
+        }
+
+        return Product::query()
+            ->where('is_active', true)
+            ->where('is_featured', true)
+            ->whereHas('categories', function ($q) use ($category) {
+                $q->where('product_categories.id', $category->id);
+            })
+            ->latest()
+            ->take(4)
+            ->get();
     }
 }

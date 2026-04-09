@@ -10,6 +10,7 @@ class Slider extends Model
         'title',
         'description',
         'image',
+        'image_mobile',
         'is_active',
         'show_button',
         'button_text',

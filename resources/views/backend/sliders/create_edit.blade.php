@@ -45,12 +45,21 @@
 
                 <!-- IMAGE -->
                 <div class="mb-3">
-                    <label>Background Image</label>
-                    <input type="file" name="image" class="form-control">
-
-                    @if($edit && $slider->image)
+                    <label>Background Image (desktop / default)</label>
+                    <input type="file" name="image" class="form-control" accept="image/*">
+                    @if ($edit && $slider->image)
                         <div class="mt-2">
-                            <img src="{{ asset('storage/'.$slider->image) }}" width="120" class="rounded">
+                            <img src="{{ asset('storage/'.$slider->image) }}" width="120" class="rounded" alt="">
+                        </div>
+                    @endif
+                </div>
+
+                <div class="mb-3">
+                    <label>Mobile Image <span class="text-muted small">(optional — portrait or cropped for phones; falls back to desktop image if empty)</span></label>
+                    <input type="file" name="image_mobile" class="form-control" accept="image/*">
+                    @if ($edit && $slider->image_mobile)
+                        <div class="mt-2">
+                            <img src="{{ asset('storage/'.$slider->image_mobile) }}" width="120" class="rounded" alt="">
                         </div>
                     @endif
                 </div>

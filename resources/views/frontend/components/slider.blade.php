@@ -1,4 +1,4 @@
-<div id="heroSlider" class="carousel slide" data-bs-ride="carousel">
+<div id="heroSlider" class="carousel slide hero-slider" data-bs-ride="carousel">
 
     <!-- Indicators -->
     <div class="carousel-indicators">
@@ -14,21 +14,22 @@
     <div class="carousel-inner">
 
         @foreach($sliders as $key => $slider)
+        @php
+            $bgDesktop = asset('storage/'.$slider->image);
+            $bgMobile = $slider->image_mobile ? asset('storage/'.$slider->image_mobile) : $bgDesktop;
+        @endphp
         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
 
-            <div style="
-                background-image:url('{{ asset('storage/'.$slider->image) }}');
-                background-size: cover;
-                background-position: center;
-                display:flex;
-                align-items:center;
-                color:white;
-                height:750px;
-            ">
+            <div class="hero-slide-bg"
+                style="--hero-bg-sm: url('{{ $bgMobile }}'); --hero-bg-lg: url('{{ $bgDesktop }}');">
                 <div class="container">
 
-                    <h1>{{ $slider->title }}</h1>
-                    <p>{{ $slider->description }}</p>
+                    @if (filled($slider->title))
+                        <h1>{{ $slider->title }}</h1>
+                    @endif
+                    @if (filled($slider->description))
+                        <p>{{ $slider->description }}</p>
+                    @endif
 
                     @if($slider->show_button)
                         <a href="{{ $slider->button_link }}" class="btn btn-light">

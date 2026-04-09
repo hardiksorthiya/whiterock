@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function index()
     {
         $search = request('search');
-        $products = Product::with('category')
+        $products = Product::with('categories')
             ->latest()
             ->when($search, function ($query, $search) {
                 $query->where('name', 'like', '%'.addcslashes($search, '%_\\').'%');
@@ -34,7 +34,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = ProductCategory::orderBy('name')->get();
-        $defaultCategory = ProductCategory::where('is_default', true)->first();
+        $defaultCategory = ProductCategory::where('is_active', true)->orderBy('name')->first();
+
         return view('backend.products.create_edit', [
             'categories' => $categories,
             'defaultCategory' => $defaultCategory,
@@ -57,11 +58,13 @@ class ProductController extends Controller
             'meta_description' => 'nullable|string',
             'keywords' => 'nullable|string',
             'is_active' => 'boolean',
+            'is_featured' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'gallery_images' => 'nullable|array',
             'gallery_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'category_id' => 'nullable|exists:product_categories,id',
+            'category_ids' => 'nullable|array',
+            'category_ids.*' => 'integer|exists:product_categories,id',
         ]);
 
         $data = $request->only([
@@ -74,22 +77,19 @@ class ProductController extends Controller
             'meta_description',
             'keywords',
             'is_active',
-            'category_id',
         ]);
 
-        $categoryId = $request->filled('category_id')
-            ? (int) $request->category_id
-            : ProductCategory::getDefaultId();
-
-        if ($categoryId === null) {
+        $categoryIds = $this->normalizedCategoryIds($request);
+        if ($categoryIds === []) {
             return back()
                 ->withErrors([
-                    'category_id' => 'Select a category or set a default category under Product Categories.',
+                    'category_ids' => 'Select at least one category or set a default category under Product Categories.',
                 ])
                 ->withInput();
         }
 
-        $data['category_id'] = $categoryId;
+        $data['category_id'] = $categoryIds[0];
+        $data['is_featured'] = $request->boolean('is_featured');
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public');
@@ -100,20 +100,21 @@ class ProductController extends Controller
         }
 
         $product = Product::create($data);
+        $product->categories()->sync($categoryIds);
         $this->storeGalleryUploads($request, $product);
 
         return redirect()->route('backend.products.index')->with('success', 'Product created successfully.');
     }
-
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        $product = Product::with('images')->findOrFail($id);
+        $product = Product::with(['images', 'categories'])->findOrFail($id);
         $categories = ProductCategory::orderBy('name')->get();
-        $defaultCategory = ProductCategory::where('is_default', true)->first();
+        $defaultCategory = ProductCategory::where('is_active', true)->orderBy('name')->first();
+
         return view('backend.products.create_edit', compact('product', 'categories', 'defaultCategory'));
     }
 
@@ -126,21 +127,23 @@ class ProductController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:products,slug,' . $product->id,
-            'sku' => 'nullable|string|max:255|unique:products,sku,' . $product->id,
+            'slug' => 'required|string|max:255|unique:products,slug,'.$product->id,
+            'sku' => 'nullable|string|max:255|unique:products,sku,'.$product->id,
             'short_description' => 'nullable|string',
             'long_description' => 'nullable|string',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'keywords' => 'nullable|string',
             'is_active' => 'boolean',
+            'is_featured' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'gallery_images' => 'nullable|array',
             'gallery_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'remove_gallery_ids' => 'nullable|array',
             'remove_gallery_ids.*' => 'integer|exists:product_images,id',
-            'category_id' => 'nullable|exists:product_categories,id',
+            'category_ids' => 'nullable|array',
+            'category_ids.*' => 'integer|exists:product_categories,id',
         ]);
 
         $data = $request->only([
@@ -153,22 +156,19 @@ class ProductController extends Controller
             'meta_description',
             'keywords',
             'is_active',
-            'category_id',
         ]);
 
-        $categoryId = $request->filled('category_id')
-            ? (int) $request->category_id
-            : ProductCategory::getDefaultId();
-
-        if ($categoryId === null) {
+        $categoryIds = $this->normalizedCategoryIds($request);
+        if ($categoryIds === []) {
             return back()
                 ->withErrors([
-                    'category_id' => 'Select a category or set a default category under Product Categories.',
+                    'category_ids' => 'Select at least one category or set a default category under Product Categories.',
                 ])
                 ->withInput();
         }
 
-        $data['category_id'] = $categoryId;
+        $data['category_id'] = $categoryIds[0];
+        $data['is_featured'] = $request->boolean('is_featured');
 
         if ($request->hasFile('image')) {
             // Delete old image if exists
@@ -189,6 +189,7 @@ class ProductController extends Controller
         }
 
         $product->update($data);
+        $product->categories()->sync($categoryIds);
 
         $this->removeGalleryImages($request, $product);
         $this->storeGalleryUploads($request, $product);
@@ -236,9 +237,11 @@ class ProductController extends Controller
         switch ($action) {
             case 'activate':
                 Product::whereIn('id', $productIds)->update(['is_active' => true]);
+
                 return redirect()->route('backend.products.index')->with('success', 'Selected products activated successfully.');
             case 'deactivate':
                 Product::whereIn('id', $productIds)->update(['is_active' => false]);
+
                 return redirect()->route('backend.products.index')->with('success', 'Selected products deactivated successfully.');
             case 'delete':
                 $products = Product::with('images')->whereIn('id', $productIds)->get();
@@ -254,6 +257,7 @@ class ProductController extends Controller
                     }
                     $product->delete();
                 }
+
                 return redirect()->route('backend.products.index')->with('success', 'Selected products deleted successfully.');
             default:
                 return redirect()->route('backend.products.index')->with('error', 'Invalid action selected.');
@@ -296,6 +300,20 @@ class ProductController extends Controller
             $image->delete();
         }
     }
+
+    /**
+     * @return list<int>
+     */
+    protected function normalizedCategoryIds(Request $request): array
+    {
+        $raw = $request->input('category_ids', []);
+        $ids = array_values(array_unique(array_filter(array_map('intval', (array) $raw))));
+        if ($ids !== []) {
+            return $ids;
+        }
+
+        $defaultId = ProductCategory::getDefaultId();
+
+        return $defaultId !== null ? [$defaultId] : [];
+    }
 }
-
-

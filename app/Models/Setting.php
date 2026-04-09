@@ -8,6 +8,7 @@ class Setting extends Model
 {
     protected $fillable = [
         'logo_path',
+        'light_logo_path',
         'favicon_path',
         'facebook_url',
         'instagram_url',
