@@ -128,6 +128,24 @@
                 </section>
 
                 <section class="adm-card">
+                    <h2 class="adm-card__title">Catalogue (PDF)</h2>
+                    <div class="adm-card__body">
+                        <p class="small adm-muted mb-2">Optional product brochure or catalogue. PDF only, max 10&nbsp;MB.</p>
+                        <input type="file" name="catalogue" class="form-control" accept="application/pdf,.pdf">
+                        @if ($edit && $product->catalogue_path)
+                            <div class="mt-2 d-flex flex-wrap align-items-center gap-2">
+                                <a href="{{ asset('storage/'.$product->catalogue_path) }}" class="adm-btn adm-btn--ghost adm-btn--sm" target="_blank" rel="noopener">View current PDF</a>
+                                <div class="form-check mb-0">
+                                    <input class="form-check-input" type="checkbox" name="remove_catalogue" id="remove-catalogue" value="1"
+                                        @checked(old('remove_catalogue'))>
+                                    <label class="form-check-label small" for="remove-catalogue">Remove catalogue on save</label>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </section>
+
+                <section class="adm-card">
                     <h2 class="adm-card__title">Gallery</h2>
                     <div class="adm-card__body">
                         <p class="small adm-muted mb-2">Select multiple images to add at once (max 2MB each).</p>
@@ -182,8 +200,18 @@
 @endsection
 
 @push('scripts')
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     <script>
         (function() {
+            if (typeof CKEDITOR !== 'undefined') {
+                if (document.getElementById('f-short_description') && !CKEDITOR.instances['f-short_description']) {
+                    CKEDITOR.replace('f-short_description');
+                }
+                if (document.getElementById('f-long_description') && !CKEDITOR.instances['f-long_description']) {
+                    CKEDITOR.replace('f-long_description');
+                }
+            }
+
             var root = document.getElementById('adm-product-cat-dd');
             if (!root) return;
             var label = root.querySelector('[data-adm-cat-label]');

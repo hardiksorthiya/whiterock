@@ -36,6 +36,7 @@
                     <span class="sorath-counter" data-count="5000">0</span>+
                 </h3>
                 <p class="sorath-counter-text"> square feet area covered</p>
+            </div>
         </div>
     </div>
 </section>

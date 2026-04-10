@@ -224,9 +224,13 @@
             <section class="adm-card mt-3">
                 <h2 class="adm-card__title">Footer</h2>
                 <div class="adm-card__body">
-                    <label class="form-label">Footer text</label>
-                    <textarea name="footer_text" class="form-control" rows="4"
+                    <label class="form-label">Footer description text</label>
+                    <textarea id="footer_text" name="footer_text" class="form-control" rows="4"
                         placeholder="Copyright, tagline, legal notice…">{{ old('footer_text', $setting->footer_text) }}</textarea>
+                    <hr class="my-3">
+                    <label class="form-label">Footer copyright text</label>
+                    <textarea id="footer_copyright_text" name="footer_copyright_text" class="form-control" rows="3"
+                        placeholder="Copyright © 2026. All rights reserved.">{{ old('footer_copyright_text', $setting->footer_copyright_text) }}</textarea>
                 </div>
             </section>
         </div>
@@ -244,8 +248,16 @@
 @endsection
 
 @push('scripts')
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     <script>
         (function () {
+            if (typeof CKEDITOR !== 'undefined' && document.getElementById('footer_text') && !CKEDITOR.instances.footer_text) {
+                CKEDITOR.replace('footer_text');
+            }
+            if (typeof CKEDITOR !== 'undefined' && document.getElementById('footer_copyright_text') && !CKEDITOR.instances.footer_copyright_text) {
+                CKEDITOR.replace('footer_copyright_text');
+            }
+
             const container = document.getElementById('contactLocations');
             const addBtn = document.getElementById('addLocationRow');
             if (!container || !addBtn) return;

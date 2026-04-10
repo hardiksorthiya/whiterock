@@ -22,6 +22,7 @@ class AboutController extends Controller
             'founder_designation' => 'nullable|string|max:255',
             'founder_description' => 'nullable|string',
             'founder_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'about_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
             'description' => 'nullable|string',
             'mission' => 'nullable|string',
             'vision' => 'nullable|string',
@@ -34,6 +35,14 @@ class AboutController extends Controller
             }
             $imagePath = $request->file('founder_image')->store('founder_images', 'public');
             $data['founder_image'] = str_replace('public/', '', $imagePath);
+        }
+
+        if ($request->hasFile('about_image')) {
+            if ($about && ! empty($about->about_image)) {
+                Storage::disk('public')->delete($about->about_image);
+            }
+            $aboutImagePath = $request->file('about_image')->store('about_images', 'public');
+            $data['about_image'] = str_replace('public/', '', $aboutImagePath);
         }
 
         if ($about) {

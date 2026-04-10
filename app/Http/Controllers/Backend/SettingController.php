@@ -36,6 +36,7 @@ class SettingController extends Controller
             'phone' => 'nullable|string|max:100',
             'email' => 'nullable|email|max:255',
             'footer_text' => 'nullable|string|max:65535',
+            'footer_copyright_text' => 'nullable|string|max:65535',
             'contact_locations' => 'nullable|array',
             'contact_locations.*.title' => 'nullable|string|max:255',
             'contact_locations.*.description' => 'nullable|string|max:10000',
@@ -55,6 +56,7 @@ class SettingController extends Controller
             'phone',
             'email',
             'footer_text',
+            'footer_copyright_text',
             'google_api_key',
             'google_place_id',
 

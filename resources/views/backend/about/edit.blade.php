@@ -71,6 +71,20 @@
 
     <div class="col-lg-4 adm-sidebar-col">
         <section class="adm-card">
+            <h2 class="adm-card__title">About Section Image</h2>
+            <div class="adm-card__body">
+                <input type="file" name="about_image" class="form-control" accept="image/*">
+
+                @if (! empty($about->about_image))
+                    <div class="mt-3">
+                        <p class="small fw-semibold mb-2">Current image</p>
+                        <img src="{{ asset('storage/' . $about->about_image) }}" alt="About section image" width="140" class="rounded">
+                    </div>
+                @endif
+            </div>
+        </section>
+
+        <section class="adm-card mt-3">
             <h2 class="adm-card__title">Founder Image</h2>
             <div class="adm-card__body">
                 <input type="file" name="founder_image" class="form-control" accept="image/*">

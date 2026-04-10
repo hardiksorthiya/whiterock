@@ -30,11 +30,13 @@ class FrontendController extends Controller
         $products = Product::query()->where('is_active', true)->latest()->take(8)->get();
         $ceilingProducts = $this->featuredProductsForCategorySlugPrefix('ceiling');
         $panelProducts = $this->featuredProductsForCategorySlugPrefix('panel');
+        $ceilingCategoryUrl = $this->categoryUrlForSlugPrefix('ceiling');
+        $panelCategoryUrl = $this->categoryUrlForSlugPrefix('panel');
         $productCategories = ProductCategory::query()->where('is_active', true)->latest()->get();
         $footerPages = Page::query()->where('is_active', true)->latest()->get();
         $googleReviewsData = $this->fetchGooglePlaceReviews($setting);
 
-        return view('frontend.pages.home', compact('sliders', 'setting', 'services', 'latestGalleryImages', 'galleryCategories', 'footerPages', 'products', 'ceilingProducts', 'panelProducts', 'productCategories', 'googleReviewsData'));
+        return view('frontend.pages.home', compact('sliders', 'setting', 'services', 'latestGalleryImages', 'galleryCategories', 'footerPages', 'products', 'ceilingProducts', 'panelProducts', 'ceilingCategoryUrl', 'panelCategoryUrl', 'productCategories', 'googleReviewsData'));
     }
 
     public function about()
@@ -352,5 +354,23 @@ class FrontendController extends Controller
             ->latest()
             ->take(4)
             ->get();
+    }
+
+    private function categoryUrlForSlugPrefix(string $slugPrefix): string
+    {
+        $category = ProductCategory::query()
+            ->where('is_active', true)
+            ->where(function ($q) use ($slugPrefix) {
+                $q->where('slug', $slugPrefix)
+                    ->orWhere('slug', 'like', $slugPrefix.'-%');
+            })
+            ->orderByDesc('id')
+            ->first();
+
+        if ($category === null) {
+            return route('products');
+        }
+
+        return route('product-category.show', $category->slug);
     }
 }

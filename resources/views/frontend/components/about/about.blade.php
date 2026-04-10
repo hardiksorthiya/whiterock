@@ -5,8 +5,8 @@
             <!-- Left Content -->
             <div class="col-lg-6 col-md-6">
                 <div class="sorath-image-wrapper">
-                    @if (! empty($about->founder_image))
-                        <img src="{{ asset('storage/' . $about->founder_image) }}" class="img-fluid" alt="Founder image">
+                    @if (! empty($about->about_image))
+                        <img src="{{ asset('storage/' . $about->about_image) }}" class="img-fluid" alt="About image">
                     @else
                         <img src="{{ asset('images/h1.jpg') }}" class="img-fluid" alt="Interior">
                     @endif

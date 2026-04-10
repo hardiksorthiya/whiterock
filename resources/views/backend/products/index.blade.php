@@ -114,6 +114,12 @@
                                     </td>
                                     <td class="text-end">
                                         <div class="adm-actions justify-content-end">
+                                            @if ($product->is_active)
+                                                <a href="{{ route('product.show', $product->slug) }}"
+                                                    class="adm-btn adm-btn--ghost adm-btn--sm"
+                                                    target="_blank" rel="noopener noreferrer"
+                                                    title="Open product page in a new tab">View</a>
+                                            @endif
                                             <a href="{{ route('backend.products.edit', $product) }}"
                                                 class="adm-btn adm-btn--ghost adm-btn--sm">Edit</a>
                                             <form action="{{ route('backend.products.destroy', $product) }}" method="POST"

@@ -11,6 +11,7 @@ class About extends Model
         'founder_designation',
         'founder_description',
         'founder_image',
+        'about_image',
         'description',
         'mission',
         'vision',

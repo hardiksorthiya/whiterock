@@ -18,6 +18,7 @@ class Setting extends Model
         'email',
         'contact_locations',
         'footer_text',
+        'footer_copyright_text',
         'google_api_key',
         'google_place_id',
     ];

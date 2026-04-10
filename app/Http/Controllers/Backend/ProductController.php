@@ -61,6 +61,7 @@ class ProductController extends Controller
             'is_featured' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'catalogue' => 'nullable|file|mimes:pdf|max:10240',
             'gallery_images' => 'nullable|array',
             'gallery_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'category_ids' => 'nullable|array',
@@ -97,6 +98,10 @@ class ProductController extends Controller
 
         if ($request->hasFile('featured_image')) {
             $data['featured_image'] = $request->file('featured_image')->store('products/featured', 'public');
+        }
+
+        if ($request->hasFile('catalogue')) {
+            $data['catalogue_path'] = $request->file('catalogue')->store('products/catalogues', 'public');
         }
 
         $product = Product::create($data);
@@ -138,6 +143,8 @@ class ProductController extends Controller
             'is_featured' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'catalogue' => 'nullable|file|mimes:pdf|max:10240',
+            'remove_catalogue' => 'nullable|boolean',
             'gallery_images' => 'nullable|array',
             'gallery_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'remove_gallery_ids' => 'nullable|array',
@@ -188,6 +195,18 @@ class ProductController extends Controller
             $data['featured_image'] = $featuredImagePath;
         }
 
+        if ($request->boolean('remove_catalogue') && $product->catalogue_path) {
+            Storage::disk('public')->delete($product->catalogue_path);
+            $data['catalogue_path'] = null;
+        }
+
+        if ($request->hasFile('catalogue')) {
+            if ($product->catalogue_path) {
+                Storage::disk('public')->delete($product->catalogue_path);
+            }
+            $data['catalogue_path'] = $request->file('catalogue')->store('products/catalogues', 'public');
+        }
+
         $product->update($data);
         $product->categories()->sync($categoryIds);
 
@@ -210,6 +229,9 @@ class ProductController extends Controller
         }
         if ($product->featured_image) {
             Storage::disk('public')->delete($product->featured_image);
+        }
+        if ($product->catalogue_path) {
+            Storage::disk('public')->delete($product->catalogue_path);
         }
         foreach ($product->images as $galleryImage) {
             Storage::disk('public')->delete($galleryImage->image);
@@ -251,6 +273,9 @@ class ProductController extends Controller
                     }
                     if ($product->featured_image) {
                         Storage::disk('public')->delete($product->featured_image);
+                    }
+                    if ($product->catalogue_path) {
+                        Storage::disk('public')->delete($product->catalogue_path);
                     }
                     foreach ($product->images as $galleryImage) {
                         Storage::disk('public')->delete($galleryImage->image);

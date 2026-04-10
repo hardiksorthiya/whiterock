@@ -1,7 +1,8 @@
-{{-- Expects: $sectionTitle, $products, optional $sectionDescription, $sectionId --}}
+{{-- Expects: $sectionTitle, $products, optional $sectionDescription, $sectionId, $viewAllUrl --}}
 @php
     $sectionDescription = $sectionDescription
         ?? 'Far far away behind the word mountains far from the countries Vokalia and Consonantia there live the blind texts.';
+    $viewAllUrl = $viewAllUrl ?? null;
 @endphp
 <section @if (!empty($sectionId)) id="{{ $sectionId }}" @endif class="product-section py-5">
     <div class="container">
@@ -12,6 +13,11 @@
                     <p class="sorath-desc">
                         {{ $sectionDescription }}
                     </p>
+                    @if (!empty($viewAllUrl))
+                        <a href="{{ $viewAllUrl }}" class="btn btn-outline-dark btn-sm mt-2" target="_blank" rel="noopener noreferrer">
+                            View All
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>

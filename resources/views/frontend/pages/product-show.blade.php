@@ -97,7 +97,7 @@
 
                     @if (!empty($product->short_description))
                         <div class="product-detail__short mb-4">
-                            {!! nl2br(e($product->short_description)) !!}
+                            {!! $product->short_description !!}
                         </div>
                     @endif
 
@@ -112,6 +112,12 @@
                             data-bs-toggle="modal" data-bs-target="#productEnquiryModal">
                             Enquiry
                         </button>
+                        @if (!empty($product->catalogue_path))
+                            <a href="{{ asset('storage/'.$product->catalogue_path) }}" class="btn btn-outline-dark px-4"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="bi bi-file-earmark-pdf me-1"></i> Catalogue
+                            </a>
+                        @endif
                         @if (!empty($setting->whatsapp_url))
                             <a href="#" id="productWhatsappBtn" class="btn btn-success px-4" target="_blank"
                                 rel="noopener noreferrer"

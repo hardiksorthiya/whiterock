@@ -3,15 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    --adm-sorath-color: #1e40af;
-    --adm-sorath-color-dark: #1e3a8a;
-    --adm-sorath-color-soft: rgba(30, 64, 175, 0.08);
-    --adm-sorath-secondary: #0f172a;
-    --adm-sorath-secondary-soft: rgba(15, 23, 42, 0.06);
-    --adm-sorath-accent: #0369a1;
-    --adm-sorath-surface: #f1f5f9;
-    --adm-sorath-card: #ffffff;
-    --adm-sorath-border: #e2e8f0;
+    --adm-sorath-primary-color: rgb(25 29 39);
     --adm-sorath-text: #1e293b;
     --adm-sorath-muted: #64748b;
     --adm-sorath-danger: #b91c1c;
@@ -22,6 +14,10 @@
     --adm-sorath-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
     --adm-sorath-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
     --adm-primary-sorath-font: 'Poppins', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body,
@@ -49,6 +45,27 @@ body.menu-open {
     min-height: 40vh;
 }
 
+/* Global section reveal animation */
+.section-reveal {
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+.section-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .section-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
 .navbar-brand .logo {
     width: 160px;
     height: auto;
@@ -56,12 +73,12 @@ body.menu-open {
 
 /* Light + dark header logos (transparent bar vs solid white bar after scroll) */
 .navbar-brand .logo.logo--header-light {
-    display: block;
-}
-
-.navbar-brand .logo.logo--header-dark {
     display: none;
 }
+
+/* .navbar-brand .logo.logo--header-dark {
+    display: none;
+} */
 
 .site-header.is-scrolled .navbar-brand .logo.logo--header-light {
     display: none;
@@ -185,7 +202,7 @@ body.menu-open {
 
 
 .site-header .nav-link {
-    color: rgba(255, 255, 255, 0.95);
+    color: rgb(25 29 39);
 }
 
 .site-header .navbar-brand {
@@ -213,8 +230,8 @@ body.menu-open {
 
 /* ——— Footer ——— */
 .site-footer {
-    background: #fff;
-    color: #111;
+    background: var(--adm-sorath-primary-color);
+    color: #fff;
     padding-top: 4rem;
     padding-bottom: 0;
 }
@@ -239,7 +256,7 @@ body.menu-open {
 
 .site-footer__lead {
     font-size: 0.95rem;
-    color: #9a9a9a;
+    color: rgba(255, 255, 255, 0.8);
     line-height: 1.65;
     max-width: 520px;
 }
@@ -251,22 +268,23 @@ body.menu-open {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #111;
+    background: rgba(255, 255, 255, 0.14);
     color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
     text-decoration: none;
     font-size: 1rem;
     transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .site-footer__social-btn:hover {
-    background: #333;
+    background: rgba(255, 255, 255, 0.24);
     color: #fff;
     transform: translateY(-2px);
 }
 
 .site-footer__middle {
     padding-bottom: 3rem;
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .site-footer__heading {
@@ -275,7 +293,7 @@ body.menu-open {
     letter-spacing: 0.12em;
     text-transform: uppercase;
     margin-bottom: 1.25rem;
-    color: #111;
+    color: #fff;
 }
 
 .site-footer__links li {
@@ -283,14 +301,14 @@ body.menu-open {
 }
 
 .site-footer__links a {
-    color: #555;
+    color: rgba(255, 255, 255, 0.86);
     text-decoration: none;
     font-size: 0.95rem;
     transition: color 0.2s ease;
 }
 
 .site-footer__links a:hover {
-    color: #111;
+    color: #fff;
 }
 
 .site-footer__projects {
@@ -304,7 +322,7 @@ body.menu-open {
     display: block;
     aspect-ratio: 3 / 2;
     overflow: hidden;
-    background: #f0f0f0;
+    background: rgba(255, 255, 255, 0.12);
 }
 
 .site-footer__project-thumb img {
@@ -326,7 +344,11 @@ body.menu-open {
 
 .site-footer__meta {
     font-size: 0.8rem;
-    color: #9a9a9a;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.site-footer .text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
 }
 
 @media (max-width: 767.98px) {
@@ -414,12 +436,16 @@ body.menu-open {
 }
 
 .sorath-title {
-    font-weight: 600;
-    margin-bottom: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: 0.01em;
 }
 
 .sorath-desc {
-    color: #666;
+    color: #5f6b7a;
+    max-width: 720px;
+    margin-inline: auto;
+    line-height: 1.7;
 }
 
 .sorath-watch-video {
@@ -490,10 +516,13 @@ body.menu-open {
     padding: 30px;
     height: 100%;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.35s ease;
     z-index: 1;
     background-size: cover;
     background-position: center;
+    border-radius: 14px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
 }
 
 
@@ -782,7 +811,9 @@ body.menu-open {
 .product-card {
     transition: 0.3s;
     overflow: hidden;
-    box-shadow: 2px 2px 10px #80808033;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    border-radius: 14px;
+    border: 1px solid rgba(15, 23, 42, 0.07);
 }
 
 .product-img {
@@ -798,7 +829,21 @@ body.menu-open {
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
+    box-shadow: 0 18px 36px rgba(15, 23, 42, 0.16);
+}
+
+.btn-dark,
+.btn-outline-dark {
+    border-radius: 999px;
+    padding-inline: 1.05rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-dark:hover,
+.btn-outline-dark:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
 }
 
 
@@ -888,6 +933,82 @@ body.menu-open {
 
 .counter-sorath{
     background: #f8f8f8;
+}
+
+/* about us page - mission / vision / values */
+.mvv-section {
+    background: #fff;
+}
+
+.mvv-section .sorath-desc {
+    max-width: 760px;
+}
+
+.mvv-card {
+    background: #fff;
+    border: 1px solid #e9eef5;
+    border-radius: 16px;
+    padding: 1.35rem 1.2rem;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.mvv-card:hover {
+    transform: translateY(-6px);
+    border-color: #d7e3f4;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.mvv-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f172a, #1f2937);
+    color: #fff;
+    font-size: 1.15rem;
+    margin-bottom: 0.85rem;
+}
+
+.mvv-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+}
+
+.mvv-body {
+    color: #556273;
+    line-height: 1.75;
+}
+
+.mvv-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* Staggered reveal when section becomes visible */
+.mvv-section .mvv-card {
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.mvv-section.section-reveal.is-visible .mvv-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.mvv-section.section-reveal.is-visible .row > div:nth-child(1) .mvv-card {
+    transition-delay: 90ms;
+}
+
+.mvv-section.section-reveal.is-visible .row > div:nth-child(2) .mvv-card {
+    transition-delay: 180ms;
+}
+
+.mvv-section.section-reveal.is-visible .row > div:nth-child(3) .mvv-card {
+    transition-delay: 270ms;
 }
 
 /* about us page - roadmap */
@@ -1678,5 +1799,142 @@ body.menu-open {
     }
     .portfolio-text-line {
         font-size: 54px;
+    }
+}
+
+/* =========================================================
+   Home premium pass (scoped only to home page wrapper)
+   ========================================================= */
+.home-premium {
+    background: #ffffff;
+}
+
+.home-premium section {
+    position: relative;
+    background: #ffffff;
+}
+
+.home-premium .hero-slider .hero-slide-bg {
+    border-radius: 0 0 30px 30px;
+    overflow: hidden;
+}
+
+.home-premium .hero-slider .hero-slide-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(104deg, rgba(15, 23, 42, 0.48) 8%, rgba(15, 23, 42, 0.18) 46%, rgba(15, 23, 42, 0.05) 100%);
+    pointer-events: none;
+}
+
+.home-premium .hero-slider .hero-slide-bg .container {
+    position: relative;
+    z-index: 2;
+}
+
+.home-premium .hero-slider h1 {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: 0.01em;
+    text-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.home-premium .hero-slider p {
+    font-size: clamp(1rem, 1.45vw, 1.18rem);
+    max-width: 640px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.96);
+}
+
+.home-premium .hero-slider .btn {
+    border-radius: 999px;
+    padding: 0.68rem 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.home-premium .sorath-section,
+.home-premium .sorath-services,
+.home-premium .product-section,
+.home-premium .why-modern,
+.home-premium .sorath-t {
+    padding-top: clamp(3.2rem, 5.5vw, 5rem) !important;
+    padding-bottom: clamp(3rem, 5vw, 4.8rem) !important;
+}
+
+.home-premium .sorath-content-box {
+    border-radius: 18px;
+    border: 1px solid #eef2f7;
+    box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+    backdrop-filter: none;
+    background: #ffffff;
+}
+
+.home-premium .sorath-small-title {
+    letter-spacing: 0.14em;
+    font-weight: 600;
+}
+
+.home-premium .sorath-service-card,
+.home-premium .product-card,
+.home-premium .why-card {
+    border-radius: 18px;
+    border: 1px solid #edf2f7;
+}
+
+.home-premium .sorath-service-card {
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
+}
+
+.home-premium .product-card {
+    background: #ffffff;
+    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.07);
+}
+
+.home-premium .product-card .card-body {
+    padding: 1.1rem 1rem 1.2rem;
+}
+
+.home-premium .why-card {
+    border: 1px solid #edf2f7;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+    background: #ffffff;
+}
+
+.home-premium .sorath-section-header .sorath-title,
+.home-premium .sorath-t__h {
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    letter-spacing: 0.02em;
+}
+
+.home-premium .sorath-section-header .sorath-desc {
+    font-size: 1.02rem;
+    color: #5f6c7b;
+}
+
+.home-premium .btn-dark {
+    background: #111827;
+    border-color: #111827;
+}
+
+.home-premium .btn-outline-dark {
+    border-width: 1.5px;
+}
+
+.home-premium .sorath-t__panel {
+    border-radius: 0 18px 18px 0;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+    border: 1px solid #eef2f7;
+    background: #ffffff;
+}
+
+@media (max-width: 991.98px) {
+    .home-premium .hero-slider .hero-slide-bg {
+        border-radius: 0 0 20px 20px;
+    }
+
+    .home-premium .sorath-t__panel {
+        border-radius: 0 0 16px 16px;
     }
 }
