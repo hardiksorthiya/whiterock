@@ -1717,12 +1717,13 @@ body.menu-open {
 
 
 
-* ——— Floating WhatsApp ——— */
+/* ——— Floating WhatsApp ——— */
 .floating-whatsapp {
     position: fixed;
+    inset: auto;
     right: max(1rem, env(safe-area-inset-right));
     bottom: max(1rem, env(safe-area-inset-bottom));
-    z-index: 1040;
+    z-index: 2050;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1735,6 +1736,7 @@ body.menu-open {
     box-shadow: 0 4px 18px rgba(37, 211, 102, 0.45), 0 2px 8px rgba(15, 23, 42, 0.12);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     text-decoration: none;
+    line-height: 1;
 }
 
 .floating-whatsapp:hover {
