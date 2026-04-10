@@ -20,12 +20,12 @@
             <!-- Right Content -->
             <div class="col-lg-6 col-md-6">
                 <div class="sorath-content-box shadow">
-                    <p class="sorath-small-title">/ WELCOME TO WHITEROCK</p>
-                    <h2 class="sorath-title">
-                        STYLISH DESIGNS,<br>INNOVATIVE IDEAS
-                    </h2>
+                    <p class="sorath-small-title">WELCOME TO NIVOC</p>
+                    <h3 class="sorath-title">
+                        Complete Ceiling & Panel Solutions,<br>Engineered For Modern Spaces
+                    </h3>
                     <p class="sorath-desc">
-                        We are specialized in PVC based wall and ceiling panels that can be installed within just 3 days, helping customers save up to 50% of their interior budget. Operating from branches in Surat, Ahmedabad, and Mumbai, we proudly transform over 1,000 premises every month, we have cover more than 2 crore square feet of space.
+                    NIVOC is a B2B product brand offering high-performance ceiling systems and architectural panel solutions designed for commercial, residential, and large-scale interior projects. From gypsum ceiling tiles and precision T-grid systems to soffit and fluted panels, our products are built for durability, seamless installation, and consistent quality across every project.    
                     </p>
                     <a href="{{ route('about') }}" class="btn btn-dark mt-3">READ MORE</a>
                 </div>
