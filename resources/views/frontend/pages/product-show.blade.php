@@ -29,7 +29,7 @@
     @include('frontend.components.breadcrumb', [
         'title' => $product->name,
         'subtitle' => $categoryNames->isNotEmpty() ? $categoryNames->join(', ') : null,
-        'image' => asset('frontend/images/products-banner.jpg'),
+        'image' => asset('images/nproduct.jpeg'),
         'crumbs' => [
             ['label' => 'Home', 'url' => route('home')],
             ['label' => 'Products', 'url' => route('products')],

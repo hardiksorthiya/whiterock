@@ -3,7 +3,7 @@
 @section('content')
     @include('frontend.components.breadcrumb', [
         'title' => 'CONTACT US',
-        'image' => asset('frontend/images/contact-banner.jpg')
+        'image' => asset('images/ncontact.jpeg')
     ])
 
     <section class="py-5">

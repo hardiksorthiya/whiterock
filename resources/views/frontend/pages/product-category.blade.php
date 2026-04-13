@@ -4,7 +4,7 @@
     @include('frontend.components.breadcrumb', [
         'title' => $category->name,
         'subtitle' => 'Products in this category',
-        'image' => asset('frontend/images/products-banner.jpg'),
+        'image' => asset('images/nproduct.jpeg'),
         'crumbs' => [
             ['label' => 'Home', 'url' => route('home')],
             ['label' => 'Products', 'url' => route('products')],

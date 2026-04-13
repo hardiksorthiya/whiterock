@@ -2,7 +2,7 @@
 @section('content')
 @include('frontend.components.breadcrumb', [
         'title' => 'ABOUT US',
-        'image' => asset('frontend/images/about-banner.jpg')
+        'image' => asset('images/nabout.jpeg')
     ])
     @include('frontend.components.about.about')
     @include('frontend.components.about.what-makes-nivoc')

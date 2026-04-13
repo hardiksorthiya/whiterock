@@ -5,7 +5,7 @@
 <!-- Breadcrumb -->
 @include('frontend.components.breadcrumb', [
     'title' => 'GALLERY',
-    'image' => asset('frontend/images/gallery-banner.jpg')
+    'image' => asset('images/ngallery.jpeg')
 ])
 
 <div class="container py-5">

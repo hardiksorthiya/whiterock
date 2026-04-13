@@ -2,7 +2,7 @@
 @section('content')
     @include('frontend.components.breadcrumb', [
         'title' => 'PRODUCTS',
-        'image' => asset('frontend/images/products-banner.jpg'),
+        'image' => asset('images/nproduct.jpeg'),
     ])
 
     @include('frontend.components.products.category-nav', [
