@@ -1,7 +1,7 @@
 @php
     $items = [
         [
-            'title' => 'Mission',
+            'title' => 'Core Positioning',
             'icon' => 'bi-bullseye',
             'content' => $about->mission ?? '',
             'fallback' => 'Our mission details will be updated soon.',
@@ -24,7 +24,7 @@
 <section class="mvv-section py-5">
     <div class="container">
         <div class="sorath-section-header text-center mb-4">
-            <p class="sorath-small-title mb-2">/ OUR FOUNDATION</p>
+            <p class="sorath-small-title mb-2">OUR FOUNDATION</p>
             <h2 class="sorath-title">Mission, Vision & Values</h2>
             <p class="sorath-desc mx-auto">The principles that guide how Whiterock builds quality, trust, and long-term customer value.</p>
         </div>

@@ -3,9 +3,11 @@
 
         <div class="why-card">
 
-            <!-- Title -->
             <div class="text-center mb-5">
-                <h2 class="fw-bold">Why Choose WhiteRock?</h2>
+                <h2 class="fw-bold">Why Professionals Choose NIVOC</h2>
+                <p class="text-muted mx-auto mb-0" style="max-width: 560px;">
+                    Engineered for performance, consistency, and real-world project execution.
+                </p>
             </div>
 
             <div class="row align-items-center">
@@ -13,20 +15,21 @@
                 <!-- LEFT -->
                 <div class="col-lg-4">
 
-                    <div class="why-item text-lg-end text-center mb-4">
-                        <h5>Top-Rated Installation Partners</h5>
+                    <div class="why-item text-lg-start text-center mb-4">
+                        <h5>Consistent Product Quality</h5>
                         <ul class="why-list">
-                            <li>Highly skilled professionals with proven expertise</li>
-                            <li>Verified track record of successful installations</li>
-                            <li>Trained for precise and efficient panel fitting</li>
-                            <li>Ensuring durability and perfect finishing</li>
+                            <li>Uniform finish across every batch</li>
+                            <li>High-strength materials for long-term durability</li>
+                            <li>Strict quality checks at every stage</li>
                         </ul>
                     </div>
 
-                    <div class="why-item text-lg-end text-center">
-                        <h5>Fast Installation</h5>
+                    <div class="why-item text-lg-start text-center">
+                        <h5>Efficient Installation Systems</h5>
                         <ul class="why-list">
-                            <li>Most of panels get installed within 3 days.</li>
+                            <li>Designed for fast and precise installation</li>
+                            <li>Reduces on-site errors and delays</li>
+                            <li>Compatible with standard frameworks</li>
                         </ul>
                     </div>
 
@@ -35,7 +38,7 @@
                 <!-- CENTER IMAGE -->
                 <div class="col-lg-4 text-center my-4">
                     <div class="why-img-box">
-                        <img src="{{ asset('images/h1.jpg') }}" class="img-fluid">
+                        <img src="{{ asset('images/h1.jpg') }}" class="img-fluid" alt="">
                     </div>
                 </div>
 
@@ -43,19 +46,20 @@
                 <div class="col-lg-4">
 
                     <div class="why-item text-lg-start text-center mb-4">
-                        <h5>Top-Quality Panels</h5>
+                        <h5>Reliable Supply &amp; Availability</h5>
                         <ul class="why-list">
-                            <li>High-density PVC material for enhanced durability</li>
-                            <li>Imported raw materials ensuring superior finish</li>
-                            <li>Termite proof & waterproof</li>
-                            <li>Easy to maintain with long-lasting color stability</li>
+                            <li>Strong dealer network across regions</li>
+                            <li>Timely delivery for ongoing projects</li>
+                            <li>Scalable supply for bulk requirements</li>
                         </ul>
                     </div>
 
                     <div class="why-item text-lg-start text-center">
-                        <h5>Cost Saving</h5>
+                        <h5>Low Maintenance Performance</h5>
                         <ul class="why-list">
-                            <li>Save upto 50% of your interior budget</li>
+                            <li>Moisture-resistant and termite-proof materials</li>
+                            <li>Long-lasting surface finish</li>
+                            <li>Minimal upkeep over time</li>
                         </ul>
                     </div>
 
@@ -63,9 +67,8 @@
 
             </div>
 
-            <!-- BUTTON -->
             <div class="text-center mt-5">
-                <a href="#" class="btn why-btn">Book A Home Visit</a>
+                <a href="{{ route('products') }}" class="btn why-btn">Get Product Details</a>
             </div>
 
         </div>

@@ -3,10 +3,9 @@
         <div class="row g-4 justify-content-center">
             <div class="col-12">
                 <div class="sorath-section-header text-center mx-auto" style="max-width: 760px;">
-                    <h2 class="sorath-title">OUR SERVICES</h2>
+                    <h2 class="sorath-title">Our Product Categories</h2>
                     <p class="sorath-desc mb-0">
-                        Far far away behind the word mountains far from the countries
-                        Vokalia and Consonantia there live the blind texts.
+                        Explore our range of ceiling systems and decorative panel solutions designed for durability, performance, and modern interiors.
                     </p>
                 </div>
             </div>

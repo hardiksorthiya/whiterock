@@ -1011,6 +1011,71 @@ body.menu-open {
     transition-delay: 270ms;
 }
 
+/* about us — what makes NIVOC different */
+.nivoc-different-section {
+    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+    border-block: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.nivoc-different-section .sorath-title {
+    font-size: clamp(1.45rem, 2.2vw, 2rem);
+    line-height: 1.25;
+}
+
+.nivoc-diff-point {
+    align-items: flex-start;
+    padding: 0.65rem 0.85rem;
+    background: #fff;
+    border: 1px solid #e8edf3;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+    min-height: 100%;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nivoc-diff-point:hover {
+    border-color: #d7dee8;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+}
+
+.nivoc-diff-point__icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #15803d, #16a34a);
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.nivoc-diff-point__text {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.45;
+}
+
+.nivoc-diff-media img {
+    transition: transform 0.5s ease;
+}
+
+.nivoc-different-section .nivoc-diff-media:hover img {
+    transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nivoc-diff-media img {
+        transition: none;
+    }
+
+    .nivoc-different-section .nivoc-diff-media:hover img {
+        transform: none;
+    }
+}
+
 /* about us page - roadmap */
 
 
@@ -1938,5 +2003,28 @@ body.menu-open {
 
     .home-premium .sorath-t__panel {
         border-radius: 0 0 16px 16px;
+    }
+}
+
+/* Home: feature grid cards — image zoom on hover */
+.block-grid-section .block-grid-media {
+    overflow: hidden;
+}
+
+.block-grid-section .block-grid-media__img {
+    transition: transform 0.45s ease;
+}
+
+.block-grid-section .card:hover .block-grid-media__img {
+    transform: scale(1.07);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .block-grid-section .block-grid-media__img {
+        transition: none;
+    }
+
+    .block-grid-section .card:hover .block-grid-media__img {
+        transform: none;
     }
 }

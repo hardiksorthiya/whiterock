@@ -5,6 +5,7 @@
         @include('frontend.components.slider')
         @include('frontend.components.home.about')
         @include('frontend.components.home.services')
+        @include('frontend.components.home.block_gird')
         @include('frontend.components.home.ceiling-products')
         @include('frontend.components.home.protfolio')
         @include('frontend.components.home.panel-products')

@@ -16,9 +16,9 @@
             <!-- Right Founder Image -->
              <div class="col-lg-6 col-md-6">
                 <div class="sorath-content-box shadow">
-                    <p class="sorath-small-title">/ WELCOME TO WHITEROCK</p>
+                    <p class="sorath-small-title">WELCOME TO NIVOC</p>
                     <h2 class="sorath-title">
-                        STYLISH DESIGNS,<br>INNOVATIVE IDEAS
+                        Built for Stronger Ceilings.<br>Designed for Modern Spaces.
                     </h2>
                     <div class="sorath-desc">
                         {!! $about->description ?? 'About content coming soon.' !!}
