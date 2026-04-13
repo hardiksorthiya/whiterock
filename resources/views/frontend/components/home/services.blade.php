@@ -23,6 +23,12 @@
                             </div>
                             <h4>{{ $service->title }}</h4>
                             <p>{{ $service->description }}</p>
+                            @if ($service->button_href)
+                                <a href="{{ $service->button_href }}" class="sorath-service-btn"
+                                    @if (str_starts_with($service->button_href, 'http://') || str_starts_with($service->button_href, 'https://')) target="_blank" rel="noopener noreferrer" @endif>
+                                    {{ $service->button_text ?: 'Learn more' }}
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>

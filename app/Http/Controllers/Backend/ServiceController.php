@@ -46,12 +46,14 @@ class ServiceController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'button_text' => 'nullable|string|max:120',
+            'button_url' => 'nullable|string|max:500',
             'icon' => 'required|image|max:5120',
             'background_image' => 'nullable|image|max:5120',
             'is_active' => ['required', Rule::in(['0', '1'])],
         ]);
 
-        $data = $request->only(['title', 'description']);
+        $data = $request->only(['title', 'description', 'button_text', 'button_url']);
         $data['is_active'] = $request->input('is_active') === '1';
 
         if ($request->hasFile('icon')) {
@@ -84,12 +86,14 @@ class ServiceController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'button_text' => 'nullable|string|max:120',
+            'button_url' => 'nullable|string|max:500',
             'icon' => 'nullable|image|max:5120',
             'background_image' => 'nullable|image|max:5120',
             'is_active' => ['required', Rule::in(['0', '1'])],
         ]);
 
-        $data = $request->only(['title', 'description']);
+        $data = $request->only(['title', 'description', 'button_text', 'button_url']);
         $data['is_active'] = $request->input('is_active') === '1';
 
         if ($request->hasFile('icon')) {

@@ -584,6 +584,27 @@ body.menu-open {
     filter: brightness(0) invert(1);
 }
 
+.sorath-service-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    padding: 0.45rem 1.1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 999px;
+    border: 1.5px solid #1e293b;
+    color: #1e293b;
+    text-decoration: none;
+    transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.sorath-service-card:hover .sorath-service-btn {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.12);
+}
+
 /* ========================= */
 /* OLD IMAGE CARD (KEEP SAFE) */
 /* ========================= */

@@ -38,9 +38,25 @@
                         value="{{ old('title', data_get($service, 'title')) }}">
                 </div>
 
-                <div class="mb-0">
+                <div class="mb-3">
                     <label for="description">Description</label>
                     <textarea name="description" id="description" class="form-control" rows="6">{{ old('description', data_get($service, 'description')) }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="button_text">Button label</label>
+                    <input type="text" name="button_text" id="button_text" class="form-control" maxlength="120"
+                        placeholder="e.g. View products, Learn more"
+                        value="{{ old('button_text', data_get($service, 'button_text')) }}">
+                    <p class="small adm-muted mb-0 mt-1">Shown on the home services card when a link is set. Defaults to “Learn more” if empty.</p>
+                </div>
+
+                <div class="mb-0">
+                    <label for="button_url">Button link</label>
+                    <input type="text" name="button_url" id="button_url" class="form-control" maxlength="500"
+                        placeholder="https://… or /products"
+                        value="{{ old('button_url', data_get($service, 'button_url')) }}">
+                    <p class="small adm-muted mb-0 mt-1">Full URL, site path (e.g. <code>/products</code>), <code>mailto:</code>, or <code>tel:</code>. Leave empty to hide the button.</p>
                 </div>
 
             </div>
