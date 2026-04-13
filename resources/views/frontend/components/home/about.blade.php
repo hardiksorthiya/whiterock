@@ -5,7 +5,7 @@
             <!-- Left Image -->
             <div class="col-lg-6 col-md-6">
                 <div class="sorath-image-wrapper">
-                    <img src="{{ asset('images/h1.jpg') }}" class="img-fluid" alt="Interior">
+                    <img src="{{ asset('images/h1.jpeg') }}" class="img-fluid" alt="Interior">
                 </div>
 
                 <!-- Watch Video -->
