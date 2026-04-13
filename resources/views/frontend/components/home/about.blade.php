@@ -7,14 +7,6 @@
                 <div class="sorath-image-wrapper">
                     <img src="{{ asset('images/h1.jpeg') }}" class="img-fluid" alt="Interior">
                 </div>
-
-                <!-- Watch Video -->
-                <div class="sorath-watch-video d-flex align-items-center">
-                    <div class="sorath-play-btn">
-                        ▶
-                    </div>
-                    <span class="ms-3">WATCH VIDEO</span>
-                </div>
             </div>
 
             <!-- Right Content -->
