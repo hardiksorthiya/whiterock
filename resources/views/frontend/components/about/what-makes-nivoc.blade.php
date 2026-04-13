@@ -30,7 +30,7 @@
             </div>
             <div class="col-lg-6 order-lg-2">
                 <div class="nivoc-diff-media ratio ratio-4x3 rounded-4 overflow-hidden shadow">
-                    <img src="{{ asset('images/h1.jpg') }}" class="w-100 h-100 object-fit-cover"
+                    <img src="{{ asset('images/h1.jpeg') }}" class="w-100 h-100 object-fit-cover"
                         alt="NIVOC ceiling and interior systems">
                 </div>
             </div>

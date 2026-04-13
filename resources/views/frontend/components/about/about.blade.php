@@ -8,7 +8,7 @@
                     @if (! empty($about->about_image))
                         <img src="{{ asset('storage/' . $about->about_image) }}" class="img-fluid" alt="About image">
                     @else
-                        <img src="{{ asset('images/h1.jpg') }}" class="img-fluid" alt="Interior">
+                        <img src="{{ asset('images/h1.jpeg') }}" class="img-fluid" alt="Interior">
                     @endif
                 </div>
             </div>
