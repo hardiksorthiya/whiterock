@@ -83,9 +83,10 @@ function initHeaderOnScroll() {
 
 function initScrollReveal() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const targets = document.querySelectorAll(
+    const allTargets = document.querySelectorAll(
         ".content section, .site-footer, .breadcrumb-section, .product-section, .why-modern, .sorath-services"
     );
+    const targets = Array.from(allTargets).filter((el) => !el.classList.contains("home-applications"));
 
     if (targets.length === 0) return;
 

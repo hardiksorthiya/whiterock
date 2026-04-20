@@ -68,7 +68,7 @@
             </div>
 
             <div class="text-center mt-5">
-                <a href="{{ route('products') }}" class="btn why-btn">Get Product Details</a>
+                <a href="#" target="_blank" class="btn why-btn">View Catelogue</a>
             </div>
 
         </div>

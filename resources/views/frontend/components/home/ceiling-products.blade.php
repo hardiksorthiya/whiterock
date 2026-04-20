@@ -1,5 +1,5 @@
 @include('frontend.components.home.product-grid', [
-    'sectionTitle' => 'Ceiling products',
+    'sectionTitle' => 'Gypsum Tile Products',
     'sectionDescription' =>
         'Featured ceiling solutions — our latest picks from the ceiling category.',
     'products' => $ceilingProducts,

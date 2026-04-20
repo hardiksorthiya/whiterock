@@ -30,13 +30,39 @@ class FrontendController extends Controller
         $products = Product::query()->where('is_active', true)->latest()->take(8)->get();
         $ceilingProducts = $this->featuredProductsForCategorySlugPrefix('ceiling');
         $panelProducts = $this->featuredProductsForCategorySlugPrefix('panel');
+        $tGridProducts = $this->featuredProductsForCategorySlugPrefix('t-grid');
+        $soffitPanelProducts = $this->featuredProductsForCategorySlugPrefix('soffit-panel');
+        $flutedPanelProducts = $this->featuredProductsForCategorySlugPrefix('fluted-panel');
         $ceilingCategoryUrl = $this->categoryUrlForSlugPrefix('ceiling');
         $panelCategoryUrl = $this->categoryUrlForSlugPrefix('panel');
+        $tGridCategoryUrl = $this->categoryUrlForSlugPrefix('t-grid');
+        $soffitPanelCategoryUrl = $this->categoryUrlForSlugPrefix('soffit-panel');
+        $flutedPanelCategoryUrl = $this->categoryUrlForSlugPrefix('fluted-panel');
         $productCategories = ProductCategory::query()->where('is_active', true)->latest()->get();
         $footerPages = Page::query()->where('is_active', true)->latest()->get();
         $googleReviewsData = $this->fetchGooglePlaceReviews($setting);
 
-        return view('frontend.pages.home', compact('sliders', 'setting', 'services', 'latestGalleryImages', 'galleryCategories', 'footerPages', 'products', 'ceilingProducts', 'panelProducts', 'ceilingCategoryUrl', 'panelCategoryUrl', 'productCategories', 'googleReviewsData'));
+        return view('frontend.pages.home', compact(
+            'sliders',
+            'setting',
+            'services',
+            'latestGalleryImages',
+            'galleryCategories',
+            'footerPages',
+            'products',
+            'ceilingProducts',
+            'panelProducts',
+            'tGridProducts',
+            'soffitPanelProducts',
+            'flutedPanelProducts',
+            'ceilingCategoryUrl',
+            'panelCategoryUrl',
+            'tGridCategoryUrl',
+            'soffitPanelCategoryUrl',
+            'flutedPanelCategoryUrl',
+            'productCategories',
+            'googleReviewsData'
+        ));
     }
 
     public function about()

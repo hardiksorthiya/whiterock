@@ -1,44 +1,89 @@
-<section class="sorath-section py-5">
+@php
+    $aboutCarouselImages = [
+        asset('images/h1.jpeg'),
+        asset('images/n1.jpeg'),
+        asset('images/n2.jpeg'),
+    ];
+    // Replace this YouTube video ID any time.
+    $aboutReelVideoId = 'p9znelcArPM';
+    $aboutReelEmbedUrl = 'https://www.youtube.com/embed/' . $aboutReelVideoId
+        . '?autoplay=1&mute=1&loop=1&playlist=' . $aboutReelVideoId
+        . '&controls=0&modestbranding=1&rel=0&playsinline=1';
+@endphp
+
+<section class="sorath-section home-about-redesign py-5">
     <div class="container">
-        <div class="row align-items-center position-relative">
-
-            <!-- Left Image -->
-            <div class="col-lg-6 col-md-6">
-                <div class="sorath-image-wrapper">
-                    <img src="{{ asset('images/h1.jpeg') }}" class="img-fluid" alt="Interior">
-                </div>
-            </div>
-
-            <!-- Right Content -->
-            <div class="col-lg-6 col-md-6">
-                <div class="sorath-content-box shadow">
+        <div class="row g-4 g-lg-5 align-items-center">
+            <div class="col-lg-5">
+                <div class="home-about-redesign__content">
                     <p class="sorath-small-title">WELCOME TO NIVOC</p>
-                    <h3 class="sorath-title">
-                        Complete Ceiling & Panel Solutions,<br>Engineered For Modern Spaces
+                    <h3 class="sorath-title mb-3">
+                        Complete Ceiling & Panel Solutions, Engineered For Modern Spaces
                     </h3>
-                    <p class="sorath-desc">
-                    NIVOC is a B2B product brand offering high-performance ceiling systems and architectural panel solutions designed for commercial, residential, and large-scale interior projects. From gypsum ceiling tiles and precision T-grid systems to soffit and fluted panels, our products are built for durability, seamless installation, and consistent quality across every project.    
+                    <p class="sorath-desc text-start mb-4">
+                        NIVOC is a B2B product brand offering high-performance ceiling systems and architectural panel
+                        solutions for commercial, residential, and large-scale interior projects. From gypsum tiles and
+                        precision T-grid systems to soffit and fluted panels, our products are built for durability and
+                        seamless installation.
                     </p>
-                    <a href="{{ route('about') }}" class="btn btn-dark mt-3">READ MORE</a>
-                </div>
+                    <a href="{{ route('about') }}" class="btn btn-dark">Read More</a>
 
-                <!-- Counters -->
-                <div class="row text-center mt-4">
-                    <div class="col-5">
-                        <h3 class="sorath-counter-title">
-                            <span class="sorath-counter" data-count="20">0</span>+
-                        </h3>
-                        <p class="sorath-counter-text">Years of Experience</p>
-                    </div>
-                    <div class="col-6">
-                        <h3 class="sorath-counter-title">
-                            <span class="sorath-counter" data-count="1375">0</span>+
-                        </h3>
-                        <p class="sorath-counter-text">Projects Completed</p>
+                    <div class="row text-start mt-4 g-3">
+                        <div class="col-6">
+                            <h3 class="sorath-counter-title mb-1">
+                                <span class="sorath-counter" data-count="20">0</span>+
+                            </h3>
+                            <p class="sorath-counter-text mb-0">Years of Experience</p>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="sorath-counter-title mb-1">
+                                <span class="sorath-counter" data-count="1375">0</span>+
+                            </h3>
+                            <p class="sorath-counter-text mb-0">Projects Completed</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <div class="col-lg-7">
+                <div class="row g-3 align-items-stretch">
+                    <div class="col-md-8">
+                        <div id="homeAboutCarousel" class="carousel slide home-about-redesign__carousel h-100"
+                            data-bs-ride="carousel"
+                            data-bs-interval="2600">
+                            <div class="carousel-inner h-100">
+                                @foreach ($aboutCarouselImages as $img)
+                                    <div class="carousel-item h-100 @if ($loop->first) active @endif">
+                                        <img src="{{ $img }}" class="d-block w-100 h-100" alt="About NIVOC">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#homeAboutCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#homeAboutCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="home-about-redesign__reel d-flex flex-column justify-content-end">
+                            <iframe
+                                class="home-about-redesign__reel-iframe"
+                                src="{{ $aboutReelEmbedUrl }}"
+                                title="NIVOC Reel"
+                                loading="lazy"
+                                allow="autoplay; encrypted-media; picture-in-picture"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen>
+                            </iframe>
+                            <span class="home-about-redesign__reel-label">Live Reel</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
