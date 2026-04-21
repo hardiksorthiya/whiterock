@@ -38,4 +38,7 @@
             </div>
         </div>
     @endif
+
+@include('frontend.components.home.sticky-enquiry')
+
 @endsection

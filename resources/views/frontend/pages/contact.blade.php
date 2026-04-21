@@ -144,5 +144,6 @@
             </div>
         </div>
     </section>
+    @include('frontend.components.home.sticky-enquiry')
 @endsection
 

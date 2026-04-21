@@ -1,9 +1,10 @@
-<section class="breadcrumb-section" 
-    style="background-image: url('{{ $image ?? asset('default.jpg') }}');">
+<section class="breadcrumb-section">
+    <div class="breadcrumb-section__bg"
+        style="background-image: url('{{ $image ?? asset('default.jpg') }}');"
+        role="presentation"
+        aria-hidden="true"></div>
 
-    <div class="breadcrumb-overlay"></div>
-
-    <div class="container">
+    <div class="container breadcrumb-section__inner">
         <div class="breadcrumb-content text-center">
 
             @if (!empty($crumbs))
@@ -25,7 +26,7 @@
 
             <h1>{{ $title ?? 'Page Title' }}</h1>
 
-            @if(isset($subtitle))
+            @if (isset($subtitle))
                 <p>{{ $subtitle }}</p>
             @endif
 

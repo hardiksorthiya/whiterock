@@ -57,10 +57,9 @@
                             @foreach ($imagePaths as $idx => $path)
                                 <button type="button"
                                     class="product-detail__thumb btn p-0 border rounded overflow-hidden @if ($idx === 0) is-active @endif"
-                                    data-src="{{ asset('storage/' . $path) }}"
-                                    aria-label="Show image {{ $idx + 1 }}">
-                                    <img src="{{ asset('storage/' . $path) }}" alt=""
-                                        class="img-fluid" style="width: 72px; height: 72px; object-fit: cover;">
+                                    data-src="{{ asset('storage/' . $path) }}" aria-label="Show image {{ $idx + 1 }}">
+                                    <img src="{{ asset('storage/' . $path) }}" alt="" class="img-fluid"
+                                        style="width: 72px; height: 72px; object-fit: cover;">
                                 </button>
                             @endforeach
                         </div>
@@ -76,7 +75,10 @@
                         <p class="mb-0 fw-medium">
                             @forelse ($product->categories as $cat)
                                 <a href="{{ route('product-category.show', $cat->slug) }}"
-                                    class="text-decoration-none">{{ $cat->name }}</a>@if (!$loop->last)<span class="text-muted">, </span>@endif
+                                    class="text-decoration-none">{{ $cat->name }}</a>
+                                @if (!$loop->last)
+                                    <span class="text-muted">, </span>
+                                @endif
                             @empty
                                 @if ($product->category)
                                     <a href="{{ route('product-category.show', $product->category->slug) }}"
@@ -108,22 +110,20 @@
                     </div>
 
                     <div class="d-flex flex-wrap gap-2 align-items-center">
-                        <button type="button" id="productEnquiryBtn" class="btn btn-dark px-4"
-                            data-bs-toggle="modal" data-bs-target="#productEnquiryModal">
+                        <button type="button" id="productEnquiryBtn" class="btn btn-dark px-4" data-bs-toggle="modal"
+                            data-bs-target="#productEnquiryModal">
                             Enquiry
                         </button>
                         @if (!empty($product->catalogue_path))
-                            <a href="{{ asset('storage/'.$product->catalogue_path) }}" class="btn btn-outline-dark px-4"
+                            <a href="{{ asset('storage/' . $product->catalogue_path) }}" class="btn btn-outline-dark px-4"
                                 target="_blank" rel="noopener noreferrer">
                                 <i class="bi bi-file-earmark-pdf me-1"></i> Catalogue
                             </a>
                         @endif
                         @if (!empty($setting->whatsapp_url))
                             <a href="#" id="productWhatsappBtn" class="btn btn-success px-4" target="_blank"
-                                rel="noopener noreferrer"
-                                data-wa-url="{{ $setting->whatsapp_url }}"
-                                data-product-name="{{ $product->name }}"
-                                data-product-sku="{{ $product->sku ?? '' }}">
+                                rel="noopener noreferrer" data-wa-url="{{ $setting->whatsapp_url }}"
+                                data-product-name="{{ $product->name }}" data-product-sku="{{ $product->sku ?? '' }}">
                                 <i class="bi bi-whatsapp me-1"></i> WhatsApp
                             </a>
                         @endif
@@ -153,7 +153,8 @@
         ])
     @endif
 
-    <div class="modal fade" id="productEnquiryModal" tabindex="-1" aria-labelledby="productEnquiryModalLabel" aria-hidden="true">
+    <div class="modal fade" id="productEnquiryModal" tabindex="-1" aria-labelledby="productEnquiryModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow">
                 <div class="modal-header">
@@ -173,8 +174,8 @@
                         <div class="mb-3">
                             <label for="enquiryName" class="form-label">Name</label>
                             <input type="text" id="enquiryName" name="name"
-                                class="form-control @error('name') is-invalid @enderror"
-                                value="{{ old('name') }}" required>
+                                class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
+                                required>
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -183,8 +184,8 @@
                         <div class="mb-3">
                             <label for="enquiryPhone" class="form-label">Phone Number</label>
                             <input type="text" id="enquiryPhone" name="phone"
-                                class="form-control @error('phone') is-invalid @enderror"
-                                value="{{ old('phone') }}" required>
+                                class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}"
+                                required>
                             @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -193,8 +194,8 @@
                         <div class="mb-3">
                             <label for="enquiryQuantity" class="form-label">Quantity</label>
                             <input type="number" id="enquiryQuantity" name="quantity"
-                                class="form-control @error('quantity') is-invalid @enderror"
-                                min="1" step="1" value="{{ old('quantity', 1) }}" required>
+                                class="form-control @error('quantity') is-invalid @enderror" min="1"
+                                step="1" value="{{ old('quantity', 1) }}" required>
                             @error('quantity')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -202,8 +203,7 @@
 
                         <div class="mb-0">
                             <label for="enquiryMessage" class="form-label">Message</label>
-                            <textarea id="enquiryMessage" name="message"
-                                class="form-control @error('message') is-invalid @enderror"
+                            <textarea id="enquiryMessage" name="message" class="form-control @error('message') is-invalid @enderror"
                                 rows="4">{{ old('message') }}</textarea>
                             @error('message')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -218,6 +218,9 @@
             </div>
         </div>
     </div>
+
+@include('frontend.components.home.sticky-enquiry')
+
 @endsection
 
 @push('scripts')

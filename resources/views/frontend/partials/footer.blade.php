@@ -97,4 +97,5 @@
 </footer>
 
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/lenis.min.js') }}" defer></script>
 <script src="{{ asset('js/frontend/script.js') }}" defer></script>

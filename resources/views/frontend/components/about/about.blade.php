@@ -16,7 +16,7 @@
             <!-- Right Founder Image -->
              <div class="col-lg-6 col-md-6">
                 <div class="sorath-content-box shadow">
-                    <p class="sorath-small-title">WELCOME TO NIVOC</p>
+                    <img src="{{ asset('images/logo_white.png') }}" class="img-fluid mb-3 about-logo-hp" alt="About image">
                     <h2 class="sorath-title">
                         Built for Stronger Ceilings.<br>Designed for Modern Spaces.
                     </h2>
