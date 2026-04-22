@@ -3,12 +3,12 @@
     <div class="container">
 
         <!-- Toggle Button -->
-        <button class="navbar-toggler border-0 d-lg-none" type="button" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <button class="navbar-toggler border-0 d-lg-none order-2" type="button" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
             <span class="hamburger"></span>
         </button>
 
         <!-- Logo -->
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand order-1" href="/">
             @php
                 $hasMainLogo = !empty($setting->logo_path);
                 $hasLightLogo = !empty($setting->light_logo_path);

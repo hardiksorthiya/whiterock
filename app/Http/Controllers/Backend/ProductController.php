@@ -57,6 +57,10 @@ class ProductController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'keywords' => 'nullable|string',
+            'available_size' => 'nullable|string|max:255',
+            'emboss_height' => 'nullable|string|max:255',
+            'pattern_size' => 'nullable|string|max:255',
+            'installation' => 'nullable|string|max:255',
             'is_active' => 'boolean',
             'is_featured' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -77,6 +81,10 @@ class ProductController extends Controller
             'meta_title',
             'meta_description',
             'keywords',
+            'available_size',
+            'emboss_height',
+            'pattern_size',
+            'installation',
             'is_active',
         ]);
 
@@ -139,6 +147,10 @@ class ProductController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'keywords' => 'nullable|string',
+            'available_size' => 'nullable|string|max:255',
+            'emboss_height' => 'nullable|string|max:255',
+            'pattern_size' => 'nullable|string|max:255',
+            'installation' => 'nullable|string|max:255',
             'is_active' => 'boolean',
             'is_featured' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -162,6 +174,10 @@ class ProductController extends Controller
             'meta_title',
             'meta_description',
             'keywords',
+            'available_size',
+            'emboss_height',
+            'pattern_size',
+            'installation',
             'is_active',
         ]);
 

@@ -132,6 +132,12 @@ body.menu-open {
     top: 0;
 }
 
+.site-header:not(.is-scrolled) .navbar-toggler {
+    background: var(--adm-sorath-primary-color);
+    border-radius: 8px;
+    padding: 20px 10px;
+}
+
 /* Mobile menu (sidebar) */
 .mobile-menu {
     position: fixed;
@@ -141,7 +147,7 @@ body.menu-open {
     height: 100%;
     background: #fff;
     z-index: 1050;
-    padding: 80px 24px 24px;
+    padding: 88px 24px 24px;
     transform: translateX(-100%);
     transition: transform 0.35s ease;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -2529,5 +2535,212 @@ article.about-road-carousel__card.is-down {
 
     .about-expertise__card:hover .about-expertise__image {
         transform: none;
+    }
+}
+
+.product-detail {
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 38%, #ffffff 100%);
+}
+
+.product-detail__media-card,
+.product-detail__info-card {
+    background: #fff;
+    border: 1px solid #edf1f6;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.product-detail__main {
+    border: 0;
+    border-radius: 14px;
+    background: radial-gradient(circle at 20% 20%, #f5f8ff 0%, #f8fafc 45%, #f3f4f6 100%);
+}
+
+.product-detail__main-img {
+    transition: transform 0.35s ease;
+}
+
+.product-detail__main:hover .product-detail__main-img {
+    transform: scale(1.02);
+}
+
+.product-detail__thumb {
+    width: 74px;
+    height: 74px;
+    border: 2px solid #e5e7eb;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+.product-detail__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-detail__thumb:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+}
+
+.product-detail__thumb.is-active {
+    border-color: #111827;
+    box-shadow: 0 0 0 2px #11182712;
+}
+
+.product-detail__title {
+    letter-spacing: -0.02em;
+}
+
+.product-detail__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #334155;
+    text-decoration: none;
+    background: #f8fafc;
+    transition: all 0.2s ease;
+}
+
+.product-detail__chip:hover {
+    color: #111827;
+    border-color: #cbd5e1;
+    background: #f1f5f9;
+}
+
+.product-detail__qty {
+    max-width: 160px;
+    border-radius: 12px;
+    border-color: #d1d5db;
+    font-weight: 600;
+    padding: 10px 12px;
+}
+
+.product-detail__short,
+.product-detail__long-body {
+    color: #374151;
+    line-height: 1.75;
+}
+
+.product-detail__highlights {
+    background: #f8fafc;
+    border: 1px solid #e9eef5;
+    border-radius: 14px;
+    padding: 0.9rem 1rem;
+}
+
+.product-detail__highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: #111827;
+    font-weight: 500;
+}
+
+.product-detail__highlight-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--adm-sorath-primary-color);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1rem;
+}
+
+.product-detail__long-wrap {
+    background: #fff;
+    border: 1px solid #edf1f6;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+}
+
+.product-detail__specs {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.product-detail__spec-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #eef2f7;
+}
+
+.product-detail__spec-row:last-child {
+    border-bottom: 0;
+}
+
+.product-detail__spec-label {
+    color: #111827;
+    font-weight: 700;
+}
+
+.product-detail__spec-value {
+    color: #334155;
+}
+
+.product-detail .product-detail__btn-primary {
+    background: var(--adm-sorath-primary-color);
+    border-color: var(--adm-sorath-primary-color);
+    color: #fff;
+    border-radius: 999px;
+}
+
+.product-detail .product-detail__btn-primary:hover,
+.product-detail .product-detail__btn-primary:focus {
+    background: #0f131b;
+    border-color: #0f131b;
+    color: #fff;
+}
+
+.product-detail .product-detail__btn-outline {
+    background: #fff;
+    border-color: var(--adm-sorath-primary-color);
+    color: var(--adm-sorath-primary-color);
+    border-radius: 999px;
+}
+
+.product-detail .product-detail__btn-outline:hover,
+.product-detail .product-detail__btn-outline:focus {
+    background: var(--adm-sorath-primary-color);
+    border-color: var(--adm-sorath-primary-color);
+    color: #fff;
+}
+
+.product-detail #productWhatsappBtn {
+    border-radius: 999px;
+    background: #25d366;
+    border-color: #25d366;
+    color: #fff;
+}
+
+.product-detail #productWhatsappBtn:hover,
+.product-detail #productWhatsappBtn:focus {
+    background: #1fbd59;
+    border-color: #1fbd59;
+    color: #fff;
+}
+
+@media (max-width: 991.98px) {
+    .product-detail__media-card,
+    .product-detail__info-card {
+        border-radius: 14px;
+    }
+
+    .product-detail__spec-row {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
     }
 }

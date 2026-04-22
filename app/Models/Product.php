@@ -28,6 +28,10 @@ class Product extends Model
         'category_id',
         'featured_image',
         'catalogue_path',
+        'available_size',
+        'emboss_height',
+        'pattern_size',
+        'installation',
     ];
 
     public function category(): BelongsTo

@@ -33,6 +33,12 @@
                         ['area', 'short_description', 'Short description', 2],
                         ['area', 'long_description', 'Long description', 4],
                     ]],
+                    ['Specifications (Optional)', [
+                        ['text', 'available_size', 'Available Size'],
+                        ['text', 'emboss_height', 'Emboss Height'],
+                        ['text', 'pattern_size', 'Pattern Size'],
+                        ['text', 'installation', 'Installation'],
+                    ]],
                     ['SEO', [
                         ['text', 'meta_title', 'Meta title'],
                         ['area', 'meta_description', 'Meta description', 2],

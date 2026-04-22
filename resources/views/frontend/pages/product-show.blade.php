@@ -17,6 +17,12 @@
     if ($categoryNames->isEmpty() && $product->category) {
         $categoryNames = collect([$product->category->name]);
     }
+    $productSpecs = collect([
+        'Available Size' => $product->available_size,
+        'Emboss Height' => $product->emboss_height,
+        'Pattern Size' => $product->pattern_size,
+        'Installation' => $product->installation,
+    ])->filter(fn($value) => filled($value));
 @endphp
 
 @section('content')
@@ -42,91 +48,127 @@
             <div class="row g-4 g-lg-5 align-items-start">
                 {{-- Left: main image + gallery --}}
                 <div class="col-lg-6">
-                    <div class="product-detail__main rounded overflow-hidden bg-light border">
-                        @if ($mainImagePath)
-                            <img src="{{ asset('storage/' . $mainImagePath) }}" alt="{{ $product->name }}"
-                                class="img-fluid w-100 product-detail__main-img" id="productMainImage"
-                                style="max-height: 480px; object-fit: contain;">
-                        @else
-                            <div class="d-flex align-items-center justify-content-center text-muted"
-                                style="min-height: 280px;">No image</div>
+                    <div class="product-detail__media-card p-3 p-lg-4">
+                        <div class="product-detail__main rounded overflow-hidden">
+                            @if ($mainImagePath)
+                                <img src="{{ asset('storage/' . $mainImagePath) }}" alt="{{ $product->name }}"
+                                    class="img-fluid w-100 product-detail__main-img" id="productMainImage"
+                                    style="max-height: 480px; object-fit: contain;">
+                            @else
+                                <div class="d-flex align-items-center justify-content-center text-muted"
+                                    style="min-height: 280px;">No image</div>
+                            @endif
+                        </div>
+                        @if ($imagePaths->count() > 1)
+                            <div class="product-detail__thumbs d-flex flex-wrap gap-2 mt-3" role="tablist">
+                                @foreach ($imagePaths as $idx => $path)
+                                    <button type="button"
+                                        class="product-detail__thumb btn p-0 rounded overflow-hidden @if ($idx === 0) is-active @endif"
+                                        data-src="{{ asset('storage/' . $path) }}" aria-label="Show image {{ $idx + 1 }}">
+                                        <img src="{{ asset('storage/' . $path) }}" alt="">
+                                    </button>
+                                @endforeach
+                            </div>
                         @endif
                     </div>
-                    @if ($imagePaths->count() > 1)
-                        <div class="product-detail__thumbs d-flex flex-wrap gap-2 mt-3" role="tablist">
-                            @foreach ($imagePaths as $idx => $path)
-                                <button type="button"
-                                    class="product-detail__thumb btn p-0 border rounded overflow-hidden @if ($idx === 0) is-active @endif"
-                                    data-src="{{ asset('storage/' . $path) }}" aria-label="Show image {{ $idx + 1 }}">
-                                    <img src="{{ asset('storage/' . $path) }}" alt="" class="img-fluid"
-                                        style="width: 72px; height: 72px; object-fit: cover;">
-                                </button>
-                            @endforeach
-                        </div>
-                    @endif
                 </div>
 
                 {{-- Right: meta + actions --}}
                 <div class="col-lg-6">
-                    <h2 class="product-detail__title fw-bold mb-3">{{ $product->name }}</h2>
+                    <div class="product-detail__info-card p-4 p-lg-5">
+                        <h2 class="product-detail__title fw-bold mb-3">{{ $product->name }}</h2>
 
-                    <div class="mb-3">
-                        <span class="text-muted small text-uppercase">Categories</span>
-                        <p class="mb-0 fw-medium">
-                            @forelse ($product->categories as $cat)
-                                <a href="{{ route('product-category.show', $cat->slug) }}"
-                                    class="text-decoration-none">{{ $cat->name }}</a>
-                                @if (!$loop->last)
-                                    <span class="text-muted">, </span>
-                                @endif
-                            @empty
-                                @if ($product->category)
-                                    <a href="{{ route('product-category.show', $product->category->slug) }}"
-                                        class="text-decoration-none">{{ $product->category->name }}</a>
-                                @else
-                                    <span class="text-muted">—</span>
-                                @endif
-                            @endforelse
-                        </p>
-                    </div>
-
-                    @if (!empty($product->sku))
-                        <div class="mb-3">
-                            <span class="text-muted small text-uppercase">SKU</span>
-                            <p class="mb-0 font-monospace">{{ $product->sku }}</p>
+                        <div class="mb-4">
+                            <span class="text-muted small text-uppercase d-block mb-2">Categories</span>
+                            <div class="d-flex flex-wrap gap-2">
+                                @forelse ($product->categories as $cat)
+                                    <a href="{{ route('product-category.show', $cat->slug) }}"
+                                        class="product-detail__chip">{{ $cat->name }}</a>
+                                @empty
+                                    @if ($product->category)
+                                        <a href="{{ route('product-category.show', $product->category->slug) }}"
+                                            class="product-detail__chip">{{ $product->category->name }}</a>
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
+                                @endforelse
+                            </div>
                         </div>
-                    @endif
 
-                    @if (!empty($product->short_description))
-                        <div class="product-detail__short mb-4">
-                            {!! $product->short_description !!}
+                        @if (!empty($product->short_description))
+                            <div class="product-detail__short mb-4">
+                                {!! $product->short_description !!}
+                            </div>
+                        @endif
+
+                       
+
+                        @if ($productSpecs->isNotEmpty())
+                            <div class="product-detail__specs mb-4">
+                                @foreach ($productSpecs as $label => $value)
+                                    <div class="product-detail__spec-row">
+                                        <div class="product-detail__spec-label">{{ $label }}</div>
+                                        <div class="product-detail__spec-value">{{ $value }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        <div class="product-detail__highlights mb-4">
+                            <div class="row g-3">
+                                <div class="col-12 col-sm-6">
+                                    <div class="product-detail__highlight-item">
+                                        <span class="product-detail__highlight-icon"><i class="bi bi-shield-check"></i></span>
+                                        <span>Warranty 5 Year</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="product-detail__highlight-item">
+                                        <span class="product-detail__highlight-icon"><i class="bi bi-gear-wide-connected"></i></span>
+                                        <span>Easy To Install</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="product-detail__highlight-item">
+                                        <span class="product-detail__highlight-icon"><i class="bi bi-globe2"></i></span>
+                                        <span>Worldwide Shipping</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="product-detail__highlight-item">
+                                        <span class="product-detail__highlight-icon"><i class="bi bi-fire"></i></span>
+                                        <span>Class "A" Fire Rated</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    @endif
 
-                    <div class="mb-4">
-                        <label for="productQuantity" class="form-label fw-semibold">Quantity</label>
-                        <input type="number" name="quantity" id="productQuantity" class="form-control product-detail__qty"
-                            min="1" step="1" value="1" inputmode="numeric">
-                    </div>
+                        <div class="mb-4">
+                            <label for="productQuantity" class="form-label fw-semibold">Quantity</label>
+                            <input type="number" name="quantity" id="productQuantity"
+                                class="form-control product-detail__qty" min="1" step="1" value="1"
+                                inputmode="numeric">
+                        </div>
 
-                    <div class="d-flex flex-wrap gap-2 align-items-center">
-                        <button type="button" id="productEnquiryBtn" class="btn btn-dark px-4" data-bs-toggle="modal"
-                            data-bs-target="#productEnquiryModal">
-                            Enquiry
-                        </button>
-                        @if (!empty($product->catalogue_path))
-                            <a href="{{ asset('storage/' . $product->catalogue_path) }}" class="btn btn-outline-dark px-4"
-                                target="_blank" rel="noopener noreferrer">
-                                <i class="bi bi-file-earmark-pdf me-1"></i> Catalogue
-                            </a>
-                        @endif
-                        @if (!empty($setting->whatsapp_url))
-                            <a href="#" id="productWhatsappBtn" class="btn btn-success px-4" target="_blank"
-                                rel="noopener noreferrer" data-wa-url="{{ $setting->whatsapp_url }}"
-                                data-product-name="{{ $product->name }}" data-product-sku="{{ $product->sku ?? '' }}">
-                                <i class="bi bi-whatsapp me-1"></i> WhatsApp
-                            </a>
-                        @endif
+                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                            <button type="button" id="productEnquiryBtn" class="btn product-detail__btn-primary px-4 py-2" data-bs-toggle="modal"
+                                data-bs-target="#productEnquiryModal">
+                                Enquiry
+                            </button>
+                            @if (!empty($product->catalogue_path))
+                                <a href="{{ asset('storage/' . $product->catalogue_path) }}" class="btn product-detail__btn-outline px-4 py-2"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <i class="bi bi-file-earmark-pdf me-1"></i> Catalogue
+                                </a>
+                            @endif
+                            @if (!empty($setting->whatsapp_url))
+                                <a href="#" id="productWhatsappBtn" class="btn btn-success px-4 py-2" target="_blank"
+                                    rel="noopener noreferrer" data-wa-url="{{ $setting->whatsapp_url }}"
+                                    data-product-name="{{ $product->name }}" data-product-sku="{{ $product->sku ?? '' }}">
+                                    <i class="bi bi-whatsapp me-1"></i> WhatsApp
+                                </a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -134,9 +176,11 @@
             @if (!empty($product->long_description))
                 <div class="row mt-5 pt-4 border-top">
                     <div class="col-12 product-detail__long">
-                        <h3 class="h4 fw-bold mb-3">Product details</h3>
-                        <div class="product-detail__long-body">
-                            {!! $product->long_description !!}
+                        <div class="product-detail__long-wrap">
+                            <h3 class="h4 fw-bold mb-3">Product details</h3>
+                            <div class="product-detail__long-body">
+                                {!! $product->long_description !!}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -212,7 +256,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-dark">Submit</button>
+                        <button type="submit" class="btn product-detail__btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
