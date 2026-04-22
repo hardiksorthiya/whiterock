@@ -2,13 +2,8 @@
 <nav class="navbar navbar-expand-lg fixed-top site-header">
     <div class="container">
 
-        <!-- Toggle Button -->
-        <button class="navbar-toggler border-0 d-lg-none order-2" type="button" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-            <span class="hamburger"></span>
-        </button>
-
         <!-- Logo -->
-        <a class="navbar-brand order-1" href="/">
+        <a class="navbar-brand" href="/">
             @php
                 $hasMainLogo = !empty($setting->logo_path);
                 $hasLightLogo = !empty($setting->light_logo_path);
@@ -22,6 +17,11 @@
                 <img src="{{ asset('storage/'.$setting->light_logo_path) }}" alt="Whiterock" class="logo">
             @endif
         </a>
+
+        <!-- Toggle Button -->
+        <button class="navbar-toggler border-0 d-lg-none" type="button" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+            <span class="hamburger"></span>
+        </button>
 
         <!-- Desktop Menu -->
         <div class="collapse navbar-collapse justify-content-end d-none d-lg-flex">
