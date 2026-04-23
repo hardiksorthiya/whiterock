@@ -1,7 +1,7 @@
 @php
     $items = [
         [
-            'title' => 'Core Positioning',
+            'title' => 'Mission',
             'icon' => 'bi-bullseye',
             'content' => $about->mission ?? '',
             'fallback' => 'Our mission details will be updated soon.',

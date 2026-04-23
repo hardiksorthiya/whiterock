@@ -7,7 +7,7 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <h3 class="sorath-counter-title">
-                        <span class="sorath-counter" data-count="20">0</span>+
+                        <span class="sorath-counter" data-count="10">0</span>+
                     </h3>
                     <p class="sorath-counter-text">Years of Experience</p>
                 </div>
@@ -18,7 +18,7 @@
                         <i class="fas fa-handshake"></i>
                     </div>
                     <h3 class="sorath-counter-title">
-                        <span class="sorath-counter" data-count="1375">0</span>+
+                        <span class="sorath-counter" data-count="500">0</span>+
                     </h3>
                     <p class="sorath-counter-text">Dealers</p>
                 </div>
@@ -29,7 +29,7 @@
                         <i class="fas fa-building"></i>
                     </div>
                     <h3 class="sorath-counter-title">
-                        <span class="sorath-counter" data-count="10000">0</span>+
+                        <span class="sorath-counter" data-count="1000">0</span>+
                     </h3>
                     <p class="sorath-counter-text">Premises transformed every month</p>
                 </div>
@@ -40,7 +40,7 @@
                         <i class="fas fa-chart-area"></i>
                     </div>
                     <h3 class="sorath-counter-title">
-                        <span class="sorath-counter" data-count="5000">0</span>+
+                        <span class="sorath-counter" data-count="2.01">0</span>Cr+
                     </h3>
                     <p class="sorath-counter-text">Square feet area covered</p>
                 </div>

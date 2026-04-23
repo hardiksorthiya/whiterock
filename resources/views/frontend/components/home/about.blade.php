@@ -1,8 +1,9 @@
 @php
     $aboutCarouselImages = [
-        asset('images/h1.jpeg'),
-        asset('images/n1.jpeg'),
-        asset('images/n2.jpeg'),
+        asset('images/home/Nivoc_slider_01.png'),
+        asset('images/home/Nivoc_slider_02.png'),
+        asset('images/home/Nivoc_slider_03.png'),
+        asset('images/home/Nivoc_slider_04.png'),
     ];
     // Replace this YouTube video ID any time.
     $aboutReelVideoId = 'p9znelcArPM';
@@ -31,15 +32,27 @@
                     <div class="row text-start mt-4 g-3">
                         <div class="col-6">
                             <h3 class="sorath-counter-title mb-1">
-                                <span class="sorath-counter" data-count="20">0</span>+
+                                <span class="sorath-counter" data-count="10">0</span>+
                             </h3>
                             <p class="sorath-counter-text mb-0">Years of Experience</p>
                         </div>
                         <div class="col-6">
                             <h3 class="sorath-counter-title mb-1">
-                                <span class="sorath-counter" data-count="1375">0</span>+
+                                <span class="sorath-counter" data-count="500">0</span>+
                             </h3>
-                            <p class="sorath-counter-text mb-0">Projects Completed</p>
+                            <p class="sorath-counter-text mb-0">Dealers</p>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="sorath-counter-title mb-1">
+                                <span class="sorath-counter" data-count="1000">0</span>+
+                            </h3>
+                            <p class="sorath-counter-text mb-0">Premises transformed every month</p>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="sorath-counter-title mb-1">
+                                <span class="sorath-counter" data-count="2.01">0</span>Cr+
+                            </h3>
+                            <p class="sorath-counter-text mb-0">Square feet area covered</p>
                         </div>
                     </div>
                 </div>
