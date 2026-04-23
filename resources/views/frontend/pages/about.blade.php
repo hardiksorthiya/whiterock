@@ -2,7 +2,7 @@
 @section('content')
 @include('frontend.components.breadcrumb', [
         'title' => 'ABOUT US',
-        'image' => asset('images/a3.png')
+        'image' => asset('images/nabt.jpeg')
     ])
     @include('frontend.components.about.about')
     @include('frontend.components.about.counter')
