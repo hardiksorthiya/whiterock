@@ -3,9 +3,9 @@
     'sectionTitle' => 'Fluted Panel',
     'sectionDescription' => 'Explore fluted panel designs crafted for elegant texture and visual depth.',
     'rightSliderImages' => [
-        asset('images/home/flutted/Nivoc_slider_01.jpg'),
-        asset('images/home/flutted/Nivoc_slider_02.jpg'),
-        asset('images/home/flutted/Nivoc_slider_03.jpg'),
-        asset('images/home/flutted/Nivoc_slider_04.jpg'),
+        asset('images/home/flutted/n1.jpg'),
+        asset('images/home/flutted/n2.jpg'),
+        asset('images/home/flutted/n3.jpg'),
+        asset('images/home/flutted/n4.jpg'),
     ],
 ])

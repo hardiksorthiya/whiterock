@@ -4,9 +4,9 @@
     // 'sectionTitle' => 'soffit-panel Systems',
     'sectionDescription' => 'Browse durable soffit-panel systems built for reliable ceiling framework support.',
     'rightSliderImages' => [
-        asset('images/home/soffit-panel/Nivoc_slider_01.jpg'),
-        asset('images/home/soffit-panel/Nivoc_slider_02.jpg'),
-        asset('images/home/soffit-panel/Nivoc_slider_03.jpg'),
-        asset('images/home/soffit-panel/Nivoc_slider_04.jpg'),
+        asset('images/home/soffit-panel/n1.jpg'),
+        asset('images/home/soffit-panel/n2.jpg'),
+        asset('images/home/soffit-panel/n3.jpg'),
+        asset('images/home/soffit-panel/n4.jpg'),
     ],
 ])
