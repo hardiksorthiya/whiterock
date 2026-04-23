@@ -1,9 +1,9 @@
 @php
     $aboutCarouselImages = [
-        asset('images/home/Nivoc_slider_01.png'),
-        asset('images/home/Nivoc_slider_02.png'),
-        asset('images/home/Nivoc_slider_03.png'),
-        asset('images/home/Nivoc_slider_04.png'),
+        asset('images/home/n1.png'),
+        asset('images/home/n2.png'),
+        asset('images/home/n3.png'),
+        asset('images/home/n4.png'),
     ];
     // Replace this YouTube video ID any time.
     $aboutReelVideoId = 'p9znelcArPM';
