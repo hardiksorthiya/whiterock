@@ -74,12 +74,12 @@
                 </ul>
             </div>
             <div class="col-md-3">
-                <h3 class="site-footer__heading">Latest product</h3>
+                <h3 class="site-footer__heading">Latest Projects</h3>
                 <div class="site-footer__projects">
                     @forelse (($latestGalleryImages ?? collect()) as $img)
                         <a href="{{ route('gallery') }}" class="site-footer__project-thumb">
                             <img src="{{ asset('storage/' . $img->image) }}" width="240" height="160"
-                                alt="Latest product image" loading="lazy">
+                                alt="Latest projects image" loading="lazy">
                         </a>
                     @empty
                         <p class="text-muted small mb-0">No gallery images yet.</p>

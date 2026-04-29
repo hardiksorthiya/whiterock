@@ -15,50 +15,21 @@
 <section class="sorath-section home-about-redesign py-5">
     <div class="container">
         <div class="row g-4 g-lg-5 align-items-center">
-            <div class="col-lg-5">
+            <div class="col-lg-6">
                 <div class="home-about-redesign__content">
                     <p class="sorath-small-title">WELCOME TO NIVOC</p>
                     <h3 class="sorath-title mb-3">
                         Complete Ceiling & Panel Solutions, Engineered For Modern Spaces
                     </h3>
-                    <p class="sorath-desc text-start mb-4">
-                        NIVOC is a B2B product brand offering high-performance ceiling systems and architectural panel
-                        solutions for commercial, residential, and large-scale interior projects. From gypsum tiles and
-                        precision T-grid systems to soffit and fluted panels, our products are built for durability and
-                        seamless installation.
+                    <p class="sorath-desc text-start">
+                        NIVOC is a trusted B2B ceiling & wall panel brand in India offering high-performance ceiling systems and interior panel solutions for commercial, residential, and large-scale interior projects. From gypsum tiles and precision T-grid systems to soffit and fluted panels, our products are built for durability and seamless installation. 
                     </p>
+                    <p class="sorath-desc text-start mb-4">Backed by the strong legacy of WhiteRock, NIVOC provides reliable solutions for dealers, contractors, architects, and large-scale projects.</p>
                     <a href="{{ route('about') }}" class="btn btn-dark">Read More</a>
-
-                    <div class="row text-start mt-4 g-3">
-                        <div class="col-6">
-                            <h3 class="sorath-counter-title mb-1">
-                                <span class="sorath-counter" data-count="10">0</span>+
-                            </h3>
-                            <p class="sorath-counter-text mb-0">Years of Experience</p>
-                        </div>
-                        <div class="col-6">
-                            <h3 class="sorath-counter-title mb-1">
-                                <span class="sorath-counter" data-count="500">0</span>+
-                            </h3>
-                            <p class="sorath-counter-text mb-0">Dealers</p>
-                        </div>
-                        <div class="col-6">
-                            <h3 class="sorath-counter-title mb-1">
-                                <span class="sorath-counter" data-count="1000">0</span>+
-                            </h3>
-                            <p class="sorath-counter-text mb-0">Premises transformed every month</p>
-                        </div>
-                        <div class="col-6">
-                            <h3 class="sorath-counter-title mb-1">
-                                <span class="sorath-counter" data-count="2.01">0</span>Cr+
-                            </h3>
-                            <p class="sorath-counter-text mb-0">Square feet area covered</p>
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-7">
+            <div class="col-lg-6">
                 <div class="row g-3 align-items-stretch">
                     <div class="col-md-8">
                         <div id="homeAboutCarousel" class="carousel slide home-about-redesign__carousel h-100"

@@ -9,6 +9,7 @@ use App\Models\GalleryImage;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\ProductApplication;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Slider;
@@ -26,6 +27,44 @@ class FrontendController extends Controller
         $setting = Setting::site();
         $services = Service::where('is_active', 1)->latest()->get();
         $galleryCategories = GalleryCategory::with('images')->get();
+
+        $productApplications = ProductApplication::query()
+            ->latest()
+            ->get();
+
+        // Attach selected gallery categories (support multi-select on applications).
+        $allCategoryIds = $productApplications
+            ->flatMap(function ($app) {
+                $ids = $app->gallery_category_ids ?? [];
+                if (empty($ids) && !empty($app->gallery_category_id)) {
+                    $ids = [$app->gallery_category_id];
+                }
+
+                return is_array($ids) ? $ids : [];
+            })
+            ->filter()
+            ->map(fn ($id) => (int) $id)
+            ->unique()
+            ->values();
+
+        $categoriesById = GalleryCategory::with('images')
+            ->whereIn('id', $allCategoryIds)
+            ->get()
+            ->keyBy('id');
+
+        $productApplications->transform(function ($app) use ($categoriesById) {
+            $ids = $app->gallery_category_ids ?? [];
+            if (empty($ids) && !empty($app->gallery_category_id)) {
+                $ids = [$app->gallery_category_id];
+            }
+
+            $ids = is_array($ids) ? $ids : [];
+            $ids = array_values(array_map(fn ($id) => (int) $id, $ids));
+
+            $app->galleryCategories = $categoriesById->only($ids)->values();
+
+            return $app;
+        });
         $latestGalleryImages = GalleryImage::query()->latest()->take(6)->get();
         $products = Product::query()->where('is_active', true)->latest()->take(8)->get();
         $ceilingProducts = $this->featuredProductsForCategorySlugPrefix('ceiling');
@@ -46,6 +85,7 @@ class FrontendController extends Controller
             'sliders',
             'setting',
             'services',
+            'productApplications',
             'latestGalleryImages',
             'galleryCategories',
             'footerPages',

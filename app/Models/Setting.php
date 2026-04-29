@@ -19,6 +19,7 @@ class Setting extends Model
         'contact_locations',
         'footer_text',
         'footer_copyright_text',
+        'contact_background_image_path',
         'google_api_key',
         'google_place_id',
     ];

@@ -3,7 +3,7 @@
         <div class="row g-4 justify-content-center">
             <div class="col-12">
                 <div class="sorath-section-header text-center mx-auto" style="max-width: 760px;">
-                    <h2 class="sorath-title">Our Product Categories</h2>
+                    <h2 class="sorath-title">Our Product Range</h2>
                     <p class="sorath-desc mb-0">
                         Explore our range of ceiling systems and decorative panel solutions designed for durability, performance, and modern interiors.
                     </p>

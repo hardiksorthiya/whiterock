@@ -35,6 +35,7 @@ class SettingController extends Controller
             'whatsapp_url' => 'nullable|string|max:2048',
             'phone' => 'nullable|string|max:100',
             'email' => 'nullable|email|max:255',
+            'contact_background_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:4096',
             'footer_text' => 'nullable|string|max:65535',
             'footer_copyright_text' => 'nullable|string|max:65535',
             'contact_locations' => 'nullable|array',
@@ -112,6 +113,16 @@ class SettingController extends Controller
                 Storage::disk('public')->delete($setting->favicon_path);
             }
             $data['favicon_path'] = $request->file('favicon')->store('settings', 'public');
+        }
+
+        if ($request->hasFile('contact_background_image')) {
+            if ($setting->contact_background_image_path) {
+                Storage::disk('public')->delete($setting->contact_background_image_path);
+            }
+
+            $data['contact_background_image_path'] = $request
+                ->file('contact_background_image')
+                ->store('settings', 'public');
         }
 
         $oldPlaceId = (string) ($setting->google_place_id ?? '');

@@ -14,23 +14,41 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                @if (session('success'))
+                    <div class="alert alert-success mb-3">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('contact.store') }}">
+                    @csrf
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Your Name">
+                            <input type="text" name="name" class="form-control" placeholder="Your Name"
+                                value="{{ old('name') }}">
                         </div>
                         <div class="col-md-6">
-                            <input type="email" class="form-control" placeholder="Your Email">
+                            <input type="email" name="email" class="form-control" placeholder="Your Email"
+                                value="{{ old('email') }}">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="tel" name="phone" class="form-control" placeholder="Phone Number"
+                                value="{{ old('phone') }}">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="city" class="form-control" placeholder="City"
+                                value="{{ old('city') }}">
                         </div>
                         <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Subject">
+                            <input type="text" name="subject" class="form-control" placeholder="Subject"
+                                value="{{ old('subject') }}">
                         </div>
                         <div class="col-12">
-                            <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
+                            <textarea name="message" class="form-control" rows="5" placeholder="Your Message">{{ old('message') }}</textarea>
                         </div>
                     </div>
 
-                    <button class="btn btn-dark w-100 mt-4 text-uppercase" type="button">
+                    <button class="btn btn-dark w-100 mt-4 text-uppercase" type="submit">
                         Send Message
                     </button>
                 </form>

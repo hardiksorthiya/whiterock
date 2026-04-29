@@ -1,8 +1,7 @@
 @include('frontend.components.home.category-showcase-item-copy', [
-    'sectionTitle' => 'T-Grid',
+    'sectionTitle' => 'Ceiling T-GRID',
     'slugPrefix' => 't-grid',
-    // 'sectionTitle' => 'T-Grid Systems',
-    'sectionDescription' => 'Browse durable T-Grid systems built for reliable ceiling framework support.',
+    'sectionDescription' => 'The T-Grid system forms the backbone of a strong and aligned ceiling structure. A precision-built framework that ensures strength, alignment, and efficiency—forming the foundation of every reliable ceiling system.',
     'rightSliderImages' => [
         asset('images/home/t-grid/n1.jpg'),
         asset('images/home/t-grid/n2.jpg'),

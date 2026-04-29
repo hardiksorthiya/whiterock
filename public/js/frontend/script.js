@@ -327,3 +327,176 @@ if (document.readyState === "loading") {
 }
 
 
+/**
+ * Home: Product Applications (continuous marquee + modal gallery)
+ */
+function initApplicationsMarquee() {
+    const rails = document.querySelectorAll(".home-applications__rail");
+    if (!rails || rails.length === 0) return;
+
+    function applyDistance() {
+        rails.forEach(function (rail) {
+            if (!rail) return;
+            const fullWidth = rail.scrollWidth || 0;
+            const half = fullWidth / 2;
+            if (half > 0) {
+                rail.style.setProperty("--marquee-distance", half + "px");
+            }
+        });
+    }
+
+    applyDistance();
+    window.addEventListener(
+        "resize",
+        function () {
+            applyDistance();
+        },
+        { passive: true }
+    );
+}
+
+function initApplicationsModals() {
+    const modals = document.querySelectorAll(".home-applications__modal");
+    if (!modals || modals.length === 0) return;
+
+    modals.forEach(function (modal) {
+        if (!modal) return;
+
+        const modalId = modal.getAttribute("id") || "";
+        const match = modalId.match(/^applicationImagesModal-(.+)$/);
+        if (!match) return;
+
+        const suffix = match[1];
+        const dataEl = document.getElementById("applicationCardMap-" + suffix);
+        if (!dataEl) return;
+
+        let applications = null;
+        try {
+            applications = JSON.parse(dataEl.textContent || dataEl.innerHTML);
+        } catch (e) {
+            return;
+        }
+
+        const title = modal.querySelector("#applicationImagesModalLabel-" + suffix);
+        const body = modal.querySelector("#applicationImagesModalBody-" + suffix);
+        if (!title || !body) return;
+
+        modal.addEventListener("show.bs.modal", function (event) {
+            const trigger = event.relatedTarget;
+            if (!trigger) return;
+
+            const applicationId = String(trigger.getAttribute("data-application-id") || "");
+            const app = applications?.[applicationId];
+            if (!app || !body || !title) return;
+
+            title.textContent = app.name + " - Gallery";
+            const images = Array.isArray(app.images) ? app.images : [];
+
+            if (images.length === 0) {
+                body.innerHTML =
+                    '<div class="text-center text-muted py-4">No images in this category yet.</div>';
+                return;
+            }
+
+            const viewerMainId = "applicationViewerMainImage-" + suffix;
+            const viewerThumbsId = "applicationViewerThumbs-" + suffix;
+
+            body.innerHTML = `
+                <div class="home-applications__viewer">
+                    <button type="button" class="home-applications__viewer-nav home-applications__viewer-prev" aria-label="Previous image">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    <img src="${images[0]}" alt="${app.name} image 1" class="home-applications__modal-main-img" id="${viewerMainId}">
+                    <button type="button" class="home-applications__viewer-nav home-applications__viewer-next" aria-label="Next image">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="home-applications__modal-thumbs mt-3" id="${viewerThumbsId}">
+                    ${images
+                        .map(function (img, idx) {
+                            const isActive = idx === 0 ? "is-active" : "";
+                            return `
+                                <button type="button" class="home-applications__thumb-btn ${isActive}" data-slide-to="${idx}" aria-label="Show image ${idx + 1}">
+                                    <img src="${img}" alt="${app.name} thumbnail ${idx + 1}" class="home-applications__thumb-img">
+                                </button>
+                            `;
+                        })
+                        .join("")}
+                </div>
+            `;
+
+            const mainImage = body.querySelector("#" + viewerMainId);
+            const thumbsWrap = body.querySelector("#" + viewerThumbsId);
+            const prevBtn = body.querySelector(".home-applications__viewer-prev");
+            const nextBtn = body.querySelector(".home-applications__viewer-next");
+            if (!mainImage || !thumbsWrap || !prevBtn || !nextBtn) return;
+
+            const thumbButtons = Array.from(
+                thumbsWrap.querySelectorAll(".home-applications__thumb-btn")
+            );
+
+            let activeIndex = 0;
+            let touchStartX = 0;
+
+            const updateViewer = function (index) {
+                if (!images.length) return;
+                activeIndex = (index + images.length) % images.length;
+                mainImage.src = images[activeIndex];
+                mainImage.alt = app.name + " image " + (activeIndex + 1);
+
+                thumbButtons.forEach(function (btn, idx) {
+                    btn.classList.toggle("is-active", idx === activeIndex);
+                });
+            };
+
+            thumbButtons.forEach(function (btn, idx) {
+                btn.addEventListener("click", function () {
+                    updateViewer(idx);
+                });
+            });
+
+            prevBtn.addEventListener("click", function () {
+                updateViewer(activeIndex - 1);
+            });
+            nextBtn.addEventListener("click", function () {
+                updateViewer(activeIndex + 1);
+            });
+
+            mainImage.addEventListener(
+                "touchstart",
+                function (e) {
+                    touchStartX = e.changedTouches[0]?.clientX ?? 0;
+                },
+                { passive: true }
+            );
+
+            mainImage.addEventListener(
+                "touchend",
+                function (e) {
+                    const touchEndX = e.changedTouches[0]?.clientX ?? 0;
+                    const deltaX = touchEndX - touchStartX;
+                    if (Math.abs(deltaX) < 24) return;
+                    if (deltaX > 0) {
+                        updateViewer(activeIndex - 1);
+                    } else {
+                        updateViewer(activeIndex + 1);
+                    }
+                },
+                { passive: true }
+            );
+        });
+    });
+}
+
+function initApplications() {
+    initApplicationsMarquee();
+    initApplicationsModals();
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initApplications);
+} else {
+    initApplications();
+}
+
+

@@ -6,12 +6,15 @@ use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\ProductEnquiryController as BackendProductEnquiryController;
 use App\Http\Controllers\Backend\ProductCategoryController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ProductApplicationController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\ContactEnquiryController;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\ContactUsController;
 use App\Http\Controllers\Frontend\ProductEnquiryController as FrontendProductEnquiryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +36,8 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::resource('product-categories', ProductCategoryController::class);
     Route::resource('products', ProductController::class);
     Route::get('enquiery-entries', [BackendProductEnquiryController::class, 'index'])->name('enquiery-entries.index');
+    Route::resource('applications', ProductApplicationController::class)->except(['show']);
+    Route::get('contact-entries', [ContactEnquiryController::class, 'index'])->name('contact-entries.index');
     Route::resource('sliders', SliderController::class)->except(['show']);
     Route::resource('gallery', GalleryController::class)->except(['show']);
     Route::resource('pages', PageController::class)->except(['show']);
@@ -53,6 +58,7 @@ Route::get('/products', [FrontendController::class, 'products'])->name('products
 Route::get('/categories/{slug}', [FrontendController::class, 'productCategory'])->name('product-category.show');
 Route::get('/products/{slug}', [FrontendController::class, 'productShow'])->name('product.show');
 Route::post('/product-enquiry', [FrontendProductEnquiryController::class, 'store'])->name('product-enquiry.store');
+Route::post('/contact', [ContactUsController::class, 'store'])->name('contact.store');
 Route::get('/pages/{slug}', [FrontendController::class, 'page'])->name('pages.show');
 Route::get('google-reviews', [FrontendController::class, 'googleReviews'])->name('google-reviews');
 

@@ -107,6 +107,19 @@
                             value="{{ old('email', $setting->email) }}">
                     </div>
 
+                            <div class="mb-3">
+                                <label class="form-label">Contact background image</label>
+                                <input type="file" name="contact_background_image" class="form-control"
+                                    accept="image/*">
+                                @if (!empty($setting->contact_background_image_path))
+                                    <div class="mt-2">
+                                        <img src="{{ asset('storage/' . $setting->contact_background_image_path) }}"
+                                            alt="Contact background" style="max-height: 120px; width: auto;"
+                                            class="rounded border">
+                                    </div>
+                                @endif
+                            </div>
+
                     <div class="d-flex align-items-center justify-content-between mb-2">
                         <label class="form-label mb-0">Locations (title, address, call, email, map iframe)</label>
                         <button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="addLocationRow">

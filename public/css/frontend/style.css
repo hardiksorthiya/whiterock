@@ -1695,6 +1695,7 @@ img.img-fluid.mb-3.about-logo-hp {
 .home-applications__rail-wrap {
     overflow: hidden;
     mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    padding: 0.5rem 1rem;
 }
 
 .home-applications__rail {
@@ -1702,12 +1703,21 @@ img.img-fluid.mb-3.about-logo-hp {
     align-items: stretch;
     gap: 1rem;
     width: max-content;
-    padding: 0.5rem 1rem;
     animation: homeApplicationsRail 36s linear infinite;
+    will-change: transform;
 }
 
 .home-applications__rail-wrap:hover .home-applications__rail {
     animation-play-state: paused;
+}
+
+/* Direction variants for the applications rail */
+.home-applications--ltr .home-applications__rail-wrap {
+    mask-image: linear-gradient(to left, transparent, #000 8%, #000 92%, transparent);
+}
+
+.home-applications--ltr .home-applications__rail {
+    animation-name: homeApplicationsRailLtr;
 }
 
 .home-applications__card {
@@ -1901,11 +1911,22 @@ img.img-fluid.mb-3.about-logo-hp {
 
 @keyframes homeApplicationsRail {
     from {
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
     }
 
     to {
-        transform: translateX(-50%);
+        /* Set by JS: half of the duplicated rail width in px. */
+        transform: translate3d(calc(-1 * var(--marquee-distance, 50%)), 0, 0);
+    }
+}
+
+@keyframes homeApplicationsRailLtr {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(var(--marquee-distance, 50%), 0, 0);
     }
 }
 
@@ -1938,14 +1959,72 @@ img.img-fluid.mb-3.about-logo-hp {
 .home-contact-us {
     background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
     border-top: 1px solid #e5ebf2;
+    position: relative;
+    overflow: hidden;
+}
+
+.home-contact-us__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+    opacity: 0.8;
+}
+
+.home-contact-us > .container {
+    position: relative;
+    z-index: 1;
 }
 
 .home-contact-us__content {
-    background: #fff;
-    border: 1px solid #e4ebf4;
+    background: transparent;
+    border: 0;
     border-radius: 16px;
-    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+    box-shadow: none;
     padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.home-contact-us__benefits {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.home-contact-us__benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+}
+
+.home-contact-us__benefit-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--adm-sorath-primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    color: #fff;
+    box-shadow: 0 10px 22px rgba(var(--adm-sorath-primary-color-rgb), 0.35);
+}
+
+.home-contact-us__benefit-icon i {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.home-contact-us__benefit-title {
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 0.05rem;
+}
+
+.home-contact-us__benefit-desc {
+    color: #334155;
+    font-size: 0.95rem;
+    margin-top: 0.1rem;
 }
 
 .home-contact-us__eyebrow {
@@ -1980,22 +2059,128 @@ img.img-fluid.mb-3.about-logo-hp {
     gap: 0.5rem;
     width: fit-content;
     max-width: 100%;
+    margin-top: 1.25rem;
 }
 
 .home-contact-us__form-card {
     border-radius: 16px;
-    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.1) !important;
+    background: #fff !important;
+    border: 1px solid #e4ebf4 !important;
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12) !important;
 }
 
-.home-contact-us__form-card .form-control {
+.home-contact-us__form-card .card-body {
+    background: #fff;
+    border-radius: 16px;
+}
+
+.home-contact-us__form-head {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.home-contact-us__form-head-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--adm-sorath-primary-color);
+    color: #fff;
+}
+
+.home-contact-us__form-title {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.home-contact-us__form-line {
+    display: inline-block;
+    width: 56px;
+    height: 3px;
+    margin-top: 0.4rem;
+    border-radius: 999px;
+    background: var(--adm-sorath-primary-color);
+}
+
+.home-contact-us__input-wrap {
+    position: relative;
+}
+
+.home-contact-us__input-wrap > i {
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 0.95rem;
+    pointer-events: none;
+}
+
+.home-contact-us__input {
     border-radius: 10px;
     border-color: #d7e0ec;
-    padding: 0.65rem 0.85rem;
+    padding: 0.7rem 0.9rem 0.7rem 2.3rem;
+    font-size: 0.95rem;
 }
 
-.home-contact-us__form-card .form-control:focus {
-    border-color: #0f172a;
-    box-shadow: 0 0 0 0.2rem rgba(15, 23, 42, 0.08);
+.home-contact-us__input:focus {
+    border-color: var(--adm-sorath-primary-color);
+    box-shadow: 0 0 0 0.16rem rgba(var(--adm-sorath-primary-color-rgb), 0.14);
+}
+
+.home-contact-us__input-wrap--textarea > i {
+    top: 0.95rem;
+    transform: none;
+}
+
+.home-contact-us__input--textarea {
+    min-height: 160px;
+    resize: vertical;
+}
+
+.home-contact-us__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 10px;
+    background: #f3f6fb;
+}
+
+.home-contact-us__trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
+    color: #334155;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.home-contact-us__trust-item i {
+    color: var(--adm-sorath-primary-color);
+}
+
+.home-contact-us__submit-btn {
+    border: 0;
+    border-radius: 999px;
+    background: var(--adm-sorath-primary-color);
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    padding: 0.85rem 1rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.home-contact-us__submit-btn:hover {
+    background: #0f1420;
+    color: #fff;
 }
 
 /* Home about redesign (40/60 with carousel + reel) */

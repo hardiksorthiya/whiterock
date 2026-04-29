@@ -25,7 +25,8 @@
             <i class="bi bi-chevron-down small"></i>
         </a>
 
-        <div class="collapse {{ request()->routeIs('products.*') ? 'show' : '' }}" id="productMenu">
+        <div class="collapse {{ request()->routeIs('backend.product-categories.*', 'backend.products.*') ? 'show' : '' }}"
+            id="productMenu">
 
             <a href="{{ route('backend.product-categories.index') }}" class="ps-5">
                 <span class="nav-label">Categories</span>
@@ -35,11 +36,28 @@
                 <span class="nav-label">Products</span>
             </a>
 
+        </div>
+
+        <!-- Enquiry Dropdown -->
+        <a href="#enquiryMenu" data-bs-toggle="collapse" class="d-flex justify-content-between align-items-center">
+            <div>
+                <i class="bi bi-inbox"></i>
+                <span class="nav-label">Enquiry</span>
+            </div>
+            <i class="bi bi-chevron-down small"></i>
+        </a>
+
+        <div class="collapse {{ request()->routeIs('backend.enquiery-entries.*', 'backend.contact-entries.*') ? 'show' : '' }}"
+            id="enquiryMenu">
             <a href="{{ route('backend.enquiery-entries.index') }}"
                 class="{{ request()->routeIs('backend.enquiery-entries.*') ? 'active' : '' }} ps-5">
-                <span class="nav-label">Enquiery Entries</span>
+                <span class="nav-label">Product Enquiery</span>
             </a>
 
+            <a href="{{ route('backend.contact-entries.index') }}"
+                class="{{ request()->routeIs('backend.contact-entries.*') ? 'active' : '' }} ps-5">
+                <span class="nav-label">Contact Enquiery</span>
+            </a>
         </div>
 
 
@@ -51,7 +69,7 @@
             <i class="bi bi-chevron-down small"></i>
         </a>
 
-        <div class="collapse {{ request()->routeIs('users.*') || request()->routeIs('roles.*') ? 'show' : '' }}" id="userMenu">
+        <div class="collapse {{ request()->routeIs('backend.users.*', 'backend.roles.*') ? 'show' : '' }}" id="userMenu">
 
             @can('user-list')
                 <a href="{{ route('backend.users.index') }}" class="ps-5">
@@ -76,7 +94,8 @@
             <i class="bi bi-chevron-down small"></i>
         </a>
 
-        <div class="collapse {{ request()->routeIs('appearance.*') ? 'show' : '' }}" id="apperanceMenu">
+        <div class="collapse {{ request()->routeIs('backend.sliders.*', 'backend.services.*', 'backend.gallery.*', 'backend.pages.*', 'backend.about.*', 'backend.applications.*') ? 'show' : '' }}"
+            id="apperanceMenu">
 
             <a href="{{ route('backend.sliders.index') }}"
                 class="{{ request()->routeIs('backend.sliders.*') ? 'active' : '' }} ps-5">
@@ -94,6 +113,12 @@
                 class="{{ request()->routeIs('backend.gallery.*') ? 'active' : '' }} ps-5">
                 <i class="bi bi-image"></i>
                 <span class="nav-label">Gallery</span>
+            </a>
+
+            <a href="{{ route('backend.applications.index') }}"
+                class="{{ request()->routeIs('backend.applications.*') ? 'active' : '' }} ps-5">
+                <i class="bi bi-grid-3x3-gap"></i>
+                <span class="nav-label">Application</span>
             </a>
 
             <a href="{{ route('backend.pages.index') }}"
