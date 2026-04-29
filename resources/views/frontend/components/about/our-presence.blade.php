@@ -45,10 +45,10 @@
                     <span class="sorath-small-title">OUR PRESENCE</span>
                     <h2 id="our-presence-title" class="sorath-title mt-3 mb-3">Strong Network Across India</h2>
                     <p class="sorath-desc our-presence__desc mb-3">
-                        We are actively serving customers from key cities across India with reliable supply, technical guidance, and responsive support.
+                        With a growing network of warehouses across key cities, NIVOC ensures faster delivery, consistent stock availability, and seamless support nationwide.
                     </p>
                     <p class="our-presence__cities mb-4">
-                        Surat, Ahmedabad, Pune, Mumbai, Nagpur, Hyderabad, Bangalore
+                        Bangalore, Hyderabad, Nagpur, Aurangabad, Mumbai, Pune, Ahmedabad, Jaipur, Ahmedabad
                     </p>
                     <a href="{{ url('/contact') }}" class="btn btn-dark our-presence__cta">Contact Us</a>
                 </div>

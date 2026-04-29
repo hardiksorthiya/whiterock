@@ -2,16 +2,16 @@
     $expertiseCards = [
         [
             'image' => asset('images/n1.jpeg'),
-            'title' => 'Ceiling System Expertise',
-            'description' => 'From gypsum boards to advanced suspension grids, we design practical ceiling solutions built for durability, precision, and clean finishes.',
-            'button' => 'Explore ceiling systems',
+            'title' => 'Ceiling Material Solutions',
+            'description' => 'From T-grid systems to gypsum tiles, we offer reliable ceiling materials designed for durability, precision, and efficient installation across projects of every scale.',
+            'button' => 'Explore Ceiling Materials',
             'url' => route('products'),
         ],
         [
             'image' => asset('images/n2.jpeg'),
-            'title' => 'Facade & Panel Expertise',
-            'description' => 'Our team delivers modern panel and facade applications that balance aesthetics, weather resistance, and long-term performance.',
-            'button' => 'Discover panel solutions',
+            'title' => 'Decorative Panel Solutions',
+            'description' => 'Our range of fluted and soffit panels combines modern aesthetics with long-lasting performance—ideal for enhancing both interior and exterior spaces.',
+            'button' => 'Explore Panel Solutions',
             'url' => route('products'),
         ],
     ];
@@ -21,7 +21,7 @@
     <div class="container">
         <div class="text-center mb-4">
             <p class="sorath-small-title mb-2 text-uppercase small">Our Expertise</p>
-            <h2 class="sorath-title mb-2">Built Through Materials, Methods & Experience</h2>
+            <h2 class="sorath-title mb-2">Built for Performance. Designed for Scale.</h2>
         </div>
 
         <div class="row g-4 justify-content-center">

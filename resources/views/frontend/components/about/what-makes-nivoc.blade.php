@@ -1,11 +1,29 @@
 @php
     $points = [
-        'Engineered for Structural Stability',
-        'Precision Manufacturing for Perfect Fit',
-        'Compatible System-Based Products',
-        'Faster Installation Across Projects',
-        'Consistent Quality Across Batches',
-        'Designed for Modern Architectural Needs',
+        [
+            'title' => 'Consistent Quality',
+            'description' => 'Delivering the same standard across every batch.',
+        ],
+        [
+            'title' => 'Reliable Supply',
+            'description' => 'Strong network ensuring timely availability.',
+        ],
+        [
+            'title' => 'Built for Scale',
+            'description' => 'Ready to support bulk and large-scale projects.',
+        ],
+        [
+            'title' => 'Efficient Processes',
+            'description' => 'Smooth coordination and faster execution.',
+        ],
+        [
+            'title' => 'Backed by Experience',
+            'description' => 'Powered by WhiteRock’s proven industry expertise.',
+        ],
+        [
+            'title' => 'Built for Execution',
+            'description' => 'Designed around real project and dealer needs.',
+        ],
     ];
 @endphp
 
@@ -22,7 +40,10 @@
                                 <span class="nivoc-diff-point__icon" aria-hidden="true">
                                     <i class="bi bi-check-lg"></i>
                                 </span>
-                                <span class="nivoc-diff-point__text">{{ $point }}</span>
+                                <span class="nivoc-diff-point__text">
+                                    <strong>{{ $point['title'] }}</strong><br>
+                                    {{ $point['description'] }}
+                                </span>
                             </div>
                         </div>
                     @endforeach
