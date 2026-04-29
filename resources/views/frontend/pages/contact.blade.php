@@ -6,162 +6,176 @@
         'image' => asset('images/ncontact.jpeg')
     ])
 
-    <section class="py-5">
+    <section class="contact-page py-5">
         <div class="container">
-        <div class="row align-items-start g-4">
-            <!-- LEFT SIDE -->
-            <div class="col-lg-5">
-                <div class="h-100">
-                    <h2 class="fw-bold mb-3">Get in Touch</h2>
-                    <p class="text-muted mb-4">
-                        We are here to help you. Reach out to any of our offices.
-                    </p>
+            <div class="contact-page__shell">
+                <div class="row align-items-start g-4">
+                    <div class="col-lg-5">
+                        <div class="contact-page__info h-100">
+                            <p class="contact-page__eyebrow mb-2">CONTACT US</p>
+                            <h2 class="contact-page__title mb-3">Get in Touch</h2>
+                            <p class="contact-page__desc mb-4">
+                                We are here to help you. Reach out to us for product enquiries, dealership support, and project discussions.
+                            </p>
 
-                    <div class="mb-3">
-                        <div class="d-flex align-items-center gap-2 mb-2">
-                            <i class="bi bi-telephone"></i>
-                            <a href="tel:{{ $setting->phone }}" class="text-decoration-none">
-                                {{ $setting->phone }}
-                            </a>
-                        </div>
-                        <div class="d-flex align-items-center gap-2 mb-2">
-                            <i class="bi bi-envelope"></i>
-                            <a href="mailto:{{ $setting->email }}" class="text-decoration-none">
-                                {{ $setting->email }}
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="mt-4">
-                        <div class="d-flex align-items-center gap-3">
-                            @if (!empty($setting->facebook_url))
-                                <a href="{{ $setting->facebook_url }}" target="_blank" rel="noopener"
-                                    class="site-footer__social-btn" aria-label="Facebook">
-                                    <i class="bi bi-facebook"></i>
+                            <div class="contact-page__meta-list">
+                                <a href="tel:{{ $setting->phone }}" class="contact-page__meta-item">
+                                    <span class="contact-page__meta-icon"><i class="bi bi-telephone-fill"></i></span>
+                                    <span>{{ $setting->phone }}</span>
                                 </a>
-                            @endif
-
-                            @if (!empty($setting->instagram_url))
-                                <a href="{{ $setting->instagram_url }}" target="_blank" rel="noopener"
-                                    class="site-footer__social-btn" aria-label="Instagram">
-                                    <i class="bi bi-instagram"></i>
+                                <a href="mailto:{{ $setting->email }}" class="contact-page__meta-item">
+                                    <span class="contact-page__meta-icon"><i class="bi bi-envelope-fill"></i></span>
+                                    <span>{{ $setting->email }}</span>
                                 </a>
-                            @endif
-
-                            @if (!empty($setting->twitter_url))
-                                <a href="{{ $setting->twitter_url }}" target="_blank" rel="noopener"
-                                    class="site-footer__social-btn" aria-label="Twitter / X">
-                                    <i class="bi bi-twitter-x"></i>
-                                </a>
-                            @endif
-
-                            @if (!empty($setting->whatsapp_url))
-                                <a href="{{ $setting->whatsapp_url }}" target="_blank" rel="noopener"
-                                    class="site-footer__social-btn" aria-label="WhatsApp">
-                                    <i class="bi bi-whatsapp"></i>
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RIGHT SIDE (FORM) -->
-            <div class="col-lg-7">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body p-4">
-                        @if (session('success'))
-                            <div class="alert alert-success mb-3">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        <form method="POST" action="{{ route('contact.store') }}">
-                            @csrf
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <input type="text" name="name" class="form-control" placeholder="Your Name"
-                                        value="{{ old('name') }}">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="email" name="email" class="form-control" placeholder="Your Email"
-                                        value="{{ old('email') }}">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="tel" name="phone" class="form-control" placeholder="Phone Number"
-                                        value="{{ old('phone') }}">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" name="city" class="form-control" placeholder="City"
-                                        value="{{ old('city') }}">
-                                </div>
-                                <div class="col-12">
-                                    <input type="text" name="subject" class="form-control" placeholder="Subject"
-                                        value="{{ old('subject') }}">
-                                </div>
-                                <div class="col-12">
-                                    <textarea name="message" class="form-control" rows="5" placeholder="Your Message">{{ old('message') }}</textarea>
+                                <div class="contact-page__meta-item">
+                                    <span class="contact-page__meta-icon"><i class="bi bi-geo-alt-fill"></i></span>
+                                    <span>{{ !empty($setting->contact_address) ? $setting->contact_address : '—' }}</span>
                                 </div>
                             </div>
 
-                            <button class="btn btn-dark w-100 mt-4 text-uppercase" type="submit">
-                                SEND MESSAGE
-                            </button>
-                        </form>
+                            <div class="contact-page__social mt-4">
+                                @if (!empty($setting->facebook_url))
+                                    <a href="{{ $setting->facebook_url }}" target="_blank" rel="noopener"
+                                        class="site-footer__social-btn" aria-label="Facebook">
+                                        <i class="bi bi-facebook"></i>
+                                    </a>
+                                @endif
+                                @if (!empty($setting->instagram_url))
+                                    <a href="{{ $setting->instagram_url }}" target="_blank" rel="noopener"
+                                        class="site-footer__social-btn" aria-label="Instagram">
+                                        <i class="bi bi-instagram"></i>
+                                    </a>
+                                @endif
+                                @if (!empty($setting->twitter_url))
+                                    <a href="{{ $setting->twitter_url }}" target="_blank" rel="noopener"
+                                        class="site-footer__social-btn" aria-label="Twitter / X">
+                                        <i class="bi bi-twitter-x"></i>
+                                    </a>
+                                @endif
+                                @if (!empty($setting->whatsapp_url))
+                                    <a href="{{ $setting->whatsapp_url }}" target="_blank" rel="noopener"
+                                        class="site-footer__social-btn" aria-label="WhatsApp">
+                                        <i class="bi bi-whatsapp"></i>
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- LOCATIONS GRID (below) -->
-            <div class="col-12 mt-2">
-                <div class="row g-4">
-                        @foreach($setting->contact_locations ?? [] as $address)
-                            @php
-                                $title = $address['title'] ?? $address['address'] ?? $address['description'] ?? '';
-                                $addressLine = $address['address'] ?? $address['description'] ?? '';
-                                $callLine = $address['call'] ?? $setting->phone ?? '';
-                                // $emailLine = $address['email'] ?? $setting->email ?? '';
-                                $mapHtml = $address['map_iframe'] ?? ($address['map'] ?? '');
-                            @endphp
-
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card shadow-sm h-100">
-                                    <div class="card-body">
-                                        <!-- top title -->
-                                        <h5 class="card-title">{{ $title !== '' ? $title : 'Location' }}</h5>
-
-                                        <!-- address -->
-                                        <p class="card-text mb-2">
-                                            <strong>Address:</strong> {{ $addressLine !== '' ? $addressLine : '—' }}
-                                        </p>
-
-                                        <!-- call -->
-                                        <p class="card-text mb-2">
-                                            <strong>Call:</strong> {{ $callLine !== '' ? $callLine : '—' }}
-                                        </p>
-
-                                        <!-- email -->
-                                        {{-- <p class="card-text mb-2">
-                                            <strong>Email:</strong> {{ $emailLine !== '' ? $emailLine : '—' }}
-                                        </p> --}}
-
-                                        <!-- map -->
-                                        @if ($mapHtml !== '')
-                                            <div class="mt-3 border rounded overflow-hidden">
-                                                <div class="ratio ratio-16x9 map-iframe">
-                                                    {!! $mapHtml !!}
-                                                </div>
-                                            </div>
-                                        @endif
+                    <div class="col-lg-7">
+                        <div class="contact-page__form-card">
+                            <div class="p-4 p-lg-5">
+                                <div class="contact-page__form-head mb-4">
+                                    <span class="contact-page__form-icon"><i class="bi bi-envelope-fill"></i></span>
+                                    <div>
+                                        <h3 class="contact-page__form-title mb-0">Send us a Message</h3>
+                                        <span class="contact-page__form-line"></span>
                                     </div>
                                 </div>
+
+                                @if (session('success'))
+                                    <div class="alert alert-success mb-3">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+
+                                <form method="POST" action="{{ route('contact.store') }}">
+                                    @csrf
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="contact-page__field">
+                                                <i class="bi bi-person"></i>
+                                                <input type="text" name="name" class="form-control" placeholder="Your Name"
+                                                    value="{{ old('name') }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="contact-page__field">
+                                                <i class="bi bi-envelope"></i>
+                                                <input type="email" name="email" class="form-control" placeholder="Your Email"
+                                                    value="{{ old('email') }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="contact-page__field">
+                                                <i class="bi bi-telephone"></i>
+                                                <input type="tel" name="phone" class="form-control" placeholder="Phone Number"
+                                                    value="{{ old('phone') }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="contact-page__field">
+                                                <i class="bi bi-geo-alt"></i>
+                                                <input type="text" name="city" class="form-control" placeholder="City"
+                                                    value="{{ old('city') }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="contact-page__field">
+                                                <i class="bi bi-clipboard"></i>
+                                                <input type="text" name="subject" class="form-control" placeholder="Subject"
+                                                    value="{{ old('subject') }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="contact-page__field contact-page__field--textarea">
+                                                <i class="bi bi-pencil"></i>
+                                                <textarea name="message" class="form-control" rows="5" placeholder="Your Message">{{ old('message') }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn contact-page__submit-btn w-100 mt-4 text-uppercase" type="submit">
+                                        Send Message
+                                    </button>
+                                </form>
                             </div>
-                        @endforeach
+                        </div>
                     </div>
+
                 </div>
+            </div>
+    </section>
+
+    <section class="contact-page__warehouses py-5">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="sorath-title mb-0">Our warehouses across India</h2>
+            </div>
+
+            <div class="contact-page__warehouse-grid">
+                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:0s;"></span><span>Bangalore</span></div>
+                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.08s;"></span><span>Hyderabad</span></div>
+                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.16s;"></span><span>Nagpur</span></div>
+                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.24s;"></span><span>Aurangabad</span></div>
+                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.32s;"></span><span>Mumbai</span></div>
+                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.40s;"></span><span>Pune</span></div>
+                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.48s;"></span><span>Ahmedabad</span></div>
+                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.56s;"></span><span>Jaipur</span></div>
+                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.64s;"></span><span>Ahmedabad</span></div>
             </div>
         </div>
     </section>
+
+    @if (!empty($setting->contact_map_iframe))
+        <section class="contact-page__map-section pb-5">
+            <div class="container">
+                <div class="contact-page__address-card">
+                    <div class="p-4 p-lg-5">
+                        <div class="text-center mb-3">
+                            <h2 class="sorath-title mb-0">Our Location</h2>
+                        </div>
+                        <div class="contact-page__map rounded overflow-hidden border">
+                            <div class="ratio ratio-21x9 map-iframe">
+                                {!! $setting->contact_map_iframe !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
+
     @include('frontend.components.home.sticky-enquiry')
 @endsection
 

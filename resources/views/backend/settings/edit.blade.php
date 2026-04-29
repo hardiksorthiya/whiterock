@@ -3,16 +3,6 @@
 @section('page_title', 'Site settings')
 @section('page_subtitle', 'Logo, light logo, favicon, social links, contact & footer')
 
-@php
-    $locations = old('contact_locations', $setting->contact_locations ?? []);
-    if (! is_array($locations)) {
-        $locations = [];
-    }
-    if (count($locations) === 0) {
-        $locations = [['address' => '', 'call' => '', 'email' => '', 'map_iframe' => '']];
-    }
-@endphp
-
 @section('content')
 
     @if (session('success'))
@@ -106,114 +96,26 @@
                         <input type="email" name="email" class="form-control"
                             value="{{ old('email', $setting->email) }}">
                     </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Contact background image</label>
-                                <input type="file" name="contact_background_image" class="form-control"
-                                    accept="image/*">
-                                @if (!empty($setting->contact_background_image_path))
-                                    <div class="mt-2">
-                                        <img src="{{ asset('storage/' . $setting->contact_background_image_path) }}"
-                                            alt="Contact background" style="max-height: 120px; width: auto;"
-                                            class="rounded border">
-                                    </div>
-                                @endif
-                            </div>
-
-                    <div class="d-flex align-items-center justify-content-between mb-2">
-                        <label class="form-label mb-0">Locations (title, address, call, email, map iframe)</label>
-                        <button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="addLocationRow">
-                            <i class="bi bi-plus-lg"></i> Add location
-                        </button>
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <textarea name="contact_address" class="form-control" rows="3">{{ old('contact_address', $setting->contact_address) }}</textarea>
                     </div>
-
-                    <div id="contactLocations" class="d-flex flex-column gap-3">
-                        @foreach ($locations as $i => $loc)
-                            <div class="contact-location-block border rounded p-3 position-relative">
-                                <button type="button" class="btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-2 remove-location"
-                                    title="Remove" aria-label="Remove location">&times;</button>
-                                @php
-                                    $titleValue = old(
-                                        'contact_locations.' . $i . '.title',
-                                        $loc['title'] ?? ''
-                                    );
-                                    $addressValue = old(
-                                        'contact_locations.' . $i . '.address',
-                                        $loc['address'] ?? $loc['title'] ?? $loc['description'] ?? ''
-                                    );
-                                    $callValue = old('contact_locations.' . $i . '.call', $loc['call'] ?? '');
-                                    $emailValue = old('contact_locations.' . $i . '.email', $loc['email'] ?? '');
-                                @endphp
-                                <div class="mb-2">
-                                    <label class="form-label small text-muted mb-0">Title</label>
-                                    <input type="text" name="contact_locations[{{ $i }}][title]" class="form-control"
-                                        value="{{ $titleValue }}">
-                                </div>
-                                <div class="mb-2">
-                                    <label class="form-label small text-muted mb-0">Address</label>
-                                    <textarea name="contact_locations[{{ $i }}][address]" class="form-control" rows="2">{{ $addressValue }}</textarea>
-                                </div>
-                                <div class="mb-2">
-                                    <label class="form-label small text-muted mb-0">Call</label>
-                                    <input type="text" name="contact_locations[{{ $i }}][call]" class="form-control"
-                                        value="{{ $callValue }}">
-                                </div>
-                                <div class="mb-2">
-                                    <label class="form-label small text-muted mb-0">Email</label>
-                                    <input type="email" name="contact_locations[{{ $i }}][email]" class="form-control"
-                                        value="{{ $emailValue }}">
-                                </div>
-                                <div class="mb-0">
-                                    <label class="form-label small text-muted mb-0">Map iframe (embed HTML)</label>
-                                    <textarea name="contact_locations[{{ $i }}][map_iframe]" class="form-control font-monospace small" rows="3"
-                                        placeholder="&lt;iframe src=&quot;...&quot;&gt;&lt;/iframe&gt;">{{ old('contact_locations.'.$i.'.map_iframe', $loc['map_iframe'] ?? '') }}</textarea>
-                                </div>
-                            </div>
-                        @endforeach
+                    <div class="mb-3">
+                        <label class="form-label">Location iframe (embed HTML)</label>
+                        <textarea name="contact_map_iframe" class="form-control font-monospace small" rows="4"
+                            placeholder="&lt;iframe src=&quot;...&quot;&gt;&lt;/iframe&gt;">{{ old('contact_map_iframe', $setting->contact_map_iframe) }}</textarea>
                     </div>
-
-                    <hr class="my-4">
-
-                    <div class="d-flex align-items-center justify-content-between mb-2">
-                        <h3 class="h5 mb-0">Locations preview</h3>
-                        <span class="text-muted small">Shows what visitors will see</span>
-                    </div>
-
-                    <div class="row g-3" id="contactLocationsPreview">
-                        @foreach ($locations as $i => $loc)
-                            @php
-                                $previewTitle = $loc['title'] ?? $loc['address'] ?? $loc['description'] ?? '';
-                                $previewAddress = $loc['address'] ?? $loc['description'] ?? $loc['title'] ?? '';
-                                $previewCall = $loc['call'] ?? '';
-                                $previewEmail = $loc['email'] ?? '';
-                                $previewMap = $loc['map_iframe'] ?? ($loc['map'] ?? '');
-                            @endphp
-                            <div class="col-md-6 col-xl-4 contact-location-preview-col">
-                                <div class="card shadow-sm h-100">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ $previewTitle !== '' ? $previewTitle : 'Location' }}</h5>
-
-                                        <p class="card-text mb-2">
-                                            <strong>Address:</strong> {{ $previewAddress !== '' ? $previewAddress : '—' }}
-                                        </p>
-                                        <p class="card-text mb-2">
-                                            <strong>Call:</strong> {{ $previewCall !== '' ? $previewCall : '—' }}
-                                        </p>
-                                        <p class="card-text mb-2">
-                                            <strong>Email:</strong> {{ $previewEmail !== '' ? $previewEmail : '—' }}
-                                        </p>
-
-                                        @if ($previewMap !== '')
-                                            <div class="mt-3 border rounded overflow-hidden">
-                                                <div class="ratio ratio-16x9 map-iframe">
-                                                    {!! $previewMap !!}
-                                                </div>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
+                    <div class="mb-0">
+                        <label class="form-label">Contact background image</label>
+                        <input type="file" name="contact_background_image" class="form-control"
+                            accept="image/*">
+                        @if (!empty($setting->contact_background_image_path))
+                            <div class="mt-2">
+                                <img src="{{ asset('storage/' . $setting->contact_background_image_path) }}"
+                                    alt="Contact background" style="max-height: 120px; width: auto;"
+                                    class="rounded border">
                             </div>
-                        @endforeach
+                        @endif
                     </div>
                 </div>
             </section>
@@ -270,99 +172,6 @@
             if (typeof CKEDITOR !== 'undefined' && document.getElementById('footer_copyright_text') && !CKEDITOR.instances.footer_copyright_text) {
                 CKEDITOR.replace('footer_copyright_text');
             }
-
-            const container = document.getElementById('contactLocations');
-            const addBtn = document.getElementById('addLocationRow');
-            if (!container || !addBtn) return;
-
-            const preview = document.getElementById('contactLocationsPreview');
-
-            function updatePreview() {
-                if (!preview) return;
-
-                const blocks = container.querySelectorAll('.contact-location-block');
-                preview.innerHTML = '';
-
-                blocks.forEach(function (block) {
-                    const titleEl = block.querySelector('input[name$="[title]"]');
-                    const addressEl = block.querySelector('textarea[name$="[address]"]');
-                    const callEl = block.querySelector('input[name$="[call]"]');
-                    const emailEl = block.querySelector('input[name$="[email]"]');
-                    const mapEl = block.querySelector('textarea[name$="[map_iframe]"]');
-
-                    const titleVal = titleEl ? titleEl.value.trim() : '';
-                    const addressVal = addressEl ? addressEl.value.trim() : '';
-                    const callVal = callEl ? callEl.value.trim() : '';
-                    const emailVal = emailEl ? emailEl.value.trim() : '';
-                    const mapVal = mapEl ? mapEl.value.trim() : '';
-
-                    const cardTitle = titleVal !== '' ? titleVal : (addressVal !== '' ? addressVal : 'Location');
-
-                    const mapHtml = mapVal !== ''
-                        ? '<div class="mt-3 border rounded overflow-hidden"><div class="ratio ratio-16x9 map-iframe">' + mapVal + '</div></div>'
-                        : '';
-
-                    const col = document.createElement('div');
-                    col.className = 'col-md-6 col-xl-4 contact-location-preview-col';
-                    col.innerHTML =
-                        '<div class="card shadow-sm h-100">' +
-                        '<div class="card-body">' +
-                        '<h5 class="card-title">' + cardTitle + '</h5>' +
-                        '<p class="card-text mb-2"><strong>Address:</strong> ' + (addressVal !== '' ? addressVal : '—') + '</p>' +
-                        '<p class="card-text mb-2"><strong>Call:</strong> ' + (callVal !== '' ? callVal : '—') + '</p>' +
-                        '<p class="card-text mb-2"><strong>Email:</strong> ' + (emailVal !== '' ? emailVal : '—') + '</p>' +
-                        mapHtml +
-                        '</div>' +
-                        '</div>';
-
-                    preview.appendChild(col);
-                });
-            }
-
-            function nextIndex() {
-                return container.querySelectorAll('.contact-location-block').length;
-            }
-
-            function bindRemove(block) {
-                const btn = block.querySelector('.remove-location');
-                if (btn) {
-                    btn.addEventListener('click', function () {
-                        if (container.querySelectorAll('.contact-location-block').length <= 1) {
-                            block.querySelectorAll('input, textarea').forEach(function (el) { el.value = ''; });
-                            updatePreview();
-                            return;
-                        }
-                        block.remove();
-                        updatePreview();
-                    });
-                }
-            }
-
-            container.querySelectorAll('.contact-location-block').forEach(bindRemove);
-
-            addBtn.addEventListener('click', function () {
-                const idx = nextIndex();
-                const wrap = document.createElement('div');
-                wrap.className = 'contact-location-block border rounded p-3 position-relative';
-                wrap.innerHTML =
-                    '<button type="button" class="btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-2 remove-location" title="Remove" aria-label="Remove location">&times;</button>' +
-                    '<div class="mb-2"><label class="form-label small text-muted mb-0">Title</label>' +
-                    '<input type="text" name="contact_locations[' + idx + '][title]" class="form-control" value=""></div>' +
-                    '<div class="mb-2"><label class="form-label small text-muted mb-0">Address</label>' +
-                    '<textarea name="contact_locations[' + idx + '][address]" class="form-control" rows="2"></textarea></div>' +
-                    '<div class="mb-2"><label class="form-label small text-muted mb-0">Call</label>' +
-                    '<input type="text" name="contact_locations[' + idx + '][call]" class="form-control" value=""></div>' +
-                    '<div class="mb-2"><label class="form-label small text-muted mb-0">Email</label>' +
-                    '<input type="email" name="contact_locations[' + idx + '][email]" class="form-control" value=""></div>' +
-                    '<div class="mb-0"><label class="form-label small text-muted mb-0">Map iframe (embed HTML)</label>' +
-                    '<textarea name="contact_locations[' + idx + '][map_iframe]" class="form-control font-monospace small" rows="3"></textarea></div>';
-                container.appendChild(wrap);
-                bindRemove(wrap);
-                updatePreview();
-            });
-
-            container.addEventListener('input', updatePreview);
-            updatePreview();
         })();
     </script>
 @endpush

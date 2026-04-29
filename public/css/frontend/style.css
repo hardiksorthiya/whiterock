@@ -2183,6 +2183,235 @@ img.img-fluid.mb-3.about-logo-hp {
     color: #fff;
 }
 
+/* Contact page redesign */
+.contact-page {
+    background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+}
+
+.contact-page__shell {
+    background: rgba(255, 255, 255, 0.64);
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.contact-page__info {
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid #e5ebf4;
+    border-radius: 14px;
+    padding: 1.2rem 1.1rem;
+}
+
+.contact-page__eyebrow {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--adm-sorath-primary-color);
+    text-transform: uppercase;
+}
+
+.contact-page__title {
+    font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.contact-page__desc {
+    color: #475569;
+}
+
+.contact-page__meta-list {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.contact-page__meta-item {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    align-items: start;
+    column-gap: 0.65rem;
+    color: #1e293b;
+    text-decoration: none;
+    font-weight: 500;
+    line-height: 1.45;
+    margin: 0;
+}
+
+.contact-page__meta-item:hover {
+    color: var(--adm-sorath-primary-color);
+}
+
+.contact-page__meta-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(var(--adm-sorath-primary-color-rgb), 0.12);
+    color: var(--adm-sorath-primary-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 30px;
+    font-size: 0.82rem;
+    margin-top: 0.1rem;
+}
+
+.contact-page__social {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.contact-page__form-card,
+.contact-page__address-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.contact-page__form-head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.contact-page__form-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--adm-sorath-primary-color);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-page__form-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.contact-page__form-line {
+    display: inline-block;
+    width: 54px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--adm-sorath-primary-color);
+}
+
+.contact-page__field {
+    position: relative;
+}
+
+.contact-page__field > i {
+    position: absolute;
+    left: 0.78rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 0.92rem;
+    pointer-events: none;
+}
+
+.contact-page__field .form-control {
+    border-radius: 9px;
+    border-color: #dbe3ef;
+    padding: 0.63rem 0.85rem 0.63rem 2.2rem;
+    font-size: 0.94rem;
+}
+
+.contact-page__field .form-control:focus {
+    border-color: var(--adm-sorath-primary-color);
+    box-shadow: 0 0 0 0.16rem rgba(var(--adm-sorath-primary-color-rgb), 0.16);
+}
+
+.contact-page__field--textarea > i {
+    top: 0.95rem;
+    transform: none;
+}
+
+.contact-page__field--textarea .form-control {
+    min-height: 155px;
+    resize: vertical;
+}
+
+.contact-page__submit-btn {
+    border: 0;
+    background: var(--adm-sorath-primary-color);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 0.8rem 1rem;
+    letter-spacing: 0.03em;
+}
+
+.contact-page__submit-btn:hover {
+    background: #0f1420;
+    color: #fff;
+}
+
+.contact-page__warehouses {
+    background: transparent;
+}
+
+.contact-page__warehouse-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.9rem;
+}
+
+.contact-page__warehouse-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    min-width: 130px;
+    padding: 0.85rem 0.7rem 0.75rem;
+    text-align: center;
+    font-weight: 600;
+    color: #1e293b;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+}
+
+.contact-page__warehouse-pin-dot {
+    margin-bottom: 0.1rem;
+    transition: transform 0.22s ease;
+}
+
+.contact-page__warehouse-pin-dot::after {
+    display: block;
+    height: 9px;
+    background: rgba(15, 23, 42, 0.35);
+}
+
+.contact-page__warehouse-card:hover .contact-page__warehouse-pin-dot {
+    transform: translateY(-2px) scale(1.06);
+}
+
+@media (max-width: 991.98px) {
+    .contact-page__warehouse-grid {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .contact-page__warehouse-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem;
+    }
+
+    .contact-page__warehouse-card {
+        min-width: 0;
+    }
+}
+
 /* Home about redesign (40/60 with carousel + reel) */
 .home-about-redesign__content {
     background: #fff;

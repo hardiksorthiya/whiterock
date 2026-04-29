@@ -35,16 +35,11 @@ class SettingController extends Controller
             'whatsapp_url' => 'nullable|string|max:2048',
             'phone' => 'nullable|string|max:100',
             'email' => 'nullable|email|max:255',
+            'contact_address' => 'nullable|string|max:10000',
+            'contact_map_iframe' => 'nullable|string|max:65535',
             'contact_background_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:4096',
             'footer_text' => 'nullable|string|max:65535',
             'footer_copyright_text' => 'nullable|string|max:65535',
-            'contact_locations' => 'nullable|array',
-            'contact_locations.*.title' => 'nullable|string|max:255',
-            'contact_locations.*.description' => 'nullable|string|max:10000',
-            'contact_locations.*.address' => 'nullable|string|max:10000',
-            'contact_locations.*.call' => 'nullable|string|max:255',
-            'contact_locations.*.email' => 'nullable|email|max:255',
-            'contact_locations.*.map_iframe' => 'nullable|string|max:65535',
             'google_api_key' => 'nullable|string|max:255',
             'google_place_id' => 'nullable|string|max:255',
         ]);
@@ -56,43 +51,14 @@ class SettingController extends Controller
             'whatsapp_url',
             'phone',
             'email',
+            'contact_address',
+            'contact_map_iframe',
             'footer_text',
             'footer_copyright_text',
             'google_api_key',
             'google_place_id',
 
         ]);
-
-        $locations = collect($request->input('contact_locations', []))
-            ->map(function ($row) {
-                $title = isset($row['title']) ? trim((string) $row['title']) : '';
-                $address = isset($row['address']) ? trim((string) $row['address']) : '';
-                $description = isset($row['description']) ? trim((string) $row['description']) : '';
-                $mapIframe = isset($row['map_iframe']) ? trim((string) $row['map_iframe']) : '';
-
-                // Backwards compatibility: older data used `map` and/or `description` for location text.
-                if ($mapIframe === '' && isset($row['map'])) {
-                    $mapIframe = trim((string) $row['map']);
-                }
-                if ($address === '') {
-                    $address = $description !== '' ? $description : ($title !== '' ? $title : '');
-                }
-
-                return [
-                    'title' => $title,
-                    'address' => $address,
-                    'call' => isset($row['call']) ? trim((string) $row['call']) : '',
-                    'email' => isset($row['email']) ? trim((string) $row['email']) : '',
-                    'map_iframe' => $mapIframe,
-                ];
-            })
-            ->filter(function ($row) {
-                return $row['title'] !== '' || $row['address'] !== '' || $row['call'] !== '' || $row['email'] !== '' || $row['map_iframe'] !== '';
-            })
-            ->values()
-            ->all();
-
-        $data['contact_locations'] = $locations;
 
         if ($request->hasFile('logo')) {
             if ($setting->logo_path) {

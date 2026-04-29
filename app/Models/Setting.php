@@ -16,6 +16,8 @@ class Setting extends Model
         'whatsapp_url',
         'phone',
         'email',
+        'contact_address',
+        'contact_map_iframe',
         'contact_locations',
         'footer_text',
         'footer_copyright_text',
