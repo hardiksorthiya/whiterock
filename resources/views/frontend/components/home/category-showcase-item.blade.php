@@ -17,7 +17,7 @@
     <div class="container">
         <article class="category-showcase">
             <div class="row g-0 align-items-stretch">
-                <div class="col-lg-5 d-flex">
+                <div class="col-lg-6 d-flex">
                     <div class="home-category-showcase__content w-100 d-flex flex-column justify-content-center">
                         @if (!empty($titleImageUrl))
                             <img src="{{ $titleImageUrl }}"
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-6">
                     <div class="home-category-showcase__media">
                         @if ($rightSliderImages->isNotEmpty())
                             <div id="home-right-slider-{{ $slugPrefix }}"

@@ -1653,14 +1653,20 @@ img.img-fluid.mb-3.about-logo-hp {
     height: 100%;
 }
 
+.home-category-showcase__right-slider .carousel-inner {
+    height: 100%;
+}
+
 .home-category-showcase__right-slider .carousel-item {
+    height: 100%;
     transition: transform 0.9s ease-in-out;
 }
 
 .home-category-showcase__right-slider img {
-    height: min(420px, 58vw);
-    min-height: 280px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 .home-category-showcase__btn {
@@ -1668,22 +1674,23 @@ img.img-fluid.mb-3.about-logo-hp {
 }
 
 .home-category-showcase__media {
-    height: 100%;
-    min-height: 280px;
+    height: 320px;
+    min-height: 320px;
     background: #f8fafc;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 .home-category-showcase__media img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 @media (min-width: 992px) {
     .home-category-showcase__content {
         min-height: 100%;
-    }
-
-    .home-category-showcase__media {
-        min-height: 360px;
     }
 }
 
@@ -1922,11 +1929,11 @@ img.img-fluid.mb-3.about-logo-hp {
 
 @keyframes homeApplicationsRailLtr {
     from {
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(calc(-1 * var(--marquee-distance, 50%)), 0, 0);
     }
 
     to {
-        transform: translate3d(var(--marquee-distance, 50%), 0, 0);
+        transform: translate3d(0, 0, 0);
     }
 }
 

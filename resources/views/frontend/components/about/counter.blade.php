@@ -4,7 +4,7 @@
             <div class="col-lg-3 col-md-6 col-6">
                 <div class="counter-sorath__card h-100">
                     <div class="sorath-counter-icon">
-                        <i class="fas fa-clock"></i>
+                        <img class="img-fluid" src="{{ asset('images/home/i01.png') }}" alt="Dealers Across India">
                     </div>
                     <h3 class="sorath-counter-title">
                         <span class="sorath-counter" data-count="500">0</span>+
@@ -15,7 +15,7 @@
             <div class="col-lg-3 col-md-6 col-6">
                 <div class="counter-sorath__card h-100">
                     <div class="sorath-counter-icon">
-                        <i class="fas fa-handshake"></i>
+                        <img class="img-fluid" src="{{ asset('images/home/i02.png') }}" alt="Square feet products supplied">
                     </div>
                     <h3 class="sorath-counter-title">
                         <span class="sorath-counter" data-count="2.01">0</span>cr+
@@ -26,7 +26,7 @@
             <div class="col-lg-3 col-md-6 col-6">
                 <div class="counter-sorath__card h-100">
                     <div class="sorath-counter-icon">
-                        <i class="fas fa-building"></i>
+                        <img class="img-fluid" src="{{ asset('images/home/i03.png') }}" alt="industry experience">
                     </div>
                     <h3 class="sorath-counter-title">
                         <span class="sorath-counter" data-count="11">0</span>+ Years
@@ -37,7 +37,7 @@
             <div class="col-lg-3 col-md-6 col-6">
                 <div class="counter-sorath__card h-100">
                     <div class="sorath-counter-icon">
-                        <i class="fas fa-chart-area"></i>
+                        <img class="img-fluid" src="{{ asset('images/home/i04.png') }}" alt="premises transform every month">
                     </div>
                     <h3 class="sorath-counter-title">
                         <span class="sorath-counter" data-count="1000">0</span>+

@@ -1,9 +1,7 @@
 @php
     $aboutCarouselImages = [
-        asset('images/home/n1.png'),
-        asset('images/home/n2.png'),
-        asset('images/home/n3.png'),
-        asset('images/home/n4.png'),
+        asset('images/home/n1.jpg'),
+        asset('images/home/n2.jpg'),
     ];
     // Replace this YouTube video ID any time.
     $aboutReelVideoId = 'p9znelcArPM';
