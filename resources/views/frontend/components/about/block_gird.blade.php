@@ -3,25 +3,25 @@
         [
             'title' => 'T-Grid Ceiling Systems',
             'text' => 'Every batch is manufactured with strict quality control, ensuring uniform finish, strength, and reliability across projects.',
-            'img' => asset('images/n1.jpeg'),
+            'img' => asset('images/about/tg.jpg'),
             'alt' => 'T-Grid Ceiling Systems',
         ],
         [
             'title' => 'Gypsum Ceiling Tiles',
             'text' => 'Engineered systems that reduce installation time, helping contractors complete projects efficiently without compromising quality.',
-            'img' => asset('images/n2.jpeg'),
+            'img' => asset('images/about/gy.jpg'),
             'alt' => 'Gypsum Ceiling Tiles',
         ],
         [
             'title' => 'Fluted Wall Panels',
             'text' => 'From gypsum ceiling tiles to T-grid systems and decorative panels, we offer complete solutions under one roof.',
-            'img' => asset('images/n3.jpeg'),
+            'img' => asset('images/about/fl.jpg'),
             'alt' => 'Fluted Wall Panels',
         ],
         [
             'title' => 'Soffit Ceiling Panels',
             'text' => 'With a strong dealer network, we ensure consistent availability and timely delivery across multiple locations.',
-            'img' => asset('images/n4.jpeg'),
+            'img' => asset('images/about/sf.jpg'),
             'alt' => 'Soffit Ceiling Panels',
         ],
     ];

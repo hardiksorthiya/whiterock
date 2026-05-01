@@ -1,14 +1,14 @@
 @php
     $expertiseCards = [
         [
-            'image' => asset('images/n1.jpeg'),
+            'image' => asset('images/about/c1.jpeg'),
             'title' => 'Ceiling Material Solutions',
             'description' => 'From T-grid systems to gypsum tiles, we offer reliable ceiling materials designed for durability, precision, and efficient installation across projects of every scale.',
             'button' => 'Explore Ceiling Materials',
             'url' => route('products'),
         ],
         [
-            'image' => asset('images/n2.jpeg'),
+            'image' => asset('images/about/d1.jpeg'),
             'title' => 'Decorative Panel Solutions',
             'description' => 'Our range of fluted and soffit panels combines modern aesthetics with long-lasting performance—ideal for enhancing both interior and exterior spaces.',
             'button' => 'Explore Panel Solutions',

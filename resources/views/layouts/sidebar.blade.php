@@ -38,6 +38,26 @@
 
         </div>
 
+        <!-- Catalogue Dropdown -->
+
+        <a href="#catalogueMenu" data-bs-toggle="collapse" class="d-flex justify-content-between align-items-center">
+            <div>
+                <i class="bi bi-book"></i>
+                <span class="nav-label">Catalogue</span>
+            </div>
+            <i class="bi bi-chevron-down small"></i>
+        </a>
+        
+        <div class="collapse {{ request()->routeIs('backend.catalogue-categories.*', 'backend.catalogues.*') ? 'show' : '' }}"
+            id="catalogueMenu">
+            <a href="{{ route('backend.catalogue-categories.index') }}" class="ps-5">
+                <span class="nav-label">Categories</span>
+            </a>
+            <a href="{{ route('backend.catalogues.index') }}" class="ps-5">
+                <span class="nav-label">Catalogues</span>
+            </a>
+        </div>
+
         <!-- Enquiry Dropdown -->
         <a href="#enquiryMenu" data-bs-toggle="collapse" class="d-flex justify-content-between align-items-center">
             <div>

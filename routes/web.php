@@ -1,20 +1,22 @@
 <?php
 
 use App\Http\Controllers\Backend\AboutController;
+use App\Http\Controllers\Backend\CatalogueCategoryController;
+use App\Http\Controllers\Backend\CatalogueController;
+use App\Http\Controllers\Backend\ContactEnquiryController;
 use App\Http\Controllers\Backend\GalleryController;
 use App\Http\Controllers\Backend\PageController;
-use App\Http\Controllers\Backend\ProductEnquiryController as BackendProductEnquiryController;
+use App\Http\Controllers\Backend\ProductApplicationController;
 use App\Http\Controllers\Backend\ProductCategoryController;
 use App\Http\Controllers\Backend\ProductController;
-use App\Http\Controllers\Backend\ProductApplicationController;
+use App\Http\Controllers\Backend\ProductEnquiryController as BackendProductEnquiryController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\UserController;
-use App\Http\Controllers\Backend\ContactEnquiryController;
-use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\ContactUsController;
+use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\ProductEnquiryController as FrontendProductEnquiryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +36,8 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('product-categories', ProductCategoryController::class);
+    Route::resource('catalogue-categories', CatalogueCategoryController::class);
+    Route::resource('catalogues', CatalogueController::class);
     Route::resource('products', ProductController::class);
     Route::get('enquiery-entries', [BackendProductEnquiryController::class, 'index'])->name('enquiery-entries.index');
     Route::resource('applications', ProductApplicationController::class)->except(['show']);
@@ -45,6 +49,8 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit');
     Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
     Route::post('product-categories/bulk-action', [ProductCategoryController::class, 'bulkAction'])->name('product-categories.bulk-action');
+    Route::post('catalogue-categories/bulk-action', [CatalogueCategoryController::class, 'bulkAction'])->name('catalogue-categories.bulk-action');
+    Route::post('catalogues/bulk-action', [CatalogueController::class, 'bulkAction'])->name('catalogues.bulk-action');
     Route::post('products/bulk-action', [ProductController::class, 'bulkAction'])->name('products.bulk-action');
     Route::get('about', [AboutController::class, 'edit'])->name('about.edit');
     Route::post('about', [AboutController::class, 'update'])->name('about.update');
