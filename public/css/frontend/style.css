@@ -956,12 +956,12 @@ body.menu-open {
     border-radius: 12px;
 }
 
-.why-img-box img {
+/* .why-img-box img {
     border-radius: 10px;
     max-height: 250px;
     object-fit: cover;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
+} */
 
 /* Button */
 .why-btn {

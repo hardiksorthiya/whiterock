@@ -38,7 +38,7 @@
                 <!-- CENTER IMAGE -->
                 <div class="col-lg-4 text-center my-4">
                     <div class="why-img-box">
-                        <img src="{{ asset('images/h1.jpeg') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('images/home/eng.png') }}" class="img-fluid" alt="">
                     </div>
                 </div>
 
