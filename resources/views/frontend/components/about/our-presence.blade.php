@@ -14,6 +14,10 @@
                         <span class="our-presence__pin-dot"></span>
                         <span class="our-presence__pin-label">Ahmedabad</span>
                     </span>
+                    <span class="our-presence__pin" style="--pin-x: 20%; --pin-y: 43%; --pin-delay: 0.1s;" aria-label="Jaipur">
+                        <span class="our-presence__pin-dot"></span>
+                        <span class="our-presence__pin-label">Jaipur</span>
+                    </span>
                     <span class="our-presence__pin" style="--pin-x: 17%; --pin-y: 56%; --pin-delay: 0.2s;" aria-label="Surat">
                         <span class="our-presence__pin-dot"></span>
                         <span class="our-presence__pin-label">Surat</span>
@@ -21,6 +25,10 @@
                     <span class="our-presence__pin" style="--pin-x: 17%; --pin-y: 63%; --pin-delay: 0.4s;" aria-label="Mumbai">
                         <span class="our-presence__pin-dot"></span>
                         <span class="our-presence__pin-label">Mumbai</span>
+                    </span>
+                    <span class="our-presence__pin" style="--pin-x: 21%; --pin-y: 61%; --pin-delay: 0.45s;" aria-label="Aurangabad">
+                        <span class="our-presence__pin-dot"></span>
+                        <span class="our-presence__pin-label">Aurangabad</span>
                     </span>
                     <span class="our-presence__pin" style="--pin-x: 24%; --pin-y: 67%; --pin-delay: 0.6s;" aria-label="Pune">
                         <span class="our-presence__pin-dot"></span>
@@ -48,9 +56,9 @@
                         With a growing network of warehouses across key cities, NIVOC ensures faster delivery, consistent stock availability, and seamless support nationwide.
                     </p>
                     <p class="our-presence__cities mb-4">
-                        Bangalore, Hyderabad, Nagpur, Aurangabad, Mumbai, Pune, Ahmedabad, Jaipur, Ahmedabad
+                        Bangalore, Hyderabad, Nagpur, Aurangabad, Mumbai, Pune, Ahmedabad, Jaipur, Surat
                     </p>
-                    <a href="{{ url('/contact') }}" class="btn btn-dark our-presence__cta">Contact Us</a>
+                    <a href="{{ route('contact') }}" class="btn btn-lg our-presence__cta">Contact Us</a>
                 </div>
             </div>
         </div>

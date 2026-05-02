@@ -31,10 +31,10 @@
                         <div class="about-expertise__image-wrap">
                             <img src="{{ $card['image'] }}" alt="{{ $card['title'] }}" class="about-expertise__image">
                         </div>
-                        <div class="about-expertise__body">
+                        <div class="about-expertise__body text-center">
                             <h3 class="about-expertise__title">{{ $card['title'] }}</h3>
                             <p class="about-expertise__desc">{{ $card['description'] }}</p>
-                            <a href="{{ $card['url'] }}" class="btn btn-dark btn-sm about-expertise__btn">
+                            <a href="{{ $card['url'] }}" class="btn about-expertise__btn">
                                 {{ $card['button'] }}
                             </a>
                         </div>

@@ -14,41 +14,9 @@
             <div class="col-lg-5">
                 <div class="home-contact-us__content h-100">
                     <p class="home-contact-us__eyebrow mb-2">CONTACT US</p>
-                    <h2 class="sorath-title mb-3">Let’s Build Your Next Project Together</h2>
-                    <p class="sorath-desc text-start mb-4">
-                        Get reliable supply, consistent quality, and professional support—designed for dealers, contractors, and large-scale projects.
-                    </p>
-                    <div class="home-contact-us__benefits">
-                        <div class="home-contact-us__benefit">
-                            <div class="home-contact-us__benefit-icon">
-                                <i class="bi bi-chat-dots-fill" aria-hidden="true"></i>
-                            </div>
-                            <div class="home-contact-us__benefit-text">
-                                <div class="home-contact-us__benefit-title">Quick Response</div>
-                                <div class="home-contact-us__benefit-desc">We reply within 24 hours</div>
-                            </div>
-                        </div>
-
-                        <div class="home-contact-us__benefit">
-                            <div class="home-contact-us__benefit-icon">
-                                <i class="bi bi-box-seam" aria-hidden="true"></i>
-                            </div>
-                            <div class="home-contact-us__benefit-text">
-                                <div class="home-contact-us__benefit-title">Bulk Pricing Available</div>
-                                <div class="home-contact-us__benefit-desc">Best rates for bulk orders</div>
-                            </div>
-                        </div>
-
-                        <div class="home-contact-us__benefit">
-                            <div class="home-contact-us__benefit-icon">
-                                <i class="bi bi-truck" aria-hidden="true"></i>
-                            </div>
-                            <div class="home-contact-us__benefit-text">
-                                <div class="home-contact-us__benefit-title">Pan-India Supply</div>
-                                <div class="home-contact-us__benefit-desc">Delivering across India</div>
-                            </div>
-                        </div>
-                    </div>
+                    <h2 class="sorath-title mb-3">Looking for a Reliable Supply Partner ?</h2>
+                    <p class="sorath-desc text-start mb-4">Reliable materials. Scalable supply. Trusted partnership.</p>
+                    
 
                     @php
                         $waLink = $setting->whatsapp_url ?? null;
