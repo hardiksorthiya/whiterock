@@ -6,6 +6,17 @@
         'image' => asset('images/cbre.jpeg')
     ])
 
+    @php
+        $phoneRaw = trim((string) ($setting->phone ?? ''));
+        $phoneParts = $phoneRaw !== ''
+            ? preg_split('/\s*(\|\||[,;])\s*/', $phoneRaw, -1, PREG_SPLIT_NO_EMPTY)
+            : [];
+        if ($phoneParts === [] && $phoneRaw !== '') {
+            $phoneParts = [$phoneRaw];
+        }
+        $contactAddress = trim((string) ($setting->contact_address ?? ''));
+    @endphp
+
     <section class="contact-page py-5">
         <div class="container">
             <div class="contact-page__shell">
@@ -18,19 +29,63 @@
                                 We are here to help you. Reach out to us for product enquiries, dealership support, and project discussions.
                             </p>
 
-                            <div class="contact-page__meta-list">
-                                <a href="tel:{{ $setting->phone }}" class="contact-page__meta-item">
-                                    <span class="contact-page__meta-icon"><i class="bi bi-telephone-fill"></i></span>
-                                    <span>{{ $setting->phone }}</span>
-                                </a>
-                                <a href="mailto:{{ $setting->email }}" class="contact-page__meta-item">
-                                    <span class="contact-page__meta-icon"><i class="bi bi-envelope-fill"></i></span>
-                                    <span>{{ $setting->email }}</span>
-                                </a>
-                                <div class="contact-page__meta-item">
-                                    <span class="contact-page__meta-icon"><i class="bi bi-geo-alt-fill"></i></span>
-                                    <span>{{ !empty($setting->contact_address) ? $setting->contact_address : '—' }}</span>
-                                </div>
+                            <div class="contact-page__intro-wrap contact-page__intro-wrap--in-panel">
+                                <article class="contact-page__intro-card">
+                                    <div class="contact-page__intro-card-icon" aria-hidden="true">
+                                        <i class="bi bi-telephone-fill"></i>
+                                    </div>
+                                    <div class="contact-page__intro-card-body">
+                                        <h3 class="contact-page__intro-card-title">Contact Us:</h3>
+                                        <div class="contact-page__intro-card-text">
+                                            @if (!empty($setting->email))
+                                                <a href="mailto:{{ $setting->email }}"
+                                                    class="contact-page__intro-link">{{ $setting->email }}</a>
+                                            @endif
+                                            @if (!empty($phoneParts))
+                                                @if (!empty($setting->email))
+                                                    <br>
+                                                @endif
+                                                <span class="contact-page__intro-phones">
+                                                    @foreach ($phoneParts as $i => $part)
+                                                        @if ($i > 0)
+                                                            <span class="contact-page__intro-phone-sep" aria-hidden="true">
+                                                                &nbsp;||&nbsp;
+                                                            </span>
+                                                        @endif
+                                                        @php
+                                                            $digits = preg_replace('/\D+/', '', (string) $part);
+                                                        @endphp
+                                                        @if ($digits !== '')
+                                                            <a href="tel:{{ $digits }}"
+                                                                class="contact-page__intro-link">{{ trim($part) }}</a>
+                                                        @else
+                                                            <span>{{ trim($part) }}</span>
+                                                        @endif
+                                                    @endforeach
+                                                </span>
+                                            @endif
+                                            @if (empty($setting->email) && $phoneParts === [])
+                                                <span class="text-muted">Contact details coming soon.</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </article>
+
+                                <article class="contact-page__intro-card">
+                                    <div class="contact-page__intro-card-icon" aria-hidden="true">
+                                        <i class="bi bi-geo-alt-fill"></i>
+                                    </div>
+                                    <div class="contact-page__intro-card-body">
+                                        <h3 class="contact-page__intro-card-title">Office address:</h3>
+                                        <div class="contact-page__intro-card-text">
+                                            @if ($contactAddress !== '')
+                                                {!! nl2br(e($contactAddress)) !!}
+                                            @else
+                                                <span class="text-muted">Address will appear here once set in site settings.</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </article>
                             </div>
 
                             <div class="contact-page__social mt-4">
@@ -125,8 +180,9 @@
                                         </div>
                                     </div>
 
-                                    <button class="btn contact-page__submit-btn w-100 mt-4 text-uppercase" type="submit">
-                                        Send Message
+                                    <button class="btn btn-lg contact-page__submit-btn w-100 mt-4 text-uppercase" type="submit">
+                                        <i class="bi bi-send" aria-hidden="true"></i>
+                                        <span>Send Message</span>
                                     </button>
                                 </form>
                             </div>

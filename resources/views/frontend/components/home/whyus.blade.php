@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="text-center text-lg-start mt-4 pt-2">
-                    <a href="{{ route('products') }}" class="btn btn-lg why-pro__cta">
+                    <a href="{{ route('catalogue') }}" class="btn btn-lg why-pro__cta">
                         View catalogue
                     </a>
                 </div>

@@ -67,6 +67,7 @@
                             <th style="width:2.5rem;"><input type="checkbox" id="select-all"
                                     aria-label="Select all on this page"></th>
                             <th>#</th>
+                            <th style="width:5rem;">Image</th>
                             <th>Name</th>
                             <th>Category</th>
                             <th>Status</th>
@@ -83,6 +84,15 @@
                                 </td>
                                 <td><span
                                         class="adm-badge">{{ $loop->iteration + ($catalogues->currentPage() - 1) * $catalogues->perPage() }}</span>
+                                </td>
+                                <td>
+                                    @if ($catalogue->featured_image)
+                                        <img src="{{ asset('storage/' . $catalogue->featured_image) }}" alt=""
+                                            class="adm-thumb adm-thumb--cover" width="48" height="48"
+                                            style="object-fit:cover;border-radius:8px;">
+                                    @else
+                                        <span class="adm-muted small">—</span>
+                                    @endif
                                 </td>
                                 <td><strong>{{ $catalogue->name }}</strong></td>
                                 <td>{{ data_get($catalogue, 'category.name', '—') }}</td>

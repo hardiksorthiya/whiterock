@@ -49,16 +49,23 @@ class CatalogueController extends Controller
             'pdf' => 'required|file|mimes:pdf',
             'category_id' => 'required|exists:catalogue_categories,id',
             'is_active' => 'nullable|boolean',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         $pdfPath = $request->file('pdf')->store('catalogues', 'public');
 
-        Catalogue::create([
+        $data = [
             'name' => $request->name,
             'pdf' => $pdfPath,
             'category_id' => $request->category_id,
             'is_active' => $request->boolean('is_active', true),
-        ]);
+        ];
+
+        if ($request->hasFile('featured_image')) {
+            $data['featured_image'] = $request->file('featured_image')->store('catalogues/featured', 'public');
+        }
+
+        Catalogue::create($data);
 
         return redirect()->route('backend.catalogues.index')->with('success', 'Catalogue created successfully');
     }
@@ -85,6 +92,8 @@ class CatalogueController extends Controller
             'pdf' => 'nullable|file|mimes:pdf',
             'category_id' => 'required|exists:catalogue_categories,id',
             'is_active' => 'nullable|boolean',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'remove_featured_image' => 'nullable|boolean',
         ]);
 
         $catalogue->name = $request->name;
@@ -96,6 +105,16 @@ class CatalogueController extends Controller
                 Storage::disk('public')->delete($catalogue->pdf);
             }
             $catalogue->pdf = $request->file('pdf')->store('catalogues', 'public');
+        }
+
+        if ($request->boolean('remove_featured_image') && $catalogue->featured_image) {
+            Storage::disk('public')->delete($catalogue->featured_image);
+            $catalogue->featured_image = null;
+        } elseif ($request->hasFile('featured_image')) {
+            if ($catalogue->featured_image) {
+                Storage::disk('public')->delete($catalogue->featured_image);
+            }
+            $catalogue->featured_image = $request->file('featured_image')->store('catalogues/featured', 'public');
         }
 
         $catalogue->save();
@@ -112,6 +131,9 @@ class CatalogueController extends Controller
 
         if ($catalogue->pdf) {
             Storage::disk('public')->delete($catalogue->pdf);
+        }
+        if ($catalogue->featured_image) {
+            Storage::disk('public')->delete($catalogue->featured_image);
         }
 
         $catalogue->delete();
@@ -142,6 +164,9 @@ class CatalogueController extends Controller
         foreach ($catalogues as $catalogue) {
             if ($catalogue->pdf) {
                 Storage::disk('public')->delete($catalogue->pdf);
+            }
+            if ($catalogue->featured_image) {
+                Storage::disk('public')->delete($catalogue->featured_image);
             }
             $catalogue->delete();
         }

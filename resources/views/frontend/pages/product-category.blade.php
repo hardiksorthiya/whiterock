@@ -32,10 +32,8 @@
     </section>
 
     @if ($products->hasPages())
-        <div class="container pb-5">
-            <div class="d-flex justify-content-center">
-                {{ $products->links() }}
-            </div>
+        <div class="container pb-5 products-pager-section">
+            {{ $products->links('vendor.pagination.frontend') }}
         </div>
     @endif
 

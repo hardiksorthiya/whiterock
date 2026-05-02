@@ -75,7 +75,7 @@
             </div>
             <div class="col-md-3">
                 <h3 class="site-footer__heading">Catalogue</h3>
-                <a href="#" class="btn btn-lg site-footer__cta">
+                <a href="{{ route('catalogue') }}" class="btn btn-lg site-footer__cta">
                    <img src="{{ asset('images/a3.png') }}" alt="Catalogue" width="100" height="100">
                 </a>
             </div>

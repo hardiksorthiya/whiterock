@@ -29,6 +29,7 @@
                 <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('products') }}">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('catalogue') }}">Catalogue</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
             </ul>
@@ -43,6 +44,7 @@
         <li><a href="{{ route('home') }}">Home</a></li>
         <li><a href="{{ route('about') }}">About</a></li>
         <li><a href="{{ route('products') }}">Products</a></li>
+        <li><a href="{{ route('catalogue') }}">Catalogue</a></li>
         <li><a href="{{ route('gallery') }}">Gallery</a></li>
         <li><a href="{{ route('contact') }}">Contact</a></li>
     </ul>

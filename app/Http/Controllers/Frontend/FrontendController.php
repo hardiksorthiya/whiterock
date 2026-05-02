@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\About;
+use App\Models\Catalogue;
+use App\Models\CatalogueCategory;
 use App\Models\GalleryCategory;
 use App\Models\GalleryImage;
 use App\Models\Page;
 use App\Models\Product;
-use App\Models\ProductCategory;
 use App\Models\ProductApplication;
+use App\Models\ProductCategory;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Slider;
@@ -511,5 +513,48 @@ class FrontendController extends Controller
         }
 
         return route('product-category.show', $category->slug);
+    }
+
+    public function catalogue()
+    {
+        $setting = Setting::site();
+        $footerPages = Page::query()->where('is_active', true)->latest()->get();
+        $catalogueCategories = CatalogueCategory::query()->orderBy('name')->get();
+        $catalogues = Catalogue::query()
+            ->with('category')
+            ->where('is_active', true)
+            ->latest()
+            ->get();
+        $selectedCatalogueCategory = null;
+
+        return view('frontend.pages.catalogue', compact(
+            'setting',
+            'footerPages',
+            'catalogueCategories',
+            'catalogues',
+            'selectedCatalogueCategory'
+        ));
+    }
+
+    public function catalogueCategory(string $slug)
+    {
+        $setting = Setting::site();
+        $footerPages = Page::query()->where('is_active', true)->latest()->get();
+        $catalogueCategories = CatalogueCategory::query()->orderBy('name')->get();
+        $selectedCatalogueCategory = CatalogueCategory::query()->where('slug', $slug)->firstOrFail();
+        $catalogues = Catalogue::query()
+            ->with('category')
+            ->where('is_active', true)
+            ->where('category_id', $selectedCatalogueCategory->id)
+            ->latest()
+            ->get();
+
+        return view('frontend.pages.catalogue', compact(
+            'setting',
+            'footerPages',
+            'catalogueCategories',
+            'catalogues',
+            'selectedCatalogueCategory'
+        ));
     }
 }

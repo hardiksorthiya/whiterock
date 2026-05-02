@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\CatalogueCategoryController;
 use App\Http\Controllers\Backend\CatalogueController;
+use App\Http\Controllers\Backend\CatalogueDownloadController as BackendCatalogueDownloadController;
 use App\Http\Controllers\Backend\ContactEnquiryController;
 use App\Http\Controllers\Backend\GalleryController;
 use App\Http\Controllers\Backend\PageController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Frontend\CatalogueDownloadController;
 use App\Http\Controllers\Frontend\ContactUsController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\ProductEnquiryController as FrontendProductEnquiryController;
@@ -40,6 +42,7 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::resource('catalogues', CatalogueController::class);
     Route::resource('products', ProductController::class);
     Route::get('enquiery-entries', [BackendProductEnquiryController::class, 'index'])->name('enquiery-entries.index');
+    Route::get('catalogue-downloads', [BackendCatalogueDownloadController::class, 'index'])->name('catalogue-downloads.index');
     Route::resource('applications', ProductApplicationController::class)->except(['show']);
     Route::get('contact-entries', [ContactEnquiryController::class, 'index'])->name('contact-entries.index');
     Route::resource('sliders', SliderController::class)->except(['show']);
@@ -56,14 +59,22 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::post('about', [AboutController::class, 'update'])->name('about.update');
 });
 
+
+// frontend routes
+
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/gallery', [FrontendController::class, 'gallery'])->name('gallery');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 Route::get('/products', [FrontendController::class, 'products'])->name('products');
+Route::get('/catalogue', [FrontendController::class, 'catalogue'])->name('catalogue');
+Route::get('/catalogue/{slug}', [FrontendController::class, 'catalogueCategory'])->name('catalogue-category.show');
 Route::get('/categories/{slug}', [FrontendController::class, 'productCategory'])->name('product-category.show');
 Route::get('/products/{slug}', [FrontendController::class, 'productShow'])->name('product.show');
 Route::post('/product-enquiry', [FrontendProductEnquiryController::class, 'store'])->name('product-enquiry.store');
+Route::post('/catalogue/download', [CatalogueDownloadController::class, 'store'])
+    ->middleware('throttle:20,1')
+    ->name('catalogue.download');
 Route::post('/contact', [ContactUsController::class, 'store'])->name('contact.store');
 Route::get('/pages/{slug}', [FrontendController::class, 'page'])->name('pages.show');
 Route::get('google-reviews', [FrontendController::class, 'googleReviews'])->name('google-reviews');

@@ -5,6 +5,7 @@
     $sectionDescription =
         $sectionDescription ??
         'Select a product to view details, specifications, and enquiry options.';
+    $tones = ['a', 'b', 'c', 'd', 'e', 'f'];
 @endphp
 
 @if ($showSectionHeader)
@@ -18,38 +19,54 @@
     </div>
 @endif
 
-<div class="row g-4 products-grid-wrap" id="productsListingGrid" data-current-view="grid-3">
-    @forelse ($products as $product)
-        <div class="product-col col-12 col-sm-6 col-lg-4">
-            <div class="card product-card h-100 border-0">
-                <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none text-reset">
-                    <div class="product-img">
-                        @if (!empty($product->featured_image))
-                            <img src="{{ asset('storage/' . $product->featured_image) }}" class="card-img-top"
-                                alt="{{ $product->name }}">
-                        @elseif (!empty($product->image))
-                            <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top"
-                                alt="{{ $product->name }}">
-                        @else
-                            <div class="bg-light d-flex align-items-center justify-content-center"
-                                style="min-height: 200px;">
-                                <span class="text-muted small">No image</span>
+<div class="product-section--visual-grid products-listing-visual">
+    <div class="row g-3 g-md-4 products-grid-wrap" id="productsListingGrid" data-current-view="grid-3">
+        @forelse ($products as $product)
+            @php
+                $tone = $tones[$loop->index % 6];
+                $detailUrl = route('product.show', $product->slug);
+                $tagline = $product->short_description ?? null;
+                $tagline = $tagline ? \Illuminate\Support\Str::limit(trim(strip_tags($tagline)), 110) : null;
+            @endphp
+            <div class="product-col col-12 col-sm-6 col-lg-4">
+                <div class="product-visual-block product-catalog-card h-100">
+                    <a href="{{ $detailUrl }}" class="product-visual-block__media text-reset text-decoration-none d-block">
+                        <div class="product-card__frame product-card__frame--tone-{{ $tone }}">
+                            <div class="product-img product-img--visual">
+                                @if (!empty($product->featured_image))
+                                    <img src="{{ asset('storage/' . $product->featured_image) }}"
+                                        class="product-card__visual-img"
+                                        alt="{{ $product->name }}"
+                                        loading="lazy">
+                                @elseif (!empty($product->image))
+                                    <img src="{{ asset('storage/' . $product->image) }}"
+                                        class="product-card__visual-img"
+                                        alt="{{ $product->name }}"
+                                        loading="lazy">
+                                @else
+                                    <div class="product-card__visual-placeholder">
+                                        <span>No image</span>
+                                    </div>
+                                @endif
                             </div>
+                        </div>
+                    </a>
+                    <div class="product-visual-block__meta text-center">
+                        <a href="{{ $detailUrl }}" class="product-visual-block__title-link text-decoration-none">
+                            <h3 class="product-visual-block__title">{{ $product->name }}</h3>
+                        </a>
+                        @if (!empty($tagline))
+                            <p class="product-visual-block__tagline">{{ $tagline }}</p>
                         @endif
                     </div>
-                </a>
-                <div class="card-body text-center">
-                    <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none text-dark">
-                        <h6 class="fw-semibold product-card__title mb-0">{{ $product->name }}</h6>
-                    </a>
                 </div>
             </div>
-        </div>
-    @empty
-        <div class="col-12 text-center text-muted py-5">
-            No products to show here yet.
-        </div>
-    @endforelse
+        @empty
+            <div class="col-12 text-center text-muted py-5">
+                No products to show here yet.
+            </div>
+        @endforelse
+    </div>
 </div>
 
 @push('scripts')
@@ -78,12 +95,12 @@
                 var classes = colsForView(view);
                 cards.forEach(function(col) {
                     col.className = 'product-col ' + classes.join(' ');
-                    var card = col.querySelector('.product-card');
-                    if (card) {
+                    var block = col.querySelector('.product-visual-block');
+                    if (block) {
                         if (view === 'list') {
-                            card.classList.add('product-card--list');
+                            block.classList.add('product-visual-block--list');
                         } else {
-                            card.classList.remove('product-card--list');
+                            block.classList.remove('product-visual-block--list');
                         }
                     }
                 });

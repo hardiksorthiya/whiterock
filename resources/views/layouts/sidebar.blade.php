@@ -67,7 +67,7 @@
             <i class="bi bi-chevron-down small"></i>
         </a>
 
-        <div class="collapse {{ request()->routeIs('backend.enquiery-entries.*', 'backend.contact-entries.*') ? 'show' : '' }}"
+        <div class="collapse {{ request()->routeIs('backend.enquiery-entries.*', 'backend.contact-entries.*', 'backend.catalogue-downloads.*') ? 'show' : '' }}"
             id="enquiryMenu">
             <a href="{{ route('backend.enquiery-entries.index') }}"
                 class="{{ request()->routeIs('backend.enquiery-entries.*') ? 'active' : '' }} ps-5">
@@ -77,6 +77,11 @@
             <a href="{{ route('backend.contact-entries.index') }}"
                 class="{{ request()->routeIs('backend.contact-entries.*') ? 'active' : '' }} ps-5">
                 <span class="nav-label">Contact Enquiery</span>
+            </a>
+
+            <a href="{{ route('backend.catalogue-downloads.index') }}"
+                class="{{ request()->routeIs('backend.catalogue-downloads.*') ? 'active' : '' }} ps-5">
+                <span class="nav-label">Catalogue downloads</span>
             </a>
         </div>
 

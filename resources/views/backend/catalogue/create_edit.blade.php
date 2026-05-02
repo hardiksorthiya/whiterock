@@ -44,6 +44,24 @@
             </section>
 
             <section class="adm-card">
+                <h2 class="adm-card__title">Featured image</h2>
+                <div class="adm-card__body">
+                    <p class="small adm-muted mb-2">Optional cover image for lists and previews. JPG, PNG, WebP, GIF or SVG, max 2&nbsp;MB.</p>
+                    <input type="file" name="featured_image" class="form-control" accept="image/*">
+                    @if ($edit && data_get($catalogue, 'featured_image'))
+                        <div class="mt-3 d-flex flex-wrap align-items-center gap-3">
+                            <img class="adm-thumb" src="{{ asset('storage/' . $catalogue->featured_image) }}" alt="">
+                            <div class="form-check mb-0">
+                                <input class="form-check-input" type="checkbox" name="remove_featured_image" id="remove-featured-image" value="1"
+                                    @checked(old('remove_featured_image'))>
+                                <label class="form-check-label small" for="remove-featured-image">Remove featured image on save</label>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </section>
+
+            <section class="adm-card">
                 <h2 class="adm-card__title">Catalogue PDF</h2>
                 <div class="adm-card__body">
                     <input type="file" name="pdf" class="form-control" accept="application/pdf,.pdf"
