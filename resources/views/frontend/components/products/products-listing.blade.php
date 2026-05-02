@@ -40,10 +40,7 @@
                 </a>
                 <div class="card-body text-center">
                     <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none text-dark">
-                        <h6 class="fw-semibold product-card__title mb-2">{{ $product->name }}</h6>
-                    </a>
-                    <a href="{{ route('product.show', $product->slug) }}" class="btn btn-dark btn-sm mt-1">
-                        View product
+                        <h6 class="fw-semibold product-card__title mb-0">{{ $product->name }}</h6>
                     </a>
                 </div>
             </div>

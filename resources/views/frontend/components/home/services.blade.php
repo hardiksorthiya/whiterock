@@ -17,10 +17,10 @@
                         style="background-image: url('{{ asset('storage/' . $service->background_image) }}');">
 
                         <div class="sorath-card-content">
-                            <div class="sorath-icon">
+                            {{-- <div class="sorath-icon">
                                 <img src="{{ asset('storage/' . $service->icon) }}" alt="Services Icon"
                                     class="img-fluid">
-                            </div>
+                            </div> --}}
                             <h4>{{ $service->title }}</h4>
                             <p>{{ $service->description }}</p>
                             @if ($service->button_href)

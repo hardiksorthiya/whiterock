@@ -1,4 +1,4 @@
-<section class="counter-sorath pb-2">
+<section class="counter-sorath pb-5">
     <div class="container">
         <div class="row g-3 g-lg-4 text-center">
             <div class="col-lg-3 col-md-6 col-6">

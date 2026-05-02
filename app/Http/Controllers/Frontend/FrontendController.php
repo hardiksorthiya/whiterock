@@ -66,17 +66,28 @@ class FrontendController extends Controller
             return $app;
         });
         $latestGalleryImages = GalleryImage::query()->latest()->take(6)->get();
-        $products = Product::query()->where('is_active', true)->latest()->take(8)->get();
+
+        $productsQuery = Product::query()->where('is_active', true);
+        $products = $productsQuery->latest()->take(8)->get();
+
         $ceilingProducts = $this->featuredProductsForCategorySlugPrefix('ceiling');
-        $panelProducts = $this->featuredProductsForCategorySlugPrefix('panel');
-        $tGridProducts = $this->featuredProductsForCategorySlugPrefix('t-grid');
-        $soffitPanelProducts = $this->featuredProductsForCategorySlugPrefix('soffit-panel');
-        $flutedPanelProducts = $this->featuredProductsForCategorySlugPrefix('fluted-panel');
         $ceilingCategoryUrl = $this->categoryUrlForSlugPrefix('ceiling');
-        $panelCategoryUrl = $this->categoryUrlForSlugPrefix('panel');
-        $tGridCategoryUrl = $this->categoryUrlForSlugPrefix('t-grid');
+
+        $gypsumTileProducts = $this->featuredProductsForCategorySlugPrefix('gypsum-ceiling-tile');
+        $gypsumTileCategoryUrl = $this->categoryUrlForSlugPrefix('gypsum-ceiling-tile');
+
+        $tGridProducts = $this->featuredProductsForCategorySlugPrefix('ceiling-t-grid');
+        $tGridCategoryUrl = $this->categoryUrlForSlugPrefix('ceiling-t-grid');
+
+        $flutedPanelProducts = $this->featuredProductsForCategorySlugPrefix('pvc-fluted-panel');
+        $flutedPanelCategoryUrl = $this->categoryUrlForSlugPrefix('pvc-fluted-panel');
+
+        $soffitPanelProducts = $this->featuredProductsForCategorySlugPrefix('soffit-panel');
         $soffitPanelCategoryUrl = $this->categoryUrlForSlugPrefix('soffit-panel');
-        $flutedPanelCategoryUrl = $this->categoryUrlForSlugPrefix('fluted-panel');
+
+        $panelProducts = $this->featuredProductsForCategorySlugPrefix('panel');
+        $panelCategoryUrl = $this->categoryUrlForSlugPrefix('panel');
+
         $productCategories = ProductCategory::query()->where('is_active', true)->latest()->get();
         $footerPages = Page::query()->where('is_active', true)->latest()->get();
         $googleReviewsData = $this->fetchGooglePlaceReviews($setting);
@@ -91,11 +102,13 @@ class FrontendController extends Controller
             'footerPages',
             'products',
             'ceilingProducts',
+            'gypsumTileProducts',
             'panelProducts',
             'tGridProducts',
             'soffitPanelProducts',
             'flutedPanelProducts',
             'ceilingCategoryUrl',
+            'gypsumTileCategoryUrl',
             'panelCategoryUrl',
             'tGridCategoryUrl',
             'soffitPanelCategoryUrl',
@@ -390,6 +403,66 @@ class FrontendController extends Controller
             'name_desc' => $query->orderByDesc('name'),
             default => $query->latest(),
         };
+    }
+
+    /**
+     * Active product category IDs for the Gypsum Ceiling Tile home section (ceiling-products).
+     * Matches slug prefixes used in admin: gypsum-tile, gypsum-ceiling-tile, ceiling, etc.
+     */
+    private function homeGypsumCeilingCategoryIds(): Collection
+    {
+        $prefixes = ['gypsum-tile', 'gypsum-ceiling-tile', 'ceiling'];
+
+        return ProductCategory::query()
+            ->where('is_active', true)
+            ->where(function ($q) use ($prefixes) {
+                foreach ($prefixes as $prefix) {
+                    $q->orWhere(function ($q2) use ($prefix) {
+                        $q2->where('slug', $prefix)
+                            ->orWhere('slug', 'like', $prefix.'-%');
+                    });
+                }
+            })
+            ->pluck('id');
+    }
+
+    /**
+     * Featured products in any of the given category IDs (for the ceiling tile home grid).
+     */
+    private function featuredProductsInCategoryIds(Collection $categoryIds): Collection
+    {
+        if ($categoryIds->isEmpty()) {
+            return collect();
+        }
+
+        return Product::query()
+            ->where('is_active', true)
+            ->where('is_featured', true)
+            ->whereHas('categories', function ($q) use ($categoryIds) {
+                $q->whereIn('product_categories.id', $categoryIds);
+            })
+            ->latest()
+            ->take(4)
+            ->get();
+    }
+
+    private function categoryUrlForCategoryIds(Collection $categoryIds): string
+    {
+        if ($categoryIds->isEmpty()) {
+            return route('products');
+        }
+
+        $category = ProductCategory::query()
+            ->where('is_active', true)
+            ->whereIn('id', $categoryIds)
+            ->orderByDesc('id')
+            ->first();
+
+        if ($category === null) {
+            return route('products');
+        }
+
+        return route('product-category.show', $category->slug);
     }
 
     /**

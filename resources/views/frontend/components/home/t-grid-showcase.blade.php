@@ -3,9 +3,10 @@
     'slugPrefix' => 't-grid',
     'sectionDescription' => 'The T-Grid system forms the backbone of a strong and aligned ceiling structure. A precision-built framework that ensures strength, alignment, and efficiency—forming the foundation of every reliable ceiling system.',
     'rightSliderImages' => [
-        asset('images/home/t-grid/n1.jpg'),
-        asset('images/home/t-grid/n2.jpg'),
-        asset('images/home/t-grid/n3.jpg'),
-        asset('images/home/t-grid/n4.jpg'),
+        asset('images/home/t-grid/t2.jpg'),
+        asset('images/home/t-grid/t1.jpg'),
+        asset('images/home/t-grid/t3.jpg'),
+        asset('images/home/t-grid/t4.jpg'),
+        asset('images/home/t-grid/t5.jpg'),
     ],
 ])

@@ -59,9 +59,9 @@
                     @endphp
                     @if (!empty($waLink))
                         <a href="{{ $waLink }}" target="_blank" rel="noopener noreferrer"
-                            class="btn btn-dark home-contact-us__wa-btn">
-                            <i class="bi bi-whatsapp"></i>
-                            <span>Get B2b Price List</span>
+                            class="btn btn-lg home-contact-us__wa-btn">
+                            <i class="bi bi-whatsapp" aria-hidden="true"></i>
+                            <span>Get B2B price list</span>
                         </a>
                     @endif
                 </div>
