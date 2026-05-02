@@ -22,7 +22,10 @@
         'Emboss Height' => $product->emboss_height,
         'Pattern Size' => $product->pattern_size,
         'Installation' => $product->installation,
-    ])->filter(fn($value) => filled($value));
+        'Thickness' => $product->thickness,
+        'QTY' => $product->qty,
+        'Material' => $product->material,
+    ])->filter(fn ($value) => filled($value));
 @endphp
 
 @section('content')
@@ -53,7 +56,7 @@
                             @if ($mainImagePath)
                                 <img src="{{ asset('storage/' . $mainImagePath) }}" alt="{{ $product->name }}"
                                     class="img-fluid w-100 product-detail__main-img" id="productMainImage"
-                                    style="max-height: 480px; object-fit: contain;">
+                                    style="max-height: 650px; object-fit: contain;">
                             @else
                                 <div class="d-flex align-items-center justify-content-center text-muted"
                                     style="min-height: 280px;">No image</div>
@@ -75,11 +78,10 @@
 
                 {{-- Right: meta + actions --}}
                 <div class="col-lg-6">
-                    <div class="product-detail__info-card p-4 p-lg-5">
-                        <h2 class="product-detail__title fw-bold mb-3">{{ $product->name }}</h2>
+                    <div class="product-detail__info-card p-3">
+                        <h2 class="product-detail__title fw-bold">{{ $product->name }}</h2>
 
-                        <div class="mb-4">
-                            <span class="text-muted small text-uppercase d-block mb-2">Categories</span>
+                        <div class="mb-1">
                             <div class="d-flex flex-wrap gap-2">
                                 @forelse ($product->categories as $cat)
                                     <a href="{{ route('product-category.show', $cat->slug) }}"
@@ -94,9 +96,10 @@
                                 @endforelse
                             </div>
                         </div>
+                        <hr class="my-2">
 
                         @if (!empty($product->short_description))
-                            <div class="product-detail__short mb-4">
+                            <div class="product-detail__short mb-2">
                                 {!! $product->short_description !!}
                             </div>
                         @endif
@@ -104,7 +107,7 @@
                        
 
                         @if ($productSpecs->isNotEmpty())
-                            <div class="product-detail__specs mb-4">
+                            <div class="product-detail__specs mb-2">
                                 @foreach ($productSpecs as $label => $value)
                                     <div class="product-detail__spec-row">
                                         <div class="product-detail__spec-label">{{ $label }}</div>
@@ -114,56 +117,58 @@
                             </div>
                         @endif
 
-                        <div class="product-detail__highlights mb-4">
-                            <div class="row g-3">
-                                <div class="col-12 col-sm-6">
-                                    <div class="product-detail__highlight-item">
-                                        <span class="product-detail__highlight-icon"><i class="bi bi-shield-check"></i></span>
-                                        <span>Warranty 5 Year</span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="product-detail__highlight-item">
-                                        <span class="product-detail__highlight-icon"><i class="bi bi-gear-wide-connected"></i></span>
-                                        <span>Easy To Install</span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="product-detail__highlight-item">
-                                        <span class="product-detail__highlight-icon"><i class="bi bi-globe2"></i></span>
-                                        <span>Worldwide Shipping</span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="product-detail__highlight-item">
-                                        <span class="product-detail__highlight-icon"><i class="bi bi-fire"></i></span>
-                                        <span>Class "A" Fire Rated</span>
-                                    </div>
+                        @php
+                            $detailFeatures = $product->features->sortBy(
+                                fn ($f) => sprintf('%010d|%s', (int) $f->sort_order, strtolower($f->title))
+                            );
+                        @endphp
+                        @if ($detailFeatures->isNotEmpty())
+                            <div class="product-detail__highlights mb-2">
+                                <div class="row g-3">
+                                    @foreach ($detailFeatures as $detailFeature)
+                                        <div class="col-12 col-sm-6">
+                                            <div class="product-detail__highlight-item">
+                                                <span class="product-detail__highlight-icon">
+                                                    @if ($detailFeature->image)
+                                                        <img src="{{ asset('storage/' . $detailFeature->image) }}"
+                                                            alt="" width="40" height="40" loading="lazy">
+                                                    @else
+                                                        <i class="bi bi-check-lg" aria-hidden="true"></i>
+                                                    @endif
+                                                </span>
+                                                <span>{{ $detailFeature->title }}</span>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
-                        </div>
+                        @endif
+                        <hr class="my-2">
 
-                        <div class="mb-4">
+
+                        <div class="mb-2">
                             <label for="productQuantity" class="form-label fw-semibold">Quantity</label>
                             <input type="number" name="quantity" id="productQuantity"
                                 class="form-control product-detail__qty" min="1" step="1" value="1"
                                 inputmode="numeric">
                         </div>
 
-                        <div class="d-flex flex-wrap gap-2 align-items-center">
-                            <button type="button" id="productEnquiryBtn" class="btn product-detail__btn-primary px-4 py-2" data-bs-toggle="modal"
-                                data-bs-target="#productEnquiryModal">
+                        <div class="d-flex flex-wrap gap-2 gap-md-3 align-items-center product-detail__cta-row">
+                            <button type="button" id="productEnquiryBtn" class="btn product-detail__cta-highlight px-4 py-2"
+                                data-bs-toggle="modal" data-bs-target="#productEnquiryModal">
                                 Enquiry
                             </button>
                             @if (!empty($product->catalogue_path))
-                                <a href="{{ asset('storage/' . $product->catalogue_path) }}" class="btn product-detail__btn-outline px-4 py-2"
+                                <a href="{{ asset('storage/' . $product->catalogue_path) }}"
+                                    class="btn product-detail__cta-highlight px-4 py-2 text-decoration-none"
                                     target="_blank" rel="noopener noreferrer">
                                     <i class="bi bi-file-earmark-pdf me-1"></i> Catalogue
                                 </a>
                             @endif
                             @if (!empty($setting->whatsapp_url))
-                                <a href="#" id="productWhatsappBtn" class="btn btn-success px-4 py-2" target="_blank"
-                                    rel="noopener noreferrer" data-wa-url="{{ $setting->whatsapp_url }}"
+                                <a href="#" id="productWhatsappBtn"
+                                    class="btn product-detail__cta-highlight product-detail__cta-highlight--whatsapp px-4 py-2 text-decoration-none"
+                                    target="_blank" rel="noopener noreferrer" data-wa-url="{{ $setting->whatsapp_url }}"
                                     data-product-name="{{ $product->name }}" data-product-sku="{{ $product->sku ?? '' }}">
                                     <i class="bi bi-whatsapp me-1"></i> WhatsApp
                                 </a>
@@ -256,7 +261,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn product-detail__btn-primary">Submit</button>
+                        <button type="submit" class="btn product-detail__cta-highlight px-4">Submit</button>
                     </div>
                 </form>
             </div>

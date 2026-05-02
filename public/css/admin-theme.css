@@ -40,7 +40,7 @@ body, h1, h2, h3, h4, h5, h6, p, label, a, button,small, div {
 
 .adm-head h1 {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--adm-sorath-secondary);
     margin: 0;
     letter-spacing: -0.02em;
@@ -71,7 +71,7 @@ body, h1, h2, h3, h4, h5, h6, p, label, a, button,small, div {
     margin: 0;
     padding: 0.85rem 1.25rem;
     font-size: 0.7rem;
-    font-weight: 700;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--adm-sorath-color);
@@ -198,7 +198,7 @@ body, h1, h2, h3, h4, h5, h6, p, label, a, button,small, div {
 
 .adm-page-title {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--adm-sorath-secondary);
     margin: 0;
     letter-spacing: -0.02em;
@@ -256,7 +256,7 @@ body, h1, h2, h3, h4, h5, h6, p, label, a, button,small, div {
 .adm-table thead th {
     padding: 0.9rem 1rem;
     font-size: 0.7rem;
-    font-weight: 700;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--adm-sorath-muted);
@@ -425,7 +425,7 @@ body, h1, h2, h3, h4, h5, h6, p, label, a, button,small, div {
 
 .adm-cat-dd__head {
     font-size: 0.7rem;
-    font-weight: 700;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--adm-sorath-color);

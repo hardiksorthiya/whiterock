@@ -25,7 +25,7 @@
             <i class="bi bi-chevron-down small"></i>
         </a>
 
-        <div class="collapse {{ request()->routeIs('backend.product-categories.*', 'backend.products.*') ? 'show' : '' }}"
+        <div class="collapse {{ request()->routeIs('backend.product-categories.*', 'backend.products.*', 'backend.product-features.*') ? 'show' : '' }}"
             id="productMenu">
 
             <a href="{{ route('backend.product-categories.index') }}" class="ps-5">
@@ -34,6 +34,11 @@
 
             <a href="{{ route('backend.products.index') }}" class="ps-5">
                 <span class="nav-label">Products</span>
+            </a>
+
+            <a href="{{ route('backend.product-features.index') }}"
+                class="{{ request()->routeIs('backend.product-features.*') ? 'active' : '' }} ps-5">
+                <span class="nav-label">Product features</span>
             </a>
 
         </div>

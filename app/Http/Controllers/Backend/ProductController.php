@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\ProductFeature;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -35,10 +36,12 @@ class ProductController extends Controller
     {
         $categories = ProductCategory::orderBy('name')->get();
         $defaultCategory = ProductCategory::where('is_active', true)->orderBy('name')->first();
+        $productFeatures = ProductFeature::query()->orderBy('sort_order')->orderBy('title')->get();
 
         return view('backend.products.create_edit', [
             'categories' => $categories,
             'defaultCategory' => $defaultCategory,
+            'productFeatures' => $productFeatures,
             'product' => null,
         ]);
     }
@@ -61,6 +64,9 @@ class ProductController extends Controller
             'emboss_height' => 'nullable|string|max:255',
             'pattern_size' => 'nullable|string|max:255',
             'installation' => 'nullable|string|max:255',
+            'thickness' => 'nullable|string|max:255',
+            'qty' => 'nullable|string|max:255',
+            'material' => 'nullable|string|max:255',
             'is_active' => 'boolean',
             'is_featured' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -70,6 +76,8 @@ class ProductController extends Controller
             'gallery_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'category_ids' => 'nullable|array',
             'category_ids.*' => 'integer|exists:product_categories,id',
+            'feature_ids' => 'nullable|array',
+            'feature_ids.*' => 'integer|exists:product_features,id',
         ]);
 
         $data = $request->only([
@@ -85,6 +93,9 @@ class ProductController extends Controller
             'emboss_height',
             'pattern_size',
             'installation',
+            'thickness',
+            'qty',
+            'material',
             'is_active',
         ]);
 
@@ -114,6 +125,7 @@ class ProductController extends Controller
 
         $product = Product::create($data);
         $product->categories()->sync($categoryIds);
+        $product->features()->sync($this->normalizedFeatureIds($request));
         $this->storeGalleryUploads($request, $product);
 
         return redirect()->route('backend.products.index')->with('success', 'Product created successfully.');
@@ -124,11 +136,12 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::with(['images', 'categories'])->findOrFail($id);
+        $product = Product::with(['images', 'categories', 'features'])->findOrFail($id);
         $categories = ProductCategory::orderBy('name')->get();
         $defaultCategory = ProductCategory::where('is_active', true)->orderBy('name')->first();
+        $productFeatures = ProductFeature::query()->orderBy('sort_order')->orderBy('title')->get();
 
-        return view('backend.products.create_edit', compact('product', 'categories', 'defaultCategory'));
+        return view('backend.products.create_edit', compact('product', 'categories', 'defaultCategory', 'productFeatures'));
     }
 
     /**
@@ -151,6 +164,9 @@ class ProductController extends Controller
             'emboss_height' => 'nullable|string|max:255',
             'pattern_size' => 'nullable|string|max:255',
             'installation' => 'nullable|string|max:255',
+            'thickness' => 'nullable|string|max:255',
+            'qty' => 'nullable|string|max:255',
+            'material' => 'nullable|string|max:255',
             'is_active' => 'boolean',
             'is_featured' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -163,6 +179,8 @@ class ProductController extends Controller
             'remove_gallery_ids.*' => 'integer|exists:product_images,id',
             'category_ids' => 'nullable|array',
             'category_ids.*' => 'integer|exists:product_categories,id',
+            'feature_ids' => 'nullable|array',
+            'feature_ids.*' => 'integer|exists:product_features,id',
         ]);
 
         $data = $request->only([
@@ -178,6 +196,9 @@ class ProductController extends Controller
             'emboss_height',
             'pattern_size',
             'installation',
+            'thickness',
+            'qty',
+            'material',
             'is_active',
         ]);
 
@@ -225,6 +246,7 @@ class ProductController extends Controller
 
         $product->update($data);
         $product->categories()->sync($categoryIds);
+        $product->features()->sync($this->normalizedFeatureIds($request));
 
         $this->removeGalleryImages($request, $product);
         $this->storeGalleryUploads($request, $product);
@@ -356,5 +378,15 @@ class ProductController extends Controller
         $defaultId = ProductCategory::getDefaultId();
 
         return $defaultId !== null ? [$defaultId] : [];
+    }
+
+    /**
+     * @return list<int>
+     */
+    protected function normalizedFeatureIds(Request $request): array
+    {
+        $raw = $request->input('feature_ids', []);
+
+        return array_values(array_unique(array_filter(array_map('intval', (array) $raw))));
     }
 }

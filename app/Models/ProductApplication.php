@@ -9,6 +9,8 @@ class ProductApplication extends Model
 {
     protected $fillable = [
         'name',
+        'feature_image',
+        'banner_image',
         'gallery_category_id',
         'gallery_category_ids',
     ];

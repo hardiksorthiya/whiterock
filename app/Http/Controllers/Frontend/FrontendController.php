@@ -204,7 +204,7 @@ class FrontendController extends Controller
         $product = Product::query()
             ->where('is_active', true)
             ->where('slug', $slug)
-            ->with(['categories', 'images', 'category'])
+            ->with(['categories', 'images', 'category', 'features'])
             ->firstOrFail();
 
         $categoryIds = $product->categories->pluck('id');
@@ -240,11 +240,115 @@ class FrontendController extends Controller
     public function gallery()
     {
         $setting = Setting::site();
-        $categories = GalleryCategory::with('images')->get();
+        $categories = GalleryCategory::with('images')->orderBy('name')->get();
         $latestGalleryImages = GalleryImage::query()->latest()->take(6)->get();
         $footerPages = Page::query()->where('is_active', true)->latest()->get();
 
-        return view('frontend.pages.gallery', compact('setting', 'categories', 'latestGalleryImages', 'footerPages'));
+        $productApplications = ProductApplication::query()->latest()->get();
+        $galleryApplicationCards = $this->galleryApplicationIndexCards($productApplications);
+
+        return view('frontend.pages.gallery', compact(
+            'setting',
+            'categories',
+            'latestGalleryImages',
+            'footerPages',
+            'galleryApplicationCards'
+        ));
+    }
+
+    public function galleryApplication(ProductApplication $application)
+    {
+        $setting = Setting::site();
+        $latestGalleryImages = GalleryImage::query()->latest()->take(6)->get();
+        $footerPages = Page::query()->where('is_active', true)->latest()->get();
+
+        $ids = $this->applicationGalleryCategoryIds($application);
+        $categoriesById = GalleryCategory::query()
+            ->with('images')
+            ->whereIn('id', $ids)
+            ->get()
+            ->keyBy('id');
+
+        $galleryCategories = collect($ids)
+            ->map(fn ($id) => $categoriesById->get($id))
+            ->filter()
+            ->values();
+
+        return view('frontend.pages.gallery-application', compact(
+            'setting',
+            'latestGalleryImages',
+            'footerPages',
+            'application',
+            'galleryCategories'
+        ));
+    }
+
+    /**
+     * @return list<int>
+     */
+    protected function applicationGalleryCategoryIds(ProductApplication $application): array
+    {
+        $ids = $application->gallery_category_ids ?? [];
+        if ($ids === [] && ! empty($application->gallery_category_id)) {
+            $ids = [$application->gallery_category_id];
+        }
+
+        return array_values(array_unique(array_map('intval', (array) $ids)));
+    }
+
+    /**
+     * Gallery index: cards linking to per-application gallery pages.
+     *
+     * @return list<array{id: int, name: string, cover: string}>
+     */
+    protected function galleryApplicationIndexCards(Collection $productApplications): array
+    {
+        $cards = [];
+
+        $allCategoryIds = $productApplications
+            ->flatMap(fn ($app) => $this->applicationGalleryCategoryIds($app))
+            ->unique()
+            ->filter()
+            ->values();
+
+        $categoriesById = GalleryCategory::query()
+            ->with('images')
+            ->whereIn('id', $allCategoryIds)
+            ->get()
+            ->keyBy('id');
+
+        foreach ($productApplications as $app) {
+            $ids = $this->applicationGalleryCategoryIds($app);
+
+            $mergedUrls = [];
+            foreach ($ids as $cid) {
+                $cat = $categoriesById->get($cid);
+                if ($cat === null) {
+                    continue;
+                }
+                foreach ($cat->images as $img) {
+                    if (empty($img->image)) {
+                        continue;
+                    }
+                    $url = asset('storage/'.$img->image);
+                    if (! in_array($url, $mergedUrls, true)) {
+                        $mergedUrls[] = $url;
+                    }
+                }
+            }
+
+            $cover = ! empty($app->feature_image)
+                ? asset('storage/'.$app->feature_image)
+                : ($mergedUrls[0] ?? asset('images/nproduct.jpeg'));
+
+            $cards[] = [
+                'id' => $app->id,
+                'name' => $app->name,
+                'cover' => $cover,
+            ];
+        }
+
+        return $cards;
     }
 
     public function page(string $slug)
@@ -556,5 +660,50 @@ class FrontendController extends Controller
             'catalogues',
             'selectedCatalogueCategory'
         ));
+    }
+
+    public function gypsumTiles()
+    {
+        $setting = Setting::site();
+        $footerPages = Page::query()->where('is_active', true)->latest()->get();
+        $gypsumPageProducts = $this->productsForCategorySlugPrefix('gypsum-ceiling-tile', 4);
+        $gypsumPageCategoryUrl = $this->categoryUrlForSlugPrefix('gypsum-ceiling-tile');
+
+        return view('frontend.pages.hpage.gypsum', compact(
+            'setting',
+            'footerPages',
+            'gypsumPageProducts',
+            'gypsumPageCategoryUrl'
+        ));
+    }
+
+    /**
+     * Active products in the newest matching category by slug prefix (e.g. gypsum-ceiling-tile).
+     *
+     * @return Collection<int, Product>
+     */
+    private function productsForCategorySlugPrefix(string $slugPrefix, int $limit = 4): Collection
+    {
+        $category = ProductCategory::query()
+            ->where('is_active', true)
+            ->where(function ($q) use ($slugPrefix) {
+                $q->where('slug', $slugPrefix)
+                    ->orWhere('slug', 'like', $slugPrefix.'-%');
+            })
+            ->orderByDesc('id')
+            ->first();
+
+        if ($category === null) {
+            return collect();
+        }
+
+        return Product::query()
+            ->where('is_active', true)
+            ->whereHas('categories', function ($q) use ($category) {
+                $q->where('product_categories.id', $category->id);
+            })
+            ->latest()
+            ->take($limit)
+            ->get();
     }
 }

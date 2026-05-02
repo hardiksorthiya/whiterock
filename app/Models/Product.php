@@ -32,6 +32,9 @@ class Product extends Model
         'emboss_height',
         'pattern_size',
         'installation',
+        'thickness',
+        'qty',
+        'material',
     ];
 
     public function category(): BelongsTo
@@ -52,5 +55,18 @@ class Product extends Model
     public function images(): HasMany
     {
         return $this->hasMany(ProductImage::class)->orderBy('sort_order')->orderBy('id');
+    }
+
+    public function features(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            ProductFeature::class,
+            'product_product_feature',
+            'product_id',
+            'product_feature_id'
+        )
+            ->withTimestamps()
+            ->orderBy('product_features.sort_order')
+            ->orderBy('product_features.title');
     }
 }

@@ -1,38 +1,38 @@
 @extends('frontend.layouts.app')
 
+@php
+    $breadcrumbCrumbs = [
+        ['label' => 'Home', 'url' => route('home')],
+        ['label' => 'Gallery', 'url' => route('gallery')],
+        ['label' => $application->name, 'url' => null],
+    ];
+@endphp
+
 @section('content')
     @include('frontend.components.breadcrumb', [
-        'title' => 'GALLERY',
+        'title' => strtoupper($application->name),
+        'subtitle' => 'Browse photos by gallery category linked to this application.',
         'image' => asset('images/ngallery.jpeg'),
+        'crumbs' => $breadcrumbCrumbs,
     ])
 
     <div class="container py-5">
+        <div class="mb-4">
+            <a href="{{ route('gallery') }}" class="gallery-application__back text-decoration-none fw-semibold">
+                <i class="bi bi-arrow-left me-1"></i> All applications
+            </a>
+        </div>
 
-        @if (! empty($galleryApplicationCards))
-            <div class="text-center mb-4 mb-lg-5">
-                <p class="gallery-page__lead text-secondary mb-0 mx-auto" style="max-width: 42rem;">
-                    Choose an application to open its gallery. Inside, use category tabs — <strong>All</strong> or each linked gallery category — just like before.
-                </p>
-            </div>
-
-            <div class="row gallery-page-apps justify-content-center g-4">
-                @foreach ($galleryApplicationCards as $card)
-                    <div class="col-sm-6 col-xl-4">
-                        <a href="{{ route('gallery.application.show', $card['id']) }}"
-                            class="home-applications__card gallery-page__app-card d-block w-100 text-decoration-none text-reset"
-                            aria-label="Open gallery for {{ $card['name'] }}">
-                            <img src="{{ $card['cover'] }}" alt="{{ $card['name'] }}" class="home-applications__card-img">
-                            <span class="home-applications__card-name">{{ $card['name'] }}</span>
-                        </a>
-                    </div>
-                @endforeach
+        @if ($galleryCategories->isEmpty())
+            <div class="alert alert-light border text-center py-5 mb-0">
+                <p class="mb-2 fw-semibold text-secondary">No gallery categories linked to this application yet.</p>
+                <p class="small text-muted mb-0">Update it in the backend under Appearance → Application.</p>
             </div>
         @else
-            {{-- Fallback when no backend applications exist --}}
             <div class="text-center mb-4">
                 <button class="filter-btn active" type="button" data-filter="all">All</button>
 
-                @foreach ($categories as $cat)
+                @foreach ($galleryCategories as $cat)
                     <button class="filter-btn" type="button" data-filter="cat-{{ $cat->id }}">
                         {{ $cat->name }}
                     </button>
@@ -40,10 +40,11 @@
             </div>
 
             <div class="row gallery-container">
-                @foreach ($categories as $cat)
+                @foreach ($galleryCategories as $cat)
                     @foreach ($cat->images as $img)
                         <div class="col-md-4 mb-4 gallery-item cat-{{ $cat->id }}">
-                            <img src="{{ asset('storage/' . $img->image) }}" class="img-fluid rounded" alt="">
+                            <img src="{{ asset('storage/' . $img->image) }}" class="img-fluid rounded"
+                                alt="{{ $cat->name }}">
                         </div>
                     @endforeach
                 @endforeach
@@ -68,9 +69,7 @@
                 });
             </script>
         @endif
-
     </div>
 
     @include('frontend.components.home.sticky-enquiry')
-
 @endsection

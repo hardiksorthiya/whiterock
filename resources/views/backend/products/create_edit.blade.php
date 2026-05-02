@@ -7,6 +7,12 @@
         $selectedCategoryIds = [];
     }
     $selectedCategoryIds = array_map('intval', $selectedCategoryIds);
+    $selectedFeatureIds = old('feature_ids', $edit ? $product->features->pluck('id')->all() : []);
+    if (! is_array($selectedFeatureIds)) {
+        $selectedFeatureIds = [];
+    }
+    $selectedFeatureIds = array_map('intval', $selectedFeatureIds);
+    $productFeatures = $productFeatures ?? collect();
 @endphp
 
 @section('page_title', $edit ? 'Edit product' : 'New product')
@@ -38,6 +44,9 @@
                         ['text', 'emboss_height', 'Emboss Height'],
                         ['text', 'pattern_size', 'Pattern Size'],
                         ['text', 'installation', 'Installation'],
+                        ['text', 'thickness', 'Thickness'],
+                        ['text', 'qty', 'QTY'],
+                        ['text', 'material', 'Material'],
                     ]],
                     ['SEO', [
                         ['text', 'meta_title', 'Meta title'],
@@ -114,6 +123,64 @@
                                     <div class="adm-cat-dd__foot border-top py-2 px-3 d-flex justify-content-end">
                                         <button type="button" class="btn btn-link btn-sm text-decoration-none p-0 adm-muted"
                                             id="adm-cat-dd-clear" style="font-size: 0.8125rem;">
+                                            Clear selection
+                                        </button>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="adm-card adm-card--overflow-visible">
+                    <h2 class="adm-card__title">Product features</h2>
+                    <div class="adm-card__body">
+                        <p class="small adm-muted mb-3">Optional highlights on the product page (icon/image + title).
+                            Manage the library under <strong>Products → Product features</strong>.</p>
+
+                        <label class="visually-hidden" for="adm-pf-dd-btn">Product features</label>
+                        <div id="adm-product-pf-dd" class="dropdown adm-cat-dd w-100" data-bs-auto-close="outside">
+                            <button type="button" id="adm-pf-dd-btn"
+                                class="dropdown-toggle adm-cat-dd__toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false" aria-haspopup="true" aria-controls="adm-pf-dd-panel">
+                                <span class="adm-cat-dd__label-text is-placeholder" data-adm-pf-label>Select product features…</span>
+                                <i class="bi bi-chevron-down adm-cat-dd__chev" aria-hidden="true"></i>
+                            </button>
+                            <div id="adm-pf-dd-panel" class="dropdown-menu adm-cat-dd__menu w-100">
+                                <div class="adm-cat-dd__head border-bottom py-2 px-3">
+                                    Choose one or more
+                                </div>
+                                @if ($productFeatures->isEmpty())
+                                    <div class="adm-cat-dd__empty px-3 py-2">
+                                        No features yet.
+                                        <a href="{{ route('backend.product-features.create') }}">Create features</a> first.
+                                    </div>
+                                @else
+                                    <div class="adm-cat-dd__scroll">
+                                        @foreach ($productFeatures as $pf)
+                                            <div class="adm-cat-dd__item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input adm-pf-dd__cb" type="checkbox"
+                                                        name="feature_ids[]" value="{{ $pf->id }}"
+                                                        id="adm-pf-chk-{{ $pf->id }}"
+                                                        data-adm-pf-name="{{ e($pf->title) }}"
+                                                        @checked(in_array((int) $pf->id, $selectedFeatureIds, true))>
+                                                    <label class="form-check-label d-flex align-items-center gap-2"
+                                                        for="adm-pf-chk-{{ $pf->id }}">
+                                                        @if ($pf->image)
+                                                            <img src="{{ asset('storage/' . $pf->image) }}" alt=""
+                                                                width="24" height="24" style="object-fit:contain;">
+                                                        @endif
+                                                        <span>{{ $pf->title }}</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="adm-cat-dd__foot border-top py-2 px-3 d-flex justify-content-end">
+                                        <button type="button" class="btn btn-link btn-sm text-decoration-none p-0 adm-muted"
+                                            id="adm-pf-dd-clear" style="font-size: 0.8125rem;">
                                             Clear selection
                                         </button>
                                     </div>
@@ -265,6 +332,57 @@
                 });
             }
             updateLabel();
+        })();
+
+        (function() {
+            var root = document.getElementById('adm-product-pf-dd');
+            if (!root) return;
+            var label = root.querySelector('[data-adm-pf-label]');
+            var boxes = root.querySelectorAll('.adm-pf-dd__cb');
+            var clearBtn = document.getElementById('adm-pf-dd-clear');
+
+            function updatePfLabel() {
+                var names = [];
+                boxes.forEach(function(cb) {
+                    if (cb.checked) names.push(cb.getAttribute('data-adm-pf-name') || '');
+                });
+                if (!label) return;
+                label.classList.toggle('is-placeholder', names.length === 0);
+                if (names.length === 0) {
+                    label.textContent = 'Select product features…';
+                    return;
+                }
+                if (names.length <= 3) {
+                    label.textContent = names.join(', ');
+                    return;
+                }
+                label.textContent = names.length + ' features selected';
+            }
+
+            boxes.forEach(function(cb) {
+                cb.addEventListener('change', updatePfLabel);
+            });
+            root.querySelectorAll('.adm-cat-dd__item').forEach(function(item) {
+                if (!item.querySelector('.adm-pf-dd__cb')) return;
+                item.addEventListener('click', function(e) {
+                    if (e.target.closest('input[type="checkbox"], label')) return;
+                    var cb = item.querySelector('.adm-pf-dd__cb');
+                    if (!cb) return;
+                    cb.checked = !cb.checked;
+                    updatePfLabel();
+                });
+            });
+            if (clearBtn) {
+                clearBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    boxes.forEach(function(cb) {
+                        cb.checked = false;
+                    });
+                    updatePfLabel();
+                });
+            }
+            updatePfLabel();
         })();
     </script>
 @endpush

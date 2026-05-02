@@ -4464,7 +4464,7 @@ fieldset:disabled .btn {
 
 .nav-underline .nav-link.active,
 .nav-underline .show>.nav-link {
-    font-weight: 700;
+    font-weight: 500;
     color: var(--bs-nav-underline-link-active-color);
     border-bottom-color: currentcolor
 }
@@ -5493,7 +5493,7 @@ fieldset:disabled .btn {
     --bs-badge-padding-x: 0.65em;
     --bs-badge-padding-y: 0.35em;
     --bs-badge-font-size: 0.75em;
-    --bs-badge-font-weight: 700;
+    --bs-badge-font-weight: 500;
     --bs-badge-color: #fff;
     --bs-badge-border-radius: var(--bs-border-radius);
     display: inline-block;
@@ -5541,7 +5541,7 @@ fieldset:disabled .btn {
 }
 
 .alert-link {
-    font-weight: 700;
+    font-weight: 500;
     color: var(--bs-alert-link-color)
 }
 

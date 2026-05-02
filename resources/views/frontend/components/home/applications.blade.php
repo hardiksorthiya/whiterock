@@ -19,6 +19,7 @@
 
     $applicationCards = collect();
     $sectionTitle = 'Product Applications';
+    $applicationsBannerUrl = null;
 
     if (!empty($productApplications) && method_exists($productApplications, 'isNotEmpty') && $productApplications->isNotEmpty()) {
         if (is_array($applicationIds) && !empty($applicationIds)) {
@@ -37,6 +38,9 @@
                 : ((string) $names->first() . ' +' . ($names->count() - 1) . ' more');
         }
 
+        $bannerApp = $productApplications->first(fn ($a) => !empty($a->banner_image));
+        $applicationsBannerUrl = $bannerApp ? asset('storage/'.$bannerApp->banner_image) : null;
+
         // Explode multi-selected categories into separate cards (so each card shows only one gallery category like before).
         $applicationCards = $productApplications
             ->flatMap(function ($app) {
@@ -49,9 +53,11 @@
 
                     $imageUrls = $images->map(fn ($image) => asset('storage/' . $image->image))->values()->all();
 
-                    $cover = !empty($imageUrls[0])
-                        ? $imageUrls[0]
-                        : asset('images/nproduct.jpeg');
+                    $cover = !empty($app->feature_image)
+                        ? asset('storage/'.$app->feature_image)
+                        : (!empty($imageUrls[0])
+                            ? $imageUrls[0]
+                            : asset('images/nproduct.jpeg'));
 
                     return [
                         // Unique key per (application, category) pair.
@@ -89,10 +95,12 @@
 @endphp
 
 @if ($applicationCards->isNotEmpty())
-    <section class="home-applications py-5 {{ (is_numeric($suffix) && (int) $suffix === 2) ? 'home-applications--ltr' : '' }}">
+    <section
+        class="home-applications py-5 {{ (is_numeric($suffix) && (int) $suffix === 2) ? 'home-applications--ltr' : '' }} {{ $applicationsBannerUrl ? 'home-applications--has-banner' : '' }}"
+        @if ($applicationsBannerUrl) style="background-image: url('{{ $applicationsBannerUrl }}')" @endif>
         <div class="container">
             <div class="text-center mb-4">
-                <h2 class="sorath-title mb-2">{{ $sectionTitle }}</h2>
+                <h2 class="sorath-title mb-2">Product Application Of {{ $sectionTitle }}</h2>
             </div>
         </div>
 

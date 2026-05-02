@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\ProductApplicationController;
 use App\Http\Controllers\Backend\ProductCategoryController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ProductFeatureController;
 use App\Http\Controllers\Backend\ProductEnquiryController as BackendProductEnquiryController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\ServiceController;
@@ -41,6 +42,7 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::resource('catalogue-categories', CatalogueCategoryController::class);
     Route::resource('catalogues', CatalogueController::class);
     Route::resource('products', ProductController::class);
+    Route::resource('product-features', ProductFeatureController::class)->except(['show']);
     Route::get('enquiery-entries', [BackendProductEnquiryController::class, 'index'])->name('enquiery-entries.index');
     Route::get('catalogue-downloads', [BackendCatalogueDownloadController::class, 'index'])->name('catalogue-downloads.index');
     Route::resource('applications', ProductApplicationController::class)->except(['show']);
@@ -65,6 +67,8 @@ Route::prefix('backend')->name('backend.')->group(function () {
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/gallery', [FrontendController::class, 'gallery'])->name('gallery');
+Route::get('/gallery/application/{application}', [FrontendController::class, 'galleryApplication'])
+    ->name('gallery.application.show');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 Route::get('/products', [FrontendController::class, 'products'])->name('products');
 Route::get('/catalogue', [FrontendController::class, 'catalogue'])->name('catalogue');
@@ -78,5 +82,6 @@ Route::post('/catalogue/download', [CatalogueDownloadController::class, 'store']
 Route::post('/contact', [ContactUsController::class, 'store'])->name('contact.store');
 Route::get('/pages/{slug}', [FrontendController::class, 'page'])->name('pages.show');
 Route::get('google-reviews', [FrontendController::class, 'googleReviews'])->name('google-reviews');
+Route::get('gypsum-tiles', [FrontendController::class, 'gypsumTiles'])->name('gypsum-tiles');
 
 require __DIR__.'/auth.php';

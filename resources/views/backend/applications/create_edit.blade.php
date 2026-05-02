@@ -18,6 +18,7 @@
 
     <form method="POST"
         action="{{ $edit ? route('backend.applications.update', $application->id) : route('backend.applications.store') }}"
+        enctype="multipart/form-data"
         class="row g-4">
         @csrf
         @if ($edit)
@@ -37,8 +38,12 @@
                     <div class="mb-3">
                         @php
                             $selectedCategoryIds = old('gallery_category_ids', data_get($application, 'gallery_category_ids', []));
-                            if (!is_array($selectedCategoryIds)) {
+                            if (! is_array($selectedCategoryIds)) {
                                 $selectedCategoryIds = [];
+                            }
+                            $selectedCategoryIds = array_map('intval', $selectedCategoryIds);
+                            if ($selectedCategoryIds === [] && $edit && data_get($application, 'gallery_category_id')) {
+                                $selectedCategoryIds = [(int) $application->gallery_category_id];
                             }
                         @endphp
 
@@ -100,6 +105,47 @@
         </div>
 
         <div class="col-lg-4 adm-sidebar-col">
+            <section class="adm-card">
+                <h2 class="adm-card__title">Feature image</h2>
+                <div class="adm-card__body">
+                    <p class="small adm-muted mb-2">Shown as the card cover on the homepage applications rail when set.
+                        JPG, PNG, WebP, GIF or SVG, max 2&nbsp;MB.</p>
+                    <input type="file" name="feature_image" class="form-control" accept="image/*">
+                    @if ($edit && data_get($application, 'feature_image'))
+                        <div class="mt-3 d-flex flex-wrap align-items-center gap-3">
+                            <img class="adm-thumb" src="{{ asset('storage/' . $application->feature_image) }}" alt="">
+                            <div class="form-check mb-0">
+                                <input class="form-check-input" type="checkbox" name="remove_feature_image"
+                                    id="remove-application-feature-image" value="1"
+                                    @checked(old('remove_feature_image'))>
+                                <label class="form-check-label small" for="remove-application-feature-image">Remove feature image on save</label>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </section>
+
+            <section class="adm-card">
+                <h2 class="adm-card__title">Banner image</h2>
+                <div class="adm-card__body">
+                    <p class="small adm-muted mb-2">Optional wide background behind the applications section (first application with a banner is used).
+                        Max 4&nbsp;MB.</p>
+                    <input type="file" name="banner_image" class="form-control" accept="image/*">
+                    @if ($edit && data_get($application, 'banner_image'))
+                        <div class="mt-3 d-flex flex-wrap align-items-center gap-3">
+                            <img class="adm-thumb" src="{{ asset('storage/' . $application->banner_image) }}" alt=""
+                                style="max-width:100%;height:auto;max-height:120px;object-fit:cover;">
+                            <div class="form-check mb-0">
+                                <input class="form-check-input" type="checkbox" name="remove_banner_image"
+                                    id="remove-application-banner-image" value="1"
+                                    @checked(old('remove_banner_image'))>
+                                <label class="form-check-label small" for="remove-application-banner-image">Remove banner image on save</label>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </section>
+
             <section class="adm-card">
                 <h2 class="adm-card__title">Save</h2>
                 <div class="adm-card__body">
