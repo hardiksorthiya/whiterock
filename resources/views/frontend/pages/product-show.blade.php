@@ -1,5 +1,17 @@
 @extends('frontend.layouts.app')
 
+@section('seo_title')
+{{ filled(trim((string) ($product->meta_title ?? ''))) ? trim($product->meta_title) : $product->name }} | Nivoc
+@endsection
+@section('seo_description')
+{{ filled(trim((string) ($product->meta_description ?? '')))
+    ? \Illuminate\Support\Str::limit(strip_tags($product->meta_description), 320)
+    : \Illuminate\Support\Str::limit(strip_tags((string) ($product->short_description ?? '')), 320) }}
+@endsection
+@section('seo_keywords')
+{{ trim((string) ($product->keywords ?? '')) ?: 'Nivoc, '.$product->name.', building materials, India' }}
+@endsection
+
 @php
     $imagePaths = collect();
     if (!empty($product->featured_image)) {

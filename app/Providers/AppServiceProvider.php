@@ -4,10 +4,11 @@ namespace App\Providers;
 
 use App\Models\ProductCategory;
 use App\Models\Setting;
+use App\View\Composers\FrontendLayoutSeoComposer;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+
+        View::composer('frontend.layouts.app', FrontendLayoutSeoComposer::class);
 
         // ✅ SAFE SETTINGS LOAD
         try {

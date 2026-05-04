@@ -2,12 +2,12 @@
     <div class="site-footer__top text-center">
         <p class="site-footer__brand mb-3">
             <a href="/" class="site-footer__brand-link">
-                @if (!empty($setting->light_logo_path))
-                    <img src="{{ asset('storage/' . $setting->light_logo_path) }}" alt="Whiterock">
-                @elseif (!empty($setting->logo_path))
+                @if (!empty($setting->logo_path))
                     <img src="{{ asset('storage/' . $setting->logo_path) }}" alt="Whiterock">
+                @elseif (!empty($setting->light_logo_path))
+                    <img src="{{ asset('storage/' . $setting->light_logo_path) }}" alt="Whiterock">
                 @else
-                    <span class="h3 m-0 d-inline-block">Whiterock</span>
+                    <span class="h3 m-0 d-inline-block site-footer__brand-text">Whiterock</span>
                 @endif
             </a>
         </p>
@@ -65,6 +65,8 @@
             <div class="col-md-3">
                 <h3 class="site-footer__heading">Quick links</h3>
                 <ul class="site-footer__links list-unstyled mb-0">
+                    <li><a href="{{ route('faq') }}">FAQ</a></li>
+
                     @forelse (($footerPages ?? collect()) as $footerPage)
                         <li>
                             <a href="{{ route('pages.show', $footerPage->slug) }}">

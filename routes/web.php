@@ -70,6 +70,7 @@ Route::get('/gallery', [FrontendController::class, 'gallery'])->name('gallery');
 Route::get('/gallery/application/{application}', [FrontendController::class, 'galleryApplication'])
     ->name('gallery.application.show');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
+Route::get('/faq', [FrontendController::class, 'faq'])->name('faq');
 Route::get('/products', [FrontendController::class, 'products'])->name('products');
 Route::get('/catalogue', [FrontendController::class, 'catalogue'])->name('catalogue');
 Route::get('/catalogue/{slug}', [FrontendController::class, 'catalogueCategory'])->name('catalogue-category.show');

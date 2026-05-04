@@ -9,7 +9,7 @@
         : null;
 @endphp
 
-<section class="home-contact-us py-5">
+<section class="home-contact-us py-5{{ !empty($contactBgUrl) ? ' home-contact-us--has-bg' : '' }}">
     @if ($contactBgUrl)
         <div class="home-contact-us__bg" style="background-image: url('{{ $contactBgUrl }}');" aria-hidden="true"></div>
     @endif

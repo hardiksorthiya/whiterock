@@ -24,7 +24,8 @@
 
 <form method="POST"
     action="{{ $edit ? route('backend.pages.update', $page->id) : route('backend.pages.store') }}"
-    class="row g-4">
+    class="row g-4"
+    enctype="multipart/form-data">
 
     @csrf
     @if($edit) @method('PUT') @endif
@@ -89,6 +90,32 @@
                             </div>
                         @endforeach
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOP BANNER IMAGE -->
+        <section class="adm-card mt-3">
+            <h2 class="adm-card__title">Top banner image</h2>
+
+            <div class="adm-card__body">
+                <p class="text-muted small mb-3">
+                    Optional. The page <strong>title</strong> above still comes from Page details. This image is only the background behind that title on the public page.
+                </p>
+
+                <div class="mb-0">
+                    <label class="form-label">Banner image</label>
+                    <input type="file" name="hero_image" class="form-control" accept="image/jpeg,image/png,image/webp,image/gif">
+                    <div class="form-text">JPEG, PNG, WebP or GIF. Max 5&nbsp;MB.</div>
+                    @if ($edit && !empty($page->hero_image))
+                        <div class="mt-2 d-flex flex-wrap align-items-center gap-3">
+                            <img src="{{ asset('storage/'.$page->hero_image) }}" alt="" class="rounded border" style="max-height: 100px; width: auto;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="remove_hero_image" id="remove_hero_image" value="1" @checked(old('remove_hero_image'))>
+                                <label class="form-check-label" for="remove_hero_image">Remove image (use site default)</label>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </section>
@@ -158,9 +185,6 @@
 
 <!-- CKEDITOR -->
 <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
-<script>
-    CKEDITOR.replace('editor');
-</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof CKEDITOR !== 'undefined' && document.getElementById('editor')) {

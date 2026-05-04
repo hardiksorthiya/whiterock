@@ -1,7 +1,7 @@
 @php
     $expertiseCards = [
         [
-            'image' => asset('images/about/c1.jpeg'),
+            'image' => asset('images/about/c2.jpeg'),
             'title' => 'Ceiling Material Solutions',
             'description' => 'From T-grid systems to gypsum tiles, we offer reliable ceiling materials designed for durability, precision, and efficient installation across projects of every scale.',
             'button' => 'Explore Ceiling Materials',

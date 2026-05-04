@@ -11,6 +11,7 @@ class Page extends Model
         'layout',
         'slug',
         'description',
+        'hero_image',
         'faq_items',
         'meta_title',
         'meta_description',
@@ -24,5 +25,17 @@ class Page extends Model
             'faq_items' => 'array',
             'is_active' => 'boolean',
         ];
+    }
+
+    /**
+     * Public URL for the page top banner image.
+     */
+    public function heroImageUrl(): string
+    {
+        if (! empty($this->hero_image)) {
+            return asset('storage/'.$this->hero_image);
+        }
+
+        return asset('frontend/images/about-banner.jpg');
     }
 }

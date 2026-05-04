@@ -1,4 +1,5 @@
 @extends('frontend.layouts.app')
+
 @section('content')
     <div class="home-premium">
         {{-- Page content --}}

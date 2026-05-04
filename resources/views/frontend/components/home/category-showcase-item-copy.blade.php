@@ -12,7 +12,7 @@
         $slug = (string) ($pc->slug ?? '');
         return $slug === $slugPrefix || str_starts_with($slug, $slugPrefix . '-');
     });
-    $sectionUrl = $category ? route('product-category.show', $category->slug) : route('products');
+    $sectionUrl = route($slugPrefix);
 @endphp
 
 <section class="home-category-showcase py-4 py-lg-5">
@@ -51,7 +51,7 @@
                         <p class="sorath-desc text-start mb-4">{{ $sectionDescription }}</p>
                         <div>
                             <a href="{{ $sectionUrl }}" class="btn btn-dark home-category-showcase__btn">
-                                View Product
+                                Know more
                             </a>
                         </div>
                     </div>

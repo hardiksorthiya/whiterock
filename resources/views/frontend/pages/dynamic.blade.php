@@ -1,9 +1,21 @@
 @extends('frontend.layouts.app')
 
+@section('seo_title')
+{{ filled(trim((string) ($page->meta_title ?? ''))) ? trim($page->meta_title) : $page->title }} | Nivoc
+@endsection
+@section('seo_description')
+{{ filled(trim((string) ($page->meta_description ?? '')))
+    ? \Illuminate\Support\Str::limit(strip_tags($page->meta_description), 320)
+    : \Illuminate\Support\Str::limit(strip_tags($page->title), 200) }}
+@endsection
+@section('seo_keywords')
+{{ trim((string) ($page->keywords ?? '')) ?: 'Nivoc, '.$page->title }}
+@endsection
+
 @section('content')
     @include('frontend.components.breadcrumb', [
         'title' => strtoupper($page->title),
-        'image' => asset('frontend/images/about-banner.jpg'),
+        'image' => $page->heroImageUrl(),
     ])
 
     <section class="py-5">

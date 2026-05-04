@@ -443,16 +443,21 @@ body.menu-open {
     transform: translateY(-100%);
 }
 
-/* ——— Footer ——— */
+/* ——— Footer (light bar — primary text, muted secondary, dark logo) ——— */
 .site-footer {
-    background: var(--adm-sorath-primary-color);
-    color: #fff;
+    background: #fff;
+    color: var(--adm-sorath-primary-color);
     padding-top: 4rem;
     padding-bottom: 0;
+    border-top: 1px solid #e8edf3;
 }
 
 .site-footer__brand-link img {
     width: 260px;
+}
+
+.site-footer__brand-text {
+    color: var(--adm-sorath-primary-color);
 }
 
 .site-footer__top {
@@ -471,9 +476,22 @@ body.menu-open {
 
 .site-footer__lead {
     font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--adm-sorath-muted);
     line-height: 1.65;
     max-width: 520px;
+}
+
+.site-footer__lead a {
+    color: var(--adm-sorath-primary-color);
+    text-decoration: underline;
+    text-decoration-color: rgba(19, 24, 34, 0.28);
+    text-underline-offset: 0.18em;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.site-footer__lead a:hover {
+    color: #2d3a52;
+    text-decoration-color: rgba(45, 58, 82, 0.45);
 }
 
 .site-footer__social-btn {
@@ -483,32 +501,39 @@ body.menu-open {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.14);
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: #f1f5f9;
+    color: var(--adm-sorath-primary-color);
+    border: 1px solid #e2e8f0;
     text-decoration: none;
     font-size: 1rem;
-    transition: transform 0.2s ease, background 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .site-footer__social-btn:hover {
-    background: rgba(255, 255, 255, 0.24);
+    background: var(--adm-sorath-primary-color);
     color: #fff;
+    border-color: var(--adm-sorath-primary-color);
+    box-shadow: 0 6px 16px rgba(19, 24, 34, 0.2);
     transform: translateY(-2px);
 }
 
 .site-footer__middle {
     padding-bottom: 3rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    border-bottom: 1px solid #e8edf3;
 }
 
 .site-footer__heading {
     font-size: 0.8rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     margin-bottom: 1.25rem;
-    color: #fff;
+    color: var(--adm-sorath-primary-color);
 }
 
 .site-footer__links li {
@@ -516,14 +541,14 @@ body.menu-open {
 }
 
 .site-footer__links a {
-    color: rgba(255, 255, 255, 0.86);
+    color: var(--adm-sorath-primary-color);
     text-decoration: none;
     font-size: 0.95rem;
     transition: color 0.2s ease;
 }
 
 .site-footer__links a:hover {
-    color: #fff;
+    color: #3d4d6b;
 }
 
 .site-footer__projects {
@@ -537,7 +562,7 @@ body.menu-open {
     display: block;
     aspect-ratio: 3 / 2;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.12);
+    background: #f1f5f9;
 }
 
 .site-footer__project-thumb img {
@@ -555,15 +580,47 @@ body.menu-open {
 .site-footer__bottom {
     padding: 1.25rem 0;
     margin-top: 0;
+    background: #f8fafc;
+    border-top: 1px solid #e8edf3;
 }
 
 .site-footer__meta {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.78);
+    color: var(--adm-sorath-muted);
+}
+
+.site-footer__meta a {
+    color: var(--adm-sorath-primary-color);
+    text-decoration: underline;
+    text-decoration-color: rgba(19, 24, 34, 0.25);
+    text-underline-offset: 0.15em;
+}
+
+.site-footer__meta a:hover {
+    color: #3d4d6b;
 }
 
 .site-footer .text-muted {
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: var(--adm-sorath-muted) !important;
+}
+
+.site-footer .site-footer__cta {
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 0.5rem 0.75rem;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.site-footer .site-footer__cta:hover {
+    background: #fff;
+    border-color: #cbd5e1;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+    transform: translateY(-2px);
 }
 
 @media (max-width: 767.98px) {
@@ -2960,7 +3017,76 @@ nav.products-pager {
     background-size: cover;
     background-position: center;
     z-index: 0;
-    opacity: 0.8;
+}
+
+/* Dark contact hero: readable left column (white type) + gradient so the form card stays clean */
+.home-contact-us--has-bg {
+    background: var(--adm-sorath-primary-color);
+}
+
+.home-contact-us--has-bg .home-contact-us__bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        105deg,
+        rgba(15, 23, 42, 0.88) 0%,
+        rgba(15, 23, 42, 0.72) min(38vw, 42%),
+        rgba(15, 23, 42, 0.28) 52%,
+        transparent 62%
+    );
+}
+
+@media (max-width: 991.98px) {
+    .home-contact-us--has-bg .home-contact-us__bg::after {
+        background: linear-gradient(
+            180deg,
+            rgba(15, 23, 42, 0.82) 0%,
+            rgba(15, 23, 42, 0.45) 42%,
+            rgba(15, 23, 42, 0.12) 58%,
+            transparent 72%
+        );
+    }
+}
+
+.home-contact-us--has-bg .home-contact-us__eyebrow {
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.home-contact-us--has-bg .home-contact-us__content .sorath-title {
+    color: #fff;
+}
+
+.home-contact-us--has-bg .home-contact-us__content .sorath-desc {
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.home-contact-us--has-bg .home-contact-us__subtitle {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.home-contact-us--has-bg .home-contact-us__meta-link {
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.home-contact-us--has-bg .home-contact-us__meta-link:hover {
+    color: #fff;
+}
+
+.home-contact-us--has-bg .home-contact-us__benefit-title {
+    color: #fff;
+}
+
+.home-contact-us--has-bg .home-contact-us__benefit-desc {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.home-contact-us--has-bg .home-contact-us__benefit-icon {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
 }
 
 .home-contact-us > .container {
@@ -5275,3 +5401,208 @@ button.catalogue-book-card:focus-visible {
         transform: none;
     }
 }
+
+/* FAQ page — dealer & WhatsApp CTA strip */
+.faq-page-cta {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: clamp(2.25rem, 4.5vw, 3.25rem);
+    padding-bottom: clamp(2.25rem, 4.5vw, 3.25rem);
+    background: linear-gradient(175deg, #f1f5f9 0%, #e8edf4 40%, #f8fafc 100%);
+    border-top: 1px solid rgba(15, 23, 42, 0.07);
+}
+
+.faq-page-cta__glow {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(0.5px);
+}
+
+.faq-page-cta__glow--1 {
+    width: min(70vw, 420px);
+    height: min(70vw, 420px);
+    background: radial-gradient(circle at 40% 40%, rgba(var(--adm-sorath-primary-color-rgb), 0.14) 0%, transparent 65%);
+    top: -35%;
+    right: -8%;
+}
+
+.faq-page-cta__glow--2 {
+    width: min(55vw, 320px);
+    height: min(55vw, 320px);
+    background: radial-gradient(circle, rgba(37, 211, 102, 0.12) 0%, transparent 68%);
+    bottom: -40%;
+    left: -5%;
+}
+
+.faq-page-cta .container {
+    position: relative;
+    z-index: 1;
+}
+
+.faq-page-cta__shell {
+    max-width: 52rem;
+    padding: clamp(1.75rem, 3vw, 2.35rem) clamp(1.25rem, 3vw, 2.5rem);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.88);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.7) inset,
+        0 18px 44px -18px rgba(15, 23, 42, 0.18),
+        0 6px 16px rgba(15, 23, 42, 0.06);
+}
+
+.faq-page-cta__eyebrow {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--adm-sorath-primary-color);
+    border: 1px solid rgba(var(--adm-sorath-primary-color-rgb), 0.28);
+    border-radius: 999px;
+    padding: 0.38rem 1rem;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.faq-page-cta__tagline {
+    max-width: 36rem;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: #64748b;
+    margin-top: 1rem;
+    margin-bottom: 1.75rem !important;
+}
+
+.faq-page-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 1rem 1.1rem;
+}
+
+.faq-page-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    flex: 1 1 240px;
+    max-width: 100%;
+    min-height: 3.35rem;
+    padding: 0.95rem 1.5rem;
+    font-size: 0.98rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        filter 0.22s ease,
+        border-color 0.22s ease,
+        background 0.22s ease,
+        color 0.22s ease;
+}
+
+.faq-page-cta__btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.faq-page-cta__btn-label {
+    flex: 0 1 auto;
+}
+
+/* Dealer — deep navy, crisp outline glow */
+.faq-page-cta__btn--dealer {
+    color: #fff !important;
+    background: linear-gradient(145deg, #1a2230 0%, var(--adm-sorath-primary-color) 45%, #0d1118 100%);
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow:
+        0 10px 32px rgba(19, 24, 34, 0.45),
+        0 4px 12px rgba(15, 23, 42, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.faq-page-cta__btn--dealer:hover {
+    color: #fff !important;
+    filter: brightness(1.05);
+    transform: translateY(-3px);
+    box-shadow:
+        0 16px 40px rgba(19, 24, 34, 0.5),
+        0 8px 18px rgba(15, 23, 42, 0.14),
+        0 0 0 1px rgba(255, 255, 255, 0.16) inset;
+}
+
+.faq-page-cta__btn--dealer:focus-visible {
+    color: #fff !important;
+    outline: none;
+    box-shadow:
+        0 10px 32px rgba(19, 24, 34, 0.45),
+        0 0 0 3px #fff,
+        0 0 0 6px var(--adm-sorath-primary-color);
+}
+
+/* WhatsApp — brand greens */
+.faq-page-cta__btn--whatsapp {
+    color: #fff !important;
+    background: linear-gradient(165deg, #1fa855 0%, #25d366 42%, #128c7e 100%);
+    border-color: rgba(255, 255, 255, 0.42);
+    box-shadow:
+        0 10px 32px rgba(37, 211, 102, 0.45),
+        0 4px 14px rgba(15, 23, 42, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+}
+
+.faq-page-cta__btn--whatsapp:hover {
+    color: #fff !important;
+    filter: brightness(1.06);
+    transform: translateY(-3px);
+    box-shadow:
+        0 16px 42px rgba(37, 211, 102, 0.55),
+        0 8px 18px rgba(15, 23, 42, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.18) inset;
+}
+
+.faq-page-cta__btn--whatsapp:focus-visible {
+    color: #fff !important;
+    outline: none;
+    box-shadow:
+        0 10px 32px rgba(37, 211, 102, 0.45),
+        0 0 0 3px #fff,
+        0 0 0 6px #25d366;
+}
+
+@media (max-width: 575.98px) {
+    .faq-page-cta__btn {
+        flex: 1 1 100%;
+    }
+
+    .faq-page-cta__btn-icon {
+        font-size: 1.45rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .faq-page-cta__btn {
+        transition: none;
+    }
+
+    .faq-page-cta__btn--dealer:hover,
+    .faq-page-cta__btn--whatsapp:hover {
+        transform: none;
+    }
+}
+

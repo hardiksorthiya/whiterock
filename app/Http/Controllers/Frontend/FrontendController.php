@@ -139,6 +139,15 @@ class FrontendController extends Controller
         return view('frontend.pages.contact', compact('setting', 'latestGalleryImages', 'footerPages'));
     }
 
+    public function faq()
+    {
+        $setting = Setting::site();
+        $latestGalleryImages = GalleryImage::query()->latest()->take(6)->get();
+        $footerPages = Page::query()->where('is_active', true)->latest()->get();
+
+        return view('frontend.pages.faq', compact('setting', 'latestGalleryImages', 'footerPages'));
+    }
+
     public function products()
     {
         $setting = Setting::site();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
 {
@@ -35,6 +36,7 @@ class PageController extends Controller
             'layout' => 'required|in:default,faq',
             'slug' => 'required|string|max:255|unique:pages,slug',
             'description' => 'nullable|string',
+            'hero_image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:5120',
             'faq_items' => 'nullable|array',
             'faq_items.*.question' => 'nullable|string|max:1000|required_with:faq_items.*.answer',
             'faq_items.*.answer' => 'nullable|string|max:10000|required_with:faq_items.*.question',
@@ -55,6 +57,10 @@ class PageController extends Controller
         ]);
         $data['is_active'] = $request->boolean('is_active', true);
         $data['faq_items'] = $this->sanitizeFaqItems($request->input('faq_items', []), $request->input('layout')) ?: null;
+
+        if ($request->hasFile('hero_image')) {
+            $data['hero_image'] = $request->file('hero_image')->store('pages/hero', 'public');
+        }
 
         Page::create($data);
 
@@ -83,6 +89,8 @@ class PageController extends Controller
             'layout' => 'required|in:default,faq',
             'slug' => 'required|string|max:255|unique:pages,slug,' . $page->id,
             'description' => 'nullable|string',
+            'hero_image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:5120',
+            'remove_hero_image' => 'sometimes|boolean',
             'faq_items' => 'nullable|array',
             'faq_items.*.question' => 'nullable|string|max:1000|required_with:faq_items.*.answer',
             'faq_items.*.answer' => 'nullable|string|max:10000|required_with:faq_items.*.question',
@@ -103,6 +111,18 @@ class PageController extends Controller
         ]);
         $data['is_active'] = $request->boolean('is_active', true);
         $data['faq_items'] = $this->sanitizeFaqItems($request->input('faq_items', []), $request->input('layout')) ?: null;
+
+        if ($request->boolean('remove_hero_image') && $page->hero_image) {
+            Storage::disk('public')->delete($page->hero_image);
+            $data['hero_image'] = null;
+        }
+
+        if ($request->hasFile('hero_image')) {
+            if ($page->hero_image) {
+                Storage::disk('public')->delete($page->hero_image);
+            }
+            $data['hero_image'] = $request->file('hero_image')->store('pages/hero', 'public');
+        }
 
         $page->update($data);
 
