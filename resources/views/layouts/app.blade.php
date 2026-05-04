@@ -7,6 +7,10 @@
 
     <title>@yield('title', config('app.name', 'Whiterock'))</title>
 
+    @if (!empty($settings?->favicon_path))
+        <link rel="icon" href="{{ asset('storage/' . $settings->favicon_path) }}" type="image/x-icon">
+    @endif
+
     {{-- css --}}
     <link rel="stylesheet" href="{{ asset('css/admin-theme.css') }}">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">

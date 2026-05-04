@@ -8,6 +8,10 @@
 
     <title>{{ config('app.name', 'Whiterock') }}</title>
 
+    @if (!empty($settings?->favicon_path))
+        <link rel="icon" href="{{ asset('storage/' . $settings->favicon_path) }}" type="image/x-icon">
+    @endif
+
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/login-register.css') }}">
 
