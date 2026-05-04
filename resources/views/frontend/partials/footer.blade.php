@@ -37,9 +37,12 @@
     <div class="container site-footer__middle">
         <div class="row g-4 g-lg-5">
             <div class="col-md-3">
-                <h3 class="site-footer__heading">Other pages</h3>
+                <h3 class="site-footer__heading">Information</h3>
                 <ul class="site-footer__links list-unstyled mb-0">
-                    <li><a href="{{ route('home') }}">Home</a></li>
+                    <li><a href="{{ route('gypsum-tiles') }}">Gypsum Ceiling Tiles</a></li>
+                    <li><a href="{{ route('ceiling-t-grid') }}">Ceiling T-Grid</a></li>
+                    <li><a href="{{ route('soffit-panels') }}">Soffit panels</a></li>
+                    <li><a href="{{ route('fluted-panels') }}">Fluted panels</a></li>
                     <li><a href="{{ route('about') }}">About</a></li>
                     <li><a href="{{ route('contact') }}">Contact</a></li>
                     <li><a href="{{ route('gallery') }}">Gallery</a></li>

@@ -1,0 +1,154 @@
+@extends('frontend.layouts.app')
+
+@section('content')
+    @include('frontend.components.breadcrumb', [
+        'title' => 'SOFFIT PANELS',
+        'image' => asset('images/cbre.jpeg'),
+    ])
+
+    <section class="gypsum-page-hero py-5 py-lg-5">
+        <div class="container">
+            <div class="gypsum-page-hero__inner mx-auto text-center">
+                <p class="gypsum-page-hero__eyebrow mb-2">Soffit &amp; exterior ceiling panels</p>
+                <h1 class="gypsum-page-hero__title mb-3 mb-lg-4">
+                    Stylish Soffit Panels to Elevate Modern Ceilings
+                </h1>
+                <p class="gypsum-page-hero__lead mb-0 mx-auto">
+                    Enhance the look of balconies, semi-open spaces, and interiors with NIVOC soffit panels—where durability
+                    meets premium design.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    @php
+        $soffitFeaturePoints = [
+            ['icon' => 'bi-tree', 'label' => 'Wood look'],
+            ['icon' => 'bi-cloud-sun', 'label' => 'Weather proof'],
+            ['icon' => 'bi-droplet', 'label' => 'Water proof'],
+            ['icon' => 'bi-lightning-charge', 'label' => 'Quick installation'],
+            ['icon' => 'bi-shield-fill-check', 'label' => 'Unbreakable'],
+            ['icon' => 'bi-patch-check', 'label' => 'Mold & termite resistant'],
+            ['icon' => 'bi-stars', 'label' => 'Easy to clean'],
+        ];
+
+        $soffitWhyPoints = [
+            ['icon' => 'bi-sun', 'label' => 'Reliable performance in outdoor conditions'],
+            ['icon' => 'bi-truck', 'label' => 'Consistent supply for large projects'],
+            ['icon' => 'bi-palette', 'label' => 'Modern designs with wood-finish options'],
+            ['icon' => 'bi-people-fill', 'label' => 'Trusted by contractors and builders'],
+        ];
+    @endphp
+
+    @include('frontend.components.home.product-grid', [
+        'sectionTitle' => 'Soffit panels',
+        'sectionDescription' => '',
+        'products' => $soffitPageProducts,
+        'viewAllUrl' => null,
+        'sectionId' => 'soffit-page-products',
+        'headerSplit' => true,
+    ])
+
+    <section class="gypsum-page-cta-bar py-4 py-lg-5">
+        <div class="container text-center">
+            <a href="{{ $soffitPageCategoryUrl }}" class="btn gypsum-page__view-all px-4 px-lg-5 py-3 text-decoration-none">
+                View all products
+            </a>
+        </div>
+    </section>
+
+    <section class="gypsum-benefits py-5 py-lg-5" aria-labelledby="soffit-features-heading">
+        <div class="container">
+            <h2 id="soffit-features-heading" class="gypsum-benefits__title sorath-title text-center mx-auto mb-4 mb-lg-5">
+                Built for real-world exteriors &amp; semi-open spaces
+            </h2>
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 gypsum-benefits__row justify-content-center">
+                @foreach ($soffitFeaturePoints as $item)
+                    <div class="col">
+                        <div class="gypsum-benefits__item text-center h-100">
+                            <div class="gypsum-benefits__icon-wrap mx-auto mb-3" aria-hidden="true">
+                                <i class="bi {{ $item['icon'] }} gypsum-benefits__icon"></i>
+                            </div>
+                            <p class="gypsum-benefits__text mb-0">{{ $item['label'] }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="gypsum-why py-5 py-lg-5" aria-labelledby="soffit-why-heading">
+        <div class="container">
+            <header class="gypsum-why__header text-center mx-auto mb-4 mb-lg-5">
+                <p class="gypsum-why__badge mb-3">Built for professionals</p>
+                <h2 id="soffit-why-heading" class="gypsum-why__title sorath-title mb-3">
+                    Why Choose NIVOC Soffit Panels?
+                </h2>
+                <p class="gypsum-why__lead mb-0 mx-auto">
+                    Premium finishes and dependable supply for façades, balconies, and ceilings that need to look good
+                    and last.
+                </p>
+            </header>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4 gypsum-why__points justify-content-center">
+                @foreach ($soffitWhyPoints as $point)
+                    <div class="col">
+                        <article class="gypsum-why__card gypsum-why__card--point h-100">
+                            <div class="gypsum-why__card-icon mx-auto mb-3" aria-hidden="true">
+                                <i class="bi {{ $point['icon'] }}"></i>
+                            </div>
+                            <p class="gypsum-why__point-label mb-0">{{ $point['label'] }}</p>
+                        </article>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="text-center mt-4 mt-lg-5 pt-lg-2">
+                <a href="{{ route('catalogue') }}" class="btn gypsum-why__cta px-4 px-xl-5 py-3 text-decoration-none">
+                    Download catalogue
+                </a>
+            </div>
+        </div>
+    </section>
+
+    @if (!empty($soffitGallerySliderCategory))
+        @include('frontend.components.gallery-category-slider', [
+            'galleryCategory' => $soffitGallerySliderCategory,
+            'sectionTitle' => 'Application photos',
+            'sectionSubtitle' => 'Installations and references featuring NIVOC soffit panels.',
+            'sliderId' => 'soffit-page',
+        ])
+    @endif
+
+    @include('frontend.components.faq', [
+        'title' => 'Frequently asked questions (FAQ)',
+        'description' => 'Quick answers on soffit panels for exteriors, balconies, and semi-open spaces.',
+        'items' => [
+            [
+                'question' => 'Which panel is best for exterior ceilings?',
+                'answer' => 'Soffit panels are the best option due to their weather resistance and durability.',
+            ],
+            [
+                'question' => 'Are soffit panels waterproof and heat-resistant?',
+                'answer' => 'Yes, they are designed to withstand rain, sunlight, and humidity.',
+            ],
+            [
+                'question' => 'Where can soffit panels be used?',
+                'answer' => 'They are ideal for balconies, terraces, building exteriors, and semi-open spaces.',
+            ],
+            [
+                'question' => 'What is the price of soffit panels in India?',
+                'answer' => 'Soffit panel prices typically range between ₹150 to ₹400 per sq ft, depending on design, finish, and material quality.',
+            ],
+        ],
+    ])
+
+    @include('frontend.components.contact', [
+        'title' => 'Enquire Now for Bulk Orders & Dealer Pricing',
+        'description' => 'Reliable materials. Scalable supply. Trusted partnership.',
+        'eyebrow' => 'CONTACT US',
+        'formNote' => 'Please include your phone number and city so we can respond with accurate logistics and pricing.',
+    ])
+
+    @include('frontend.components.home.sticky-enquiry')
+@endsection

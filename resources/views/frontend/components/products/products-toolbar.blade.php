@@ -8,13 +8,13 @@
     <div class="col-12 col-lg d-flex flex-wrap align-items-center justify-content-lg-center gap-2">
         <span class="small text-muted text-uppercase fw-semibold me-1 d-none d-md-inline">View</span>
         <div class="btn-group products-view-toggle shadow-sm" role="group" aria-label="Product layout">
-            <button type="button" class="btn btn-outline-secondary products-view-btn px-3" data-products-view="grid-3"
-                title="Grid (3 columns)">
-                <i class="bi bi-grid-3x3-gap"></i>
-            </button>
             <button type="button" class="btn btn-outline-secondary products-view-btn px-3" data-products-view="grid-4"
                 title="Grid (4 columns)">
                 <i class="bi bi-grid-fill"></i>
+            </button>
+            <button type="button" class="btn btn-outline-secondary products-view-btn px-3" data-products-view="grid-3"
+                title="Grid (3 columns)">
+                <i class="bi bi-grid-3x3-gap"></i>
             </button>
             <button type="button" class="btn btn-outline-secondary products-view-btn px-3" data-products-view="grid-2"
                 title="Larger cards">

@@ -20,7 +20,7 @@
 @endif
 
 <div class="product-section--visual-grid products-listing-visual">
-    <div class="row g-3 g-md-4 products-grid-wrap" id="productsListingGrid" data-current-view="grid-3">
+    <div class="row g-3 g-md-4 products-grid-wrap" id="productsListingGrid" data-current-view="grid-4">
         @forelse ($products as $product)
             @php
                 $tone = $tones[$loop->index % 6];
@@ -28,9 +28,10 @@
                 $tagline = $product->short_description ?? null;
                 $tagline = $tagline ? \Illuminate\Support\Str::limit(trim(strip_tags($tagline)), 110) : null;
             @endphp
-            <div class="product-col col-12 col-sm-6 col-lg-4">
+                <div class="product-col col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="product-visual-block product-catalog-card h-100">
-                    <a href="{{ $detailUrl }}" class="product-visual-block__media text-reset text-decoration-none d-block">
+                    <a href="{{ $detailUrl }}" class="product-visual-block__media text-reset text-decoration-none d-block"
+                        aria-label="View {{ $product->name }}">
                         <div class="product-card__frame product-card__frame--tone-{{ $tone }}">
                             <div class="product-img product-img--visual">
                                 @if (!empty($product->featured_image))
@@ -49,6 +50,9 @@
                                     </div>
                                 @endif
                             </div>
+                            <span class="product-visual-block__view-overlay" aria-hidden="true">
+                                <span class="product-visual-block__view-btn">View</span>
+                            </span>
                         </div>
                     </a>
                     <div class="product-visual-block__meta text-center">
@@ -72,7 +76,8 @@
 @push('scripts')
     <script>
         (function() {
-            var storageKey = 'whiterock_products_view';
+            /* v2: default 4 columns; old key kept users on 3-col after we changed the default */
+            var storageKey = 'whiterock_products_view_v2';
             var grid = document.getElementById('productsListingGrid');
             if (!grid) return;
 
@@ -112,12 +117,12 @@
                 } catch (e) {}
             }
 
-            var initial = 'grid-3';
+            var initial = 'grid-4';
             try {
-                initial = localStorage.getItem(storageKey) || 'grid-3';
+                initial = localStorage.getItem(storageKey) || 'grid-4';
             } catch (e) {}
             if (!['grid-3', 'grid-4', 'grid-2', 'list'].includes(initial)) {
-                initial = 'grid-3';
+                initial = 'grid-4';
             }
             applyView(initial);
 

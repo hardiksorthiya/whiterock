@@ -669,11 +669,89 @@ class FrontendController extends Controller
         $gypsumPageProducts = $this->productsForCategorySlugPrefix('gypsum-ceiling-tile', 4);
         $gypsumPageCategoryUrl = $this->categoryUrlForSlugPrefix('gypsum-ceiling-tile');
 
+        // Gypsum page gallery slider: `gallery_categories.id` to show (use null to hide).
+        $gypsumPageGalleryCategoryId = 2;
+
+        $gypsumGallerySliderCategory = $gypsumPageGalleryCategoryId
+            ? GalleryCategory::query()->with('images')->find((int) $gypsumPageGalleryCategoryId)
+            : null;
+
         return view('frontend.pages.hpage.gypsum', compact(
             'setting',
             'footerPages',
             'gypsumPageProducts',
-            'gypsumPageCategoryUrl'
+            'gypsumPageCategoryUrl',
+            'gypsumGallerySliderCategory'
+        ));
+    }
+
+    public function tGridPage()
+    {
+        $setting = Setting::site();
+        $footerPages = Page::query()->where('is_active', true)->latest()->get();
+        $tGridPageProducts = $this->productsForCategorySlugPrefix('ceiling-t-grid', 4);
+        $tGridPageCategoryUrl = $this->categoryUrlForSlugPrefix('ceiling-t-grid');
+
+        // T-Grid page gallery slider: `gallery_categories.id` (null to hide).
+        $tGridPageGalleryCategoryId =2;
+
+        $tGridGallerySliderCategory = $tGridPageGalleryCategoryId
+            ? GalleryCategory::query()->with('images')->find((int) $tGridPageGalleryCategoryId)
+            : null;
+
+        return view('frontend.pages.hpage.t-grid', compact(
+            'setting',
+            'footerPages',
+            'tGridPageProducts',
+            'tGridPageCategoryUrl',
+            'tGridGallerySliderCategory'
+        ));
+    }
+
+    public function soffitPanelPage()
+    {
+
+        $setting = Setting::site();
+        $footerPages = Page::query()->where('is_active', true)->latest()->get();
+        $soffitPageProducts = $this->productsForCategorySlugPrefix('soffit-panel', 4);
+        $soffitPageCategoryUrl = $this->categoryUrlForSlugPrefix('soffit-panel');
+
+        // Soffit page gallery slider: `gallery_categories.id` (null to hide).
+        $soffitPageGalleryCategoryId = 3;
+
+        $soffitGallerySliderCategory = $soffitPageGalleryCategoryId
+            ? GalleryCategory::query()->with('images')->find((int) $soffitPageGalleryCategoryId)
+            : null;
+
+        return view('frontend.pages.hpage.soffit-panel', compact(
+            'setting',
+            'footerPages',
+            'soffitPageProducts',
+            'soffitPageCategoryUrl',
+            'soffitGallerySliderCategory'
+        ));
+    }
+
+    public function flutedPanelPage()
+    {
+        $setting = Setting::site();
+        $footerPages = Page::query()->where('is_active', true)->latest()->get();
+        $flutedPageProducts = $this->productsForCategorySlugPrefix('pvc-fluted-panel', 4);
+        $flutedPageCategoryUrl = $this->categoryUrlForSlugPrefix('pvc-fluted-panel');
+
+        // Fluted panel page gallery slider: `gallery_categories.id` (null to hide).
+        $flutedPageGalleryCategoryId =4;
+
+        $flutedGallerySliderCategory = $flutedPageGalleryCategoryId
+            ? GalleryCategory::query()->with('images')->find((int) $flutedPageGalleryCategoryId)
+            : null;
+
+        return view('frontend.pages.hpage.fluted-panel', compact(
+            'setting',
+            'footerPages',
+            'flutedPageProducts',
+            'flutedPageCategoryUrl',
+            'flutedGallerySliderCategory'
         ));
     }
 

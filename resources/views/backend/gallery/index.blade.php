@@ -50,6 +50,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>ID</th>
                             <th>Name</th>
                             <th>Images</th>
                             <th class="text-end">Action</th>
@@ -63,6 +64,7 @@
                                         {{ $loop->iteration + ($categories->currentPage() - 1) * $categories->perPage() }}
                                     </span>
                                 </td>
+                                <td>{{ $c->id }}</td>
                                 <td><strong>{{ $c->name }}</strong></td>
                                 <td>
                                     @if ($c->images->isNotEmpty())

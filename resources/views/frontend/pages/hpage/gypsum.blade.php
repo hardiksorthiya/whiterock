@@ -40,6 +40,24 @@
         ];
     @endphp
 
+   
+
+    @include('frontend.components.home.product-grid', [
+        'sectionTitle' => 'Gypsum ceiling tiles',
+        'sectionDescription' => '',
+        'products' => $gypsumPageProducts,
+        'viewAllUrl' => null,
+        'sectionId' => 'gypsum-page-products',
+        'headerSplit' => true,
+    ])
+    <section class="gypsum-page-cta-bar py-4 py-lg-5">
+        <div class="container text-center">
+            <a href="{{ $gypsumPageCategoryUrl }}" class="btn gypsum-page__view-all px-4 px-lg-5 py-3 text-decoration-none">
+                View all gypsum products
+            </a>
+        </div>
+    </section>
+
     <section class="gypsum-benefits py-5 py-lg-5" aria-labelledby="gypsum-benefits-heading">
         <div class="container">
             <h2 id="gypsum-benefits-heading" class="gypsum-benefits__title sorath-title text-center mx-auto mb-4 mb-lg-5">
@@ -57,22 +75,6 @@
                     </div>
                 @endforeach
             </div>
-        </div>
-    </section>
-
-    @include('frontend.components.home.product-grid', [
-        'sectionTitle' => 'Gypsum ceiling tiles',
-        'sectionDescription' => '',
-        'products' => $gypsumPageProducts,
-        'viewAllUrl' => null,
-        'sectionId' => 'gypsum-page-products',
-        'headerSplit' => true,
-    ])
-    <section class="gypsum-page-cta-bar py-4 py-lg-5">
-        <div class="container text-center">
-            <a href="{{ $gypsumPageCategoryUrl }}" class="btn gypsum-page__view-all px-4 px-lg-5 py-3 text-decoration-none">
-                View all gypsum products
-            </a>
         </div>
     </section>
 
@@ -109,7 +111,54 @@
         </div>
     </section>
 
-    
+    @if (!empty($gypsumGallerySliderCategory))
+        @include('frontend.components.gallery-category-slider', [
+            'galleryCategory' => $gypsumGallerySliderCategory,
+            'sectionTitle' => 'Gypsum ceiling gallery',
+            'sectionSubtitle' => 'A glimpse of real installations and finishes from this gallery category.',
+            'sliderId' => 'gypsum-page',
+        ])
+    @endif
+
+    @include('frontend.components.faq', [
+        'title' => 'Frequently asked questions (FAQ)',
+        'description' => 'Quick answers on compatibility, supply, and what to expect from NIVOC gypsum ceiling tiles.',
+        'items' => [
+            [
+                'question' => 'What are gypsum ceiling tiles and where are they used?',
+                'answer' => 'Gypsum ceiling tiles are lightweight panels used in false ceilings for offices, hospitals, retail stores, and commercial spaces to create a clean and uniform ceiling finish.',
+            ],
+            [
+                'question' => 'What is the cost of gypsum ceiling per sq ft in India?',
+                'answer' => 'Gypsum ceiling tile systems typically cost between ₹60 to ₹150 per sq ft, depending on tile quality, T-grid system, and installation.',
+            ],
+            [
+                'question' => 'Which is better: gypsum ceiling tiles or POP ceiling?',
+                'answer' => 'Gypsum ceiling tiles are better for commercial spaces as they offer faster installation, easy maintenance, and tile replacement, whereas POP is more time-consuming and permanent.',
+            ],
+            [
+                'question' => 'Are gypsum ceiling tiles fire-resistant and durable?',
+                'answer' => 'Yes, gypsum tiles are fire-resistant, lightweight, and durable, making them ideal for commercial and institutional spaces.',
+            ],
+            [
+                'question' => 'Are gypsum ceiling tiles suitable for homes?',
+                'answer' => 'Yes, they can be used in homes, but they are more commonly preferred for offices and commercial areas due to their grid system design.',
+            ],
+            [
+                'question' => 'What are the advantages of gypsum ceiling tiles?',
+                'answer' => 'Clean and professional look
+                Easy maintenance
+                Quick installation
+                Good thermal and sound insulation',
+            ],
+        ],
+    ])
+
+    @include('frontend.components.contact', [
+        'title' => 'Enquire Now for Bulk Orders & Dealer Pricing ',
+        'description' => 'Reliable materials. Scalable supply. Trusted partnership.',
+        'eyebrow' => 'CONTACT US',
+    ])
 
     @include('frontend.components.home.sticky-enquiry')
 @endsection

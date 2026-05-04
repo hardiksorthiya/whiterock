@@ -83,5 +83,8 @@ Route::post('/contact', [ContactUsController::class, 'store'])->name('contact.st
 Route::get('/pages/{slug}', [FrontendController::class, 'page'])->name('pages.show');
 Route::get('google-reviews', [FrontendController::class, 'googleReviews'])->name('google-reviews');
 Route::get('gypsum-tiles', [FrontendController::class, 'gypsumTiles'])->name('gypsum-tiles');
+Route::get('ceiling-t-grid', [FrontendController::class, 'tGridPage'])->name('ceiling-t-grid');
+Route::get('soffit-panels', [FrontendController::class, 'soffitPanelPage'])->name('soffit-panels');
+Route::get('fluted-panels', [FrontendController::class, 'flutedPanelPage'])->name('fluted-panels');
 
 require __DIR__.'/auth.php';

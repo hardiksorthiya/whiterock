@@ -54,7 +54,8 @@
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="product-visual-block h-100">
                         <a href="{{ $detailUrl }}"
-                            class="product-visual-block__media text-reset text-decoration-none d-block">
+                            class="product-visual-block__media text-reset text-decoration-none d-block"
+                            aria-label="View {{ $product->name }}">
                             <div class="product-card__frame product-card__frame--tone-{{ $tone }}">
                                 <div class="product-img product-img--visual">
                                     @if (!empty($product->featured_image))
@@ -73,6 +74,9 @@
                                         </div>
                                     @endif
                                 </div>
+                                <span class="product-visual-block__view-overlay" aria-hidden="true">
+                                    <span class="product-visual-block__view-btn">View</span>
+                                </span>
                             </div>
                         </a>
                         <div class="product-visual-block__meta text-center">
