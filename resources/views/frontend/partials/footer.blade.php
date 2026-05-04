@@ -44,7 +44,6 @@
                     <li><a href="{{ route('soffit-panels') }}">Soffit panels</a></li>
                     <li><a href="{{ route('fluted-panels') }}">Fluted panels</a></li>
                     <li><a href="{{ route('about') }}">About</a></li>
-                    <li><a href="{{ route('contact') }}">Contact</a></li>
                     <li><a href="{{ route('gallery') }}">Gallery</a></li>
                 </ul>
             </div>
@@ -66,6 +65,9 @@
                 <h3 class="site-footer__heading">Quick links</h3>
                 <ul class="site-footer__links list-unstyled mb-0">
                     <li><a href="{{ route('faq') }}">FAQ</a></li>
+                    
+                    <li><a href="{{ route('career') }}">Careers</a></li>
+                    <li><a href="{{ route('contact') }}">Contact</a></li>
 
                     @forelse (($footerPages ?? collect()) as $footerPage)
                         <li>

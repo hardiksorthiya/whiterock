@@ -200,16 +200,15 @@
             </div>
 
             <div class="contact-page__warehouse-grid">
-                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:0s;"></span><span>Bangalore</span></div>
-                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.08s;"></span><span>Hyderabad</span></div>
-                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.16s;"></span><span>Nagpur</span></div>
-                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.24s;"></span><span>Aurangabad</span></div>
-                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.32s;"></span><span>Mumbai</span></div>
-                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.40s;"></span><span>Pune</span></div>
-                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.48s;"></span><span>Ahmedabad</span></div>
-                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.56s;"></span><span>Jaipur</span></div>
-                <div class="contact-page__warehouse-card"><span class="our-presence__pin-dot contact-page__warehouse-pin-dot" style="--pin-delay:.64s;"></span><span>Ahmedabad</span></div>
-            </div>
+                <div class="contact-page__warehouse-card"><img src="{{ asset('images/contact/ban.png') }}" alt="Bangalore" class="contact-page__warehouse-card-img img-fluid"><span>Bangalore</span></div>
+                <div class="contact-page__warehouse-card"><img src="{{ asset('images/contact/hyd.png') }}" alt="Hyderabad" class="contact-page__warehouse-card-img img-fluid"><span>Hyderabad</span></div>
+                <div class="contact-page__warehouse-card"><img src="{{ asset('images/contact/nag.png') }}" alt="Nagpur" class="contact-page__warehouse-card-img img-fluid"><span>Nagpur</span></div>
+                <div class="contact-page__warehouse-card"><img src="{{ asset('images/contact/aur.png') }}" alt="Aurangabad" class="contact-page__warehouse-card-img img-fluid"><span>Aurangabad</span></div>
+                <div class="contact-page__warehouse-card"><img src="{{ asset('images/contact/mum.png') }}" alt="Mumbai" class="contact-page__warehouse-card-img img-fluid"><span>Mumbai</span></div>
+                <div class="contact-page__warehouse-card"><img src="{{ asset('images/contact/pun.png') }}" alt="Pune" class="contact-page__warehouse-card-img img-fluid"><span>Pune</span></div>
+                <div class="contact-page__warehouse-card"><img src="{{ asset('images/contact/ahm.png') }}" alt="Ahmedabad" class="contact-page__warehouse-card-img img-fluid"><span>Ahmedabad</span></div>
+                <div class="contact-page__warehouse-card"><img src="{{ asset('images/contact/jai.png') }}" alt="Jaipur" class="contact-page__warehouse-card-img img-fluid"><span>Jaipur</span></div>
+                 </div>
         </div>
     </section>
 

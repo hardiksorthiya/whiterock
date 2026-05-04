@@ -67,6 +67,7 @@
                 </li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('catalogue') }}">Catalogue</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('career') }}">Careers</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
             </ul>
         </div>
@@ -93,6 +94,7 @@
         </li>
         <li><a href="{{ route('catalogue') }}">Catalogue</a></li>
         <li><a href="{{ route('gallery') }}">Gallery</a></li>
+        <li><a href="{{ route('career') }}">Careers</a></li>
         <li><a href="{{ route('contact') }}">Contact</a></li>
     </ul>
 </div>

@@ -69,6 +69,11 @@ return [
             'description' => 'Answers about Nivoc products, dealership, gypsum and T-grid ceilings, soffit and fluted panels, pricing, installation and bulk orders.',
             'keywords' => 'Nivoc FAQ, dealer, gypsum ceiling cost, T-grid, soffit panels, fluted panels, B2B pricing, India',
         ],
+        'career' => [
+            'title' => 'Careers — Build your future with Nivoc | Nivoc',
+            'description' => 'Join Nivoc—careers in India’s interior and building materials industry. Apply online with your CV and discover why professionals choose our culture.',
+            'keywords' => 'Nivoc careers, jobs, hiring, interior industry, building materials, dealer careers India',
+        ],
         'gypsum-tiles' => [
             'title' => 'Gypsum ceiling tiles | Nivoc',
             'description' => 'Nivoc gypsum ceiling tiles for commercial and residential false ceilings—performance, finishes, FAQs and dealer enquiry.',
