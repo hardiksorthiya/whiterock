@@ -3,7 +3,7 @@
 @section('content')
     @include('frontend.components.breadcrumb', [
         'title' => 'PRODUCTS',
-        'image' => asset('images/nproduct.jpeg'),
+        'image' => asset('images/breadcrumb/nivoc_heading_banner_05.jpg'),
     ])
 
     @include('frontend.components.products.category-nav', [

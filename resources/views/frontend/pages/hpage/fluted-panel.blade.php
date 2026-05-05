@@ -3,7 +3,7 @@
 @section('content')
     @include('frontend.components.breadcrumb', [
         'title' => 'FLUTED PANELS',
-        'image' => asset('images/cbre.jpeg'),
+        'image' => asset('images/breadcrumb/nivoc_heading_banner_04.jpg'),
     ])
 
     <section class="gypsum-page-hero py-5 py-lg-5">

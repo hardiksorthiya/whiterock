@@ -3,7 +3,7 @@
 @section('content')
     @include('frontend.components.breadcrumb', [
         'title' => 'SOFFIT PANELS',
-        'image' => asset('images/cbre.jpeg'),
+        'image' => asset('images/breadcrumb/nivoc_heading_banner_03.jpg'),
     ])
 
     <section class="gypsum-page-hero py-5 py-lg-5">

@@ -50,7 +50,7 @@
     @include('frontend.components.breadcrumb', [
         'title' => $product->name,
         'subtitle' => $categoryNames->isNotEmpty() ? $categoryNames->join(', ') : null,
-        'image' => asset('images/nproduct.jpeg'),
+        'image' => asset('images/breadcrumb/nivoc_heading_banner_05.jpg'),
         'crumbs' => [
             ['label' => 'Home', 'url' => route('home')],
             ['label' => 'Products', 'url' => route('products')],

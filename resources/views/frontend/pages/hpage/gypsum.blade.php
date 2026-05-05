@@ -3,7 +3,7 @@
 @section('content')
     @include('frontend.components.breadcrumb', [
         'title' => 'GYPSUM TILES',
-        'image' => asset('images/cbre.jpeg'),
+        'image' => asset('images/breadcrumb/nivoc_heading_banner_01.jpg'),
     ])
 
     <section class="gypsum-page-hero py-5 py-lg-5">
@@ -25,7 +25,7 @@
         $gypsumBenefits = [
             ['icon' => 'bi-clock-history', 'label' => 'On-time supply'],
             ['icon' => 'bi-layers-half', 'label' => 'No variation in batches'],
-            ['icon' => 'bi-sparkles', 'label' => 'Smooth finish for a premium ceiling'],
+            ['icon' => 'bi-stars', 'label' => 'Smooth finish for a premium ceiling'],
             ['icon' => 'bi-tools', 'label' => 'Zero installation hassle'],
             ['icon' => 'bi-shield-fill-check', 'label' => 'Long-lasting durability'],
         ];

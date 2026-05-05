@@ -198,7 +198,7 @@ body.menu-open {
 
 /* ——— Sticky Header (transparent at top) ——— */
 .site-header {
-    background: transparent;
+    background: #ffffffa6;
     box-shadow: none;
     transition: background-color 0.25s ease, box-shadow 0.25s ease;
     will-change: transform;
@@ -1584,7 +1584,6 @@ body.menu-open {
 
 .product-section--visual-grid .product-visual-block__tagline {
     margin: 0.4rem 0 0;
-    font-size: 0.8125rem;
     line-height: 1.45;
     color: #475569;
     font-weight: 400;
@@ -2497,7 +2496,7 @@ nav.products-pager {
 }
 
 .home-premium .product-section--head-split .product-section__head-title {
-    font-size: clamp(1.55rem, 4.6vw, 5.15rem);
+    font-size: clamp(0.55rem, 3.6vw, 3.15rem);
     font-weight: 500;
 }
 
@@ -3000,6 +2999,82 @@ nav.products-pager {
 
     .gallery-category-slider.home-applications .home-applications__card {
         width: 240px;
+    }
+}
+
+/* Career page: foundation hero slider (single slide view) */
+.career-foundation-hero__subtitle {
+    max-width: 46rem;
+    color: #64748b;
+    font-size: 1.02rem;
+    line-height: 1.65;
+}
+
+.career-foundation-hero__carousel {
+    border-radius: 1.2rem;
+    overflow: hidden;
+    box-shadow: 0 20px 48px rgba(15, 23, 42, 0.16);
+}
+
+.career-foundation-hero__media-btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    background: #0f172a;
+    cursor: zoom-in;
+}
+
+.career-foundation-hero__img {
+    width: 100%;
+    height: min(72vh, 620px);
+    object-fit: cover;
+    display: block;
+}
+
+.career-foundation-hero__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.05) 45%, transparent 78%);
+}
+
+.career-foundation-hero__zoom {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.56);
+    color: #fff;
+    font-size: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.career-foundation-hero__carousel .carousel-control-prev,
+.career-foundation-hero__carousel .carousel-control-next {
+    width: 9%;
+    z-index: 6;
+}
+
+@media (max-width: 991.98px) {
+    .career-foundation-hero__img {
+        height: min(58vh, 460px);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .career-foundation-hero__img {
+        height: min(46vh, 320px);
+    }
+
+    .career-foundation-hero__carousel .carousel-control-prev,
+    .career-foundation-hero__carousel .carousel-control-next {
+        width: 14%;
     }
 }
 
@@ -6082,8 +6157,8 @@ button.catalogue-book-card:focus-visible {
 }
 
 .career-core-values__circle {
-    width: 5rem;
-    height: 5rem;
+    width: 7rem;
+    height: 7rem;
     border-radius: 50%;
     margin: 0 auto 0.85rem;
     background: #fff;
@@ -6101,7 +6176,7 @@ button.catalogue-book-card:focus-visible {
 }
 
 .career-core-values__icon {
-    font-size: 1.45rem;
+    font-size: 2.45rem;
     line-height: 1;
     color: var(--adm-sorath-primary-color);
 }
@@ -6147,7 +6222,6 @@ button.catalogue-book-card:focus-visible {
 }
 
 .career-why-card__body {
-    font-size: 0.875rem;
     line-height: 1.65;
     color: #5f6c7b;
 }

@@ -3,7 +3,7 @@
 @section('content')
     @include('frontend.components.breadcrumb', [
         'title' => 'GALLERY',
-        'image' => asset('images/ngallery.jpeg'),
+        'image' => asset('images/breadcrumb/nivoc_heading_banner_06.jpg'),
     ])
 
     <div class="container py-5">
@@ -17,7 +17,7 @@
 
             <div class="row gallery-page-apps justify-content-center g-4">
                 @foreach ($galleryApplicationCards as $card)
-                    <div class="col-sm-6 col-xl-4">
+                    <div class="col-sm-6 col-xl-6">
                         <a href="{{ route('gallery.application.show', $card['id']) }}"
                             class="home-applications__card gallery-page__app-card d-block w-100 text-decoration-none text-reset"
                             aria-label="Open gallery for {{ $card['name'] }}">

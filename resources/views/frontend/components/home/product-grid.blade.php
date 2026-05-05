@@ -17,14 +17,7 @@
                 @if ($headerSplit)
                     <div
                         class="product-section__head-row d-flex flex-wrap align-items-center justify-content-between gap-3">
-                        <h2 class="product-section__head-title sorath-title mb-0 text-start">{{ $sectionTitle }}</h2>
-                        @if (!empty($viewAllUrl))
-                            <a href="{{ $viewAllUrl }}"
-                                class="btn btn-outline-dark product-section__view-all-btn flex-shrink-0"
-                                target="_blank" rel="noopener noreferrer">
-                                View All
-                            </a>
-                        @endif
+                        <h2 class="product-section__head-title sorath-title mb-0 text-center">{{ $sectionTitle }}</h2>
                     </div>
                 @else
                     <div class="sorath-section-header text-center">
@@ -32,18 +25,12 @@
                         <p class="sorath-desc">
                             {{ $sectionDescription }}
                         </p>
-                        @if (!empty($viewAllUrl))
-                            <a href="{{ $viewAllUrl }}" class="btn btn-outline-dark btn-sm mt-2" target="_blank"
-                                rel="noopener noreferrer">
-                                View All
-                            </a>
-                        @endif
                     </div>
                 @endif
             </div>
         </div>
 
-        <div class="row g-3 g-md-4 justify-content-center product-section--visual-grid__row">
+        <div class="row g-3 g-md-4 justify-content-center product-section--visual-grid__row mb-2">
             @forelse ($products as $product)
                 @php
                     $tone = $tones[$loop->index % 6];
@@ -94,6 +81,33 @@
                     No products to show here yet.
                 </div>
             @endforelse
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12 position-relative">
+                @if ($headerSplit)
+                    <div
+                        class="product-section__head-row d-flex justify-content-center">
+                         @if (!empty($viewAllUrl))
+                            <a href="{{ $viewAllUrl }}"
+                                class="btn btn-outline-dark product-section__view-all-btn flex-shrink-0"
+                                target="_blank" rel="noopener noreferrer">
+                                View All
+                            </a>
+                        @endif
+                    </div>
+                @else
+                    <div class="sorath-section-header text-center">
+                    
+                        @if (!empty($viewAllUrl))
+                            <a href="{{ $viewAllUrl }}" class="btn btn-outline-dark btn-sm mt-2" target="_blank"
+                                rel="noopener noreferrer">
+                                View All
+                            </a>
+                        @endif
+                    </div>
+                @endif
+            </div>
         </div>
 
     </div>

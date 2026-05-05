@@ -3,7 +3,7 @@
 @section('content')
     @include('frontend.components.breadcrumb', [
         'title' => 'CAREERS',
-        'image' => asset('images/cbre.jpeg'),
+        'image' => asset('images/breadcrumb/nivoc_heading_banner_08.jpg'),
     ])
 
     {{-- Banner --}}
@@ -237,9 +237,9 @@
     </section>
 
     @if (!empty($careerGallerySliderCategory))
-        @include('frontend.components.gallery-category-slider', [
+        @include('frontend.components.career-foundation-hero-slider', [
             'galleryCategory' => $careerGallerySliderCategory,
-            'sectionTitle' => 'Our Foundation ',
+            'sectionTitle' => 'Our Workplace, Our Foundation ',
             'sectionSubtitle' => 'At NIVOC, our workplace is designed to inspire progress. It’s a space where teams collaborate, challenges are solved, and every individual contributes to building something bigger—together.',
             'sliderId' => 'career-page',
         ])

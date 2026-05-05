@@ -12,7 +12,7 @@
     @include('frontend.components.breadcrumb', [
         'title' => strtoupper($application->name),
         'subtitle' => 'Browse photos by gallery category linked to this application.',
-        'image' => asset('images/ngallery.jpeg'),
+        'image' => asset('images/breadcrumb/nivoc_heading_banner_06.jpg'),
         'crumbs' => $breadcrumbCrumbs,
     ])
 
