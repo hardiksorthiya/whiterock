@@ -23,10 +23,10 @@
 
     @php
         $gypsumBenefits = [
-            ['icon' => 'bi-clock-history', 'label' => 'On-time supply'],
-            ['icon' => 'bi-layers-half', 'label' => 'No variation in batches'],
-            ['icon' => 'bi-stars', 'label' => 'Smooth finish for a premium ceiling'],
-            ['icon' => 'bi-tools', 'label' => 'Zero installation hassle'],
+            ['icon' => 'bi-clock-fill', 'label' => 'On-time supply'],
+            ['icon' => 'bi-grid-3x3-gap-fill', 'label' => 'No variation in batches'],
+            ['icon' => 'bi-star-fill', 'label' => 'Smooth finish for a premium ceiling'],
+            ['icon' => 'bi-gear-fill', 'label' => 'Zero installation hassle'],
             ['icon' => 'bi-shield-fill-check', 'label' => 'Long-lasting durability'],
         ];
 

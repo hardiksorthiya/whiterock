@@ -23,13 +23,13 @@
 
     @php
         $soffitFeaturePoints = [
-            ['icon' => 'bi-tree', 'label' => 'Wood look'],
-            ['icon' => 'bi-cloud-sun', 'label' => 'Weather proof'],
-            ['icon' => 'bi-droplet', 'label' => 'Water proof'],
-            ['icon' => 'bi-lightning-charge', 'label' => 'Quick installation'],
+            ['icon' => 'bi-tree-fill', 'label' => 'Wood look'],
+            ['icon' => 'bi-cloud-sun-fill', 'label' => 'Weather proof'],
+            ['icon' => 'bi-droplet-fill', 'label' => 'Water proof'],
+            ['icon' => 'bi-lightning-charge-fill', 'label' => 'Quick installation'],
             ['icon' => 'bi-shield-fill-check', 'label' => 'Unbreakable'],
-            ['icon' => 'bi-patch-check', 'label' => 'Mold & termite resistant'],
-            ['icon' => 'bi-stars', 'label' => 'Easy to clean'],
+            ['icon' => 'bi-patch-check-fill', 'label' => 'Mold & termite resistant'],
+            ['icon' => 'bi-star-fill', 'label' => 'Easy to clean'],
         ];
 
         $soffitWhyPoints = [

@@ -4954,29 +4954,23 @@ article.about-road-carousel__card.is-down {
 }
 
 .gypsum-benefits__text {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     line-height: 1.35;
     color: var(--adm-sorath-text, #334155);
 }
 
-@media (min-width: 768px) {
-    .gypsum-benefits__text {
-        font-size: 0.8125rem;
-        letter-spacing: 0.07em;
-    }
-}
+
 
 @media (min-width: 992px) {
     .gypsum-benefits__icon-wrap {
-        width: 4.25rem;
-        height: 4.25rem;
+        width: 5.25rem;
+        height: 5.25rem;
     }
 
     .gypsum-benefits__icon {
-        font-size: 1.75rem;
+        font-size: 2.75rem;
     }
 }
 
@@ -5049,8 +5043,7 @@ article.about-road-carousel__card.is-down {
 }
 
 .gypsum-why__point-label {
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 500;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     line-height: 1.35;
@@ -5059,16 +5052,13 @@ article.about-road-carousel__card.is-down {
     margin-inline: auto;
 }
 
-@media (min-width: 768px) {
-    .gypsum-why__point-label {
-        font-size: 0.8125rem;
-        letter-spacing: 0.065em;
-    }
-}
 
+.gypsum-why__card-icon i {
+    font-size: 36px;
+}
 .gypsum-why__card-icon {
-    width: 3.25rem;
-    height: 3.25rem;
+    width: 4.25rem;
+    height: 4.25rem;
     border-radius: 12px;
     display: flex;
     align-items: center;
