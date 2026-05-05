@@ -1,25 +1,21 @@
 @extends('frontend.layouts.app')
 
 @php
-    $breadcrumbCrumbs = [['label' => 'Home', 'url' => route('home')]];
-    if ($selectedCatalogueCategory) {
-        $breadcrumbCrumbs[] = ['label' => 'Catalogue', 'url' => route('catalogue')];
-        $breadcrumbCrumbs[] = ['label' => $selectedCatalogueCategory->name, 'url' => null];
-    } else {
-        $breadcrumbCrumbs[] = ['label' => 'Catalogue', 'url' => null];
-    }
+    // $breadcrumbCrumbs = [['label' => 'Home', 'url' => route('home')]];
+    // if ($selectedCatalogueCategory) {
+    //     $breadcrumbCrumbs[] = ['label' => 'Catalogue', 'url' => route('catalogue')];
+    //     $breadcrumbCrumbs[] = ['label' => $selectedCatalogueCategory->name, 'url' => null];
+    // } else {
+    //     $breadcrumbCrumbs[] = ['label' => 'Catalogue', 'url' => null];
+    // }
     $heroTitle = $selectedCatalogueCategory ? $selectedCatalogueCategory->name : 'Catalogue';
 @endphp
 
 @section('content')
     @include('frontend.components.breadcrumb', [
-        'title' => strtoupper($heroTitle),
-        'subtitle' =>
-            $selectedCatalogueCategory
-                ? 'Browse PDF catalogues in this category — tap a cover and share your details to download.'
-                : 'Browse product catalogues — tap a cover and share your details to download the PDF.',
-        'image' => asset('images/nproduct.jpeg'),
-        'crumbs' => $breadcrumbCrumbs,
+        'title' => strtoupper($heroTitle), 
+        'image' => asset('images/breadcrumb/nivoc_heading_banner_07.jpeg'),
+        // 'crumbs' => $breadcrumbCrumbs,
     ])
 
     @include('frontend.components.catalogue.catalogue-filters', [

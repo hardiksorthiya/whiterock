@@ -1,19 +1,19 @@
 @extends('frontend.layouts.app')
 
-@php
+{{-- @php
     $breadcrumbCrumbs = [
         ['label' => 'Home', 'url' => route('home')],
         ['label' => 'Gallery', 'url' => route('gallery')],
         ['label' => $application->name, 'url' => null],
     ];
-@endphp
+@endphp --}}
 
 @section('content')
     @include('frontend.components.breadcrumb', [
         'title' => strtoupper($application->name),
-        'subtitle' => 'Browse photos by gallery category linked to this application.',
+        // 'subtitle' => 'Browse photos by gallery category linked to this application.',
         'image' => asset('images/breadcrumb/nivoc_heading_banner_06.jpg'),
-        'crumbs' => $breadcrumbCrumbs,
+        // 'crumbs' => $breadcrumbCrumbs,
     ])
 
     <div class="container py-5">

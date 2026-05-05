@@ -78,7 +78,7 @@
                     @endforeach
                 </div>
 
-                <div class="text-center text-lg-start mt-4 pt-2">
+                <div class="text-center text-lg-start mt-4 pt-2 d-flex">
                     <a href="{{ route('catalogue') }}" class="btn btn-lg why-pro__cta">
                         View catalogue
                     </a>
