@@ -12,6 +12,7 @@
     @include('frontend.components.about.what-makes-nivoc')
 
     @include('frontend.components.about.feature-showcase')
+    @include('frontend.components.about.video')
     @include('frontend.components.about.founder')
 
     @include('frontend.components.about.roadmap-scroll')

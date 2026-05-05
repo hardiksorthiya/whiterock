@@ -39,6 +39,7 @@ class AboutController extends Controller
             'slides.*.popup_video_remove' => 'nullable|boolean',
             'slides.*.card_media' => 'nullable|file|mimes:jpeg,jpg,png,gif,webp,mp4,webm|max:20480',
             'slides.*.card_media_existing' => 'nullable|string|max:500',
+            'slides.*.card_media_remove' => 'nullable|boolean',
         ]);
 
         $existingSlides = $about && is_array($about->about_feature_slides)
@@ -54,15 +55,24 @@ class AboutController extends Controller
             $cardMediaType = ($row['card_media_type'] ?? 'image') === 'video' ? 'video' : 'image';
             $popupUrl = isset($row['popup_video_url']) ? trim((string) $row['popup_video_url']) : '';
             $removePopupFile = ! empty($row['popup_video_remove']);
+            $removeCardMedia = ! empty($row['card_media_remove']);
 
+            $prevCardPath = $existingSlides[$i]['card_media'] ?? null;
             $path = null;
             if ($request->hasFile("slides.$i.card_media")) {
-                $stored = $request->file("slides.$i.card_media")->store('about_feature_slides', 'public');
-                $path = $stored;
+                if ($this->shouldDeleteStoredAboutFeatureFile($prevCardPath)) {
+                    Storage::disk('public')->delete($prevCardPath);
+                }
+                $path = $request->file("slides.$i.card_media")->store('about_feature_slides', 'public');
+            } elseif ($removeCardMedia) {
+                if ($this->shouldDeleteStoredAboutFeatureFile($prevCardPath)) {
+                    Storage::disk('public')->delete($prevCardPath);
+                }
+                $path = null;
             } elseif (! empty($row['card_media_existing'])) {
                 $path = $row['card_media_existing'];
-            } elseif (isset($existingSlides[$i]['card_media'])) {
-                $path = $existingSlides[$i]['card_media'];
+            } elseif (! empty($prevCardPath)) {
+                $path = $prevCardPath;
             }
 
             if (empty($path) && $title === '' && $popupUrl === '') {
@@ -77,12 +87,12 @@ class AboutController extends Controller
             $popupPath = null;
 
             if ($request->hasFile("slides.$i.popup_video")) {
-                if (! empty($prevPopupPath)) {
+                if ($this->shouldDeleteStoredAboutFeatureFile($prevPopupPath)) {
                     Storage::disk('public')->delete($prevPopupPath);
                 }
                 $popupPath = $request->file("slides.$i.popup_video")->store('about_feature_popup_videos', 'public');
             } elseif ($removePopupFile) {
-                if (! empty($prevPopupPath)) {
+                if ($this->shouldDeleteStoredAboutFeatureFile($prevPopupPath)) {
                     Storage::disk('public')->delete($prevPopupPath);
                 }
                 $popupPath = null;
@@ -143,5 +153,21 @@ class AboutController extends Controller
         }
 
         return redirect()->back()->with('success', 'About information updated successfully.');
+    }
+
+    /**
+     * Only delete files we stored under the public disk (not public/ asset paths like "images/...").
+     */
+    protected function shouldDeleteStoredAboutFeatureFile(?string $storedPath): bool
+    {
+        if (empty($storedPath)) {
+            return false;
+        }
+        if (str_contains($storedPath, '..')) {
+            return false;
+        }
+
+        return str_starts_with($storedPath, 'about_feature_slides/')
+            || str_starts_with($storedPath, 'about_feature_popup_videos/');
     }
 }

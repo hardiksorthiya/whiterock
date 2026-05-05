@@ -118,6 +118,13 @@
                                         @if (! str_contains($existing, 'http') && preg_match('/\.(jpe?g|png|gif|webp)$/i', $existing))
                                             <img src="{{ asset('storage/' . $existing) }}" alt="" class="rounded mt-2" style="max-height:80px;max-width:100%;object-fit:cover;" loading="lazy">
                                         @endif
+                                        @if (str_starts_with($existing, 'about_feature_slides/'))
+                                            <div class="form-check mt-2">
+                                                <input class="form-check-input" type="checkbox" name="slides[{{ $idx }}][card_media_remove]" value="1"
+                                                    id="card_remove_{{ $idx }}" {{ old('slides.'.$idx.'.card_media_remove') ? 'checked' : '' }}>
+                                                <label class="form-check-label small" for="card_remove_{{ $idx }}">Remove uploaded card media</label>
+                                            </div>
+                                        @endif
                                     @endif
                                 </div>
                                 <div class="col-md-6">
@@ -130,11 +137,13 @@
                                     <input type="hidden" name="slides[{{ $idx }}][popup_video_path_existing]" value="{{ $existingPopup }}">
                                     @if (! empty($existingPopup))
                                         <p class="small mt-2 mb-0 text-muted">Current popup file: <code>{{ $existingPopup }}</code></p>
-                                        <div class="form-check mt-2">
-                                            <input class="form-check-input" type="checkbox" name="slides[{{ $idx }}][popup_video_remove]" value="1"
-                                                id="popup_remove_{{ $idx }}" {{ old('slides.'.$idx.'.popup_video_remove') ? 'checked' : '' }}>
-                                            <label class="form-check-label small" for="popup_remove_{{ $idx }}">Remove uploaded popup video</label>
-                                        </div>
+                                        @if (str_starts_with($existingPopup, 'about_feature_popup_videos/'))
+                                            <div class="form-check mt-2">
+                                                <input class="form-check-input" type="checkbox" name="slides[{{ $idx }}][popup_video_remove]" value="1"
+                                                    id="popup_remove_{{ $idx }}" {{ old('slides.'.$idx.'.popup_video_remove') ? 'checked' : '' }}>
+                                                <label class="form-check-label small" for="popup_remove_{{ $idx }}">Remove uploaded popup video</label>
+                                            </div>
+                                        @endif
                                     @endif
                                 </div>
                                 <div class="col-md-6">
