@@ -4595,7 +4595,7 @@ article.about-road-carousel__card.is-down {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    border: 1px solid var(--adm-sorath-primary-color);
+    /* border: 1px solid var(--adm-sorath-primary-color); */
     color: #fff;
     display: inline-flex;
     align-items: center;
