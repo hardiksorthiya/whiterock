@@ -284,6 +284,92 @@ function initAboutRoadmapSwiper() {
     window.aboutRoadmapSwiper = new Swiper(el, roadmapSwiperConfig);
 }
 
+function initAboutFeatureShowcase() {
+    const swiperEl = document.querySelector(".js-about-feature-swiper");
+    if (!swiperEl || typeof Swiper === "undefined") return;
+
+    new Swiper(swiperEl, {
+        slidesPerView: 1.08,
+        spaceBetween: 14,
+        grabCursor: true,
+        watchOverflow: true,
+        loop: true,
+        speed: 700,
+        autoplay: {
+            delay: 4500,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+        },
+        navigation: {
+            nextEl: ".js-about-feature-next",
+            prevEl: ".js-about-feature-prev",
+        },
+        breakpoints: {
+            480: {
+                slidesPerView: 1.15,
+                spaceBetween: 16,
+            },
+            768: {
+                slidesPerView: 1.65,
+                spaceBetween: 18,
+            },
+            992: {
+                slidesPerView: 2.05,
+                spaceBetween: 20,
+            },
+            1200: {
+                slidesPerView: 2.15,
+                spaceBetween: 24,
+            },
+        },
+    });
+
+    const modalEl = document.getElementById("aboutFeatureVideoModal");
+    const frame = modalEl ? modalEl.querySelector("[data-about-feature-modal-frame]") : null;
+    if (!modalEl || !frame || typeof window.bootstrap === "undefined" || !window.bootstrap.Modal) return;
+
+    let modal = window.bootstrap.Modal.getInstance(modalEl);
+    if (!modal) {
+        modal = new window.bootstrap.Modal(modalEl);
+    }
+
+    swiperEl.querySelectorAll("[data-about-feature-popup-src]").forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+            const type = trigger.getAttribute("data-about-feature-popup-type");
+            const src = trigger.getAttribute("data-about-feature-popup-src");
+            if (!src) return;
+            frame.innerHTML = "";
+            if (type === "youtube") {
+                const iframe = document.createElement("iframe");
+                iframe.className = "about-feature-modal__iframe";
+                iframe.src = src;
+                iframe.title = "Video";
+                iframe.setAttribute("allowfullscreen", "");
+                iframe.setAttribute(
+                    "allow",
+                    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                );
+                frame.appendChild(iframe);
+            } else {
+                const video = document.createElement("video");
+                video.className = "about-feature-modal__video";
+                video.controls = true;
+                video.playsInline = true;
+                video.autoplay = true;
+                const source = document.createElement("source");
+                source.src = src;
+                video.appendChild(source);
+                frame.appendChild(video);
+            }
+            modal.show();
+        });
+    });
+
+    modalEl.addEventListener("hidden.bs.modal", () => {
+        frame.innerHTML = "";
+    });
+}
+
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initLenisSmoothScroll);
 } else {
@@ -326,6 +412,11 @@ if (document.readyState === "loading") {
     initAboutRoadmapSwiper();
 }
 
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAboutFeatureShowcase);
+} else {
+    initAboutFeatureShowcase();
+}
 
 /**
  * Home: Product Applications (continuous marquee + modal gallery)

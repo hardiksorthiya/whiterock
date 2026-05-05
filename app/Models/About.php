@@ -16,5 +16,13 @@ class About extends Model
         'mission',
         'vision',
         'values',
+        'about_feature_slides',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'about_feature_slides' => 'array',
+        ];
+    }
 }
