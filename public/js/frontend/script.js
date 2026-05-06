@@ -730,10 +730,102 @@ function initGalleryCategoryModals() {
     });
 }
 
+function initGalleryCategorySliderDrag() {
+    const wraps = document.querySelectorAll(
+        ".gallery-category-slider .home-applications__rail-wrap"
+    );
+    if (!wraps || wraps.length === 0) return;
+
+    wraps.forEach(function (wrap) {
+        const rail = wrap.querySelector(".home-applications__rail");
+        if (!rail) return;
+
+        let isPointerDown = false;
+        let startX = 0;
+        let startScrollLeft = 0;
+        let dragged = false;
+        let activePointerId = null;
+
+        const DRAG_THRESHOLD = 8;
+
+        wrap.addEventListener("pointerdown", function (event) {
+            if (event.button !== 0) return;
+
+            isPointerDown = true;
+            dragged = false;
+            activePointerId = event.pointerId;
+            startX = event.clientX;
+            startScrollLeft = wrap.scrollLeft;
+
+            rail.style.animationPlayState = "paused";
+            wrap.classList.add("is-dragging");
+            wrap.setPointerCapture?.(event.pointerId);
+        });
+
+        wrap.addEventListener("pointermove", function (event) {
+            if (!isPointerDown || event.pointerId !== activePointerId) return;
+
+            const deltaX = event.clientX - startX;
+            if (!dragged && Math.abs(deltaX) > DRAG_THRESHOLD) {
+                dragged = true;
+            }
+
+            if (!dragged) return;
+
+            wrap.scrollLeft = startScrollLeft - deltaX;
+            event.preventDefault();
+        });
+
+        const endDrag = function (event) {
+            if (!isPointerDown || event.pointerId !== activePointerId) return;
+
+            isPointerDown = false;
+            activePointerId = null;
+            wrap.releasePointerCapture?.(event.pointerId);
+            wrap.classList.remove("is-dragging");
+            rail.style.animationPlayState = "";
+
+            if (dragged) {
+                wrap.dataset.dragMoved = "1";
+                window.setTimeout(function () {
+                    delete wrap.dataset.dragMoved;
+                }, 0);
+            }
+        };
+
+        wrap.addEventListener("pointerup", endDrag);
+        wrap.addEventListener("pointercancel", endDrag);
+        wrap.addEventListener("lostpointercapture", function () {
+            if (!isPointerDown) return;
+            isPointerDown = false;
+            activePointerId = null;
+            wrap.classList.remove("is-dragging");
+            rail.style.animationPlayState = "";
+        });
+
+        wrap.addEventListener(
+            "click",
+            function (event) {
+                if (wrap.dataset.dragMoved === "1") {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            },
+            true
+        );
+    });
+}
+
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initGalleryCategoryModals);
 } else {
     initGalleryCategoryModals();
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initGalleryCategorySliderDrag);
+} else {
+    initGalleryCategorySliderDrag();
 }
 
 

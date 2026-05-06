@@ -2965,6 +2965,20 @@ nav.products-pager {
     overflow: hidden;
 }
 
+.gallery-category-slider .home-applications__rail-wrap {
+    cursor: grab;
+    touch-action: pan-y;
+}
+
+.gallery-category-slider .home-applications__rail-wrap.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+}
+
+.gallery-category-slider .home-applications__rail-wrap.is-dragging .home-applications__rail {
+    pointer-events: none;
+}
+
 .gallery-category-slider__photo-img {
     height: 380px;
     transition: transform 0.45s ease;
