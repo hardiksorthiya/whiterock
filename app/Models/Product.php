@@ -35,6 +35,7 @@ class Product extends Model
         'thickness',
         'qty',
         'material',
+        'feature',
     ];
 
     public function category(): BelongsTo

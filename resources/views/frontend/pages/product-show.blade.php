@@ -37,6 +37,7 @@
         'Thickness' => $product->thickness,
         'QTY' => $product->qty,
         'Material' => $product->material,
+        'Features' => $product->feature,
     ])->filter(fn ($value) => filled($value));
 @endphp
 
@@ -123,7 +124,9 @@
                                 @foreach ($productSpecs as $label => $value)
                                     <div class="product-detail__spec-row">
                                         <div class="product-detail__spec-label">{{ $label }}</div>
-                                        <div class="product-detail__spec-value">{{ $value }}</div>
+                                        <div class="product-detail__spec-value @if ($label === 'Features') product-detail__spec-value--feature @endif">
+                                            {{ $value }}
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>

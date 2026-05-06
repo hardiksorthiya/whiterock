@@ -4735,6 +4735,10 @@ article.about-road-carousel__card.is-down {
     color: #334155;
 }
 
+.product-detail__spec-value--feature {
+    font-weight: 500;
+}
+
 /* Product detail — match contact / home highlighted CTAs */
 .product-detail .product-detail__cta-highlight.btn {
     border: 3px solid #94a3b8;

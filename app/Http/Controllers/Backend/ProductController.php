@@ -67,6 +67,7 @@ class ProductController extends Controller
             'thickness' => 'nullable|string|max:255',
             'qty' => 'nullable|string|max:255',
             'material' => 'nullable|string|max:255',
+            'feature' => 'nullable|string',
             'is_active' => 'boolean',
             'is_featured' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -96,6 +97,7 @@ class ProductController extends Controller
             'thickness',
             'qty',
             'material',
+            'feature',
             'is_active',
         ]);
 
@@ -167,6 +169,7 @@ class ProductController extends Controller
             'thickness' => 'nullable|string|max:255',
             'qty' => 'nullable|string|max:255',
             'material' => 'nullable|string|max:255',
+            'feature' => 'nullable|string',
             'is_active' => 'boolean',
             'is_featured' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -199,6 +202,7 @@ class ProductController extends Controller
             'thickness',
             'qty',
             'material',
+            'feature',
             'is_active',
         ]);
 

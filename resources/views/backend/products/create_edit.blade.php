@@ -47,6 +47,7 @@
                         ['text', 'thickness', 'Thickness'],
                         ['text', 'qty', 'QTY'],
                         ['text', 'material', 'Material'],
+                        ['area', 'feature', 'Features', 3],
                     ]],
                     ['SEO', [
                         ['text', 'meta_title', 'Meta title'],
