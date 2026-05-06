@@ -21,7 +21,7 @@ class CareerController extends Controller
         $footerPages = Page::query()->where('is_active', true)->latest()->get();
 
         /** @var int|null $careerPageGalleryCategoryId Backend: gallery category primary key (`gallery_categories.id`). Same pattern as gypsum page slider. */
-        $careerPageGalleryCategoryId =5;
+        $careerPageGalleryCategoryId =20;
 
         $careerGallerySliderCategory = $careerPageGalleryCategoryId
             ? GalleryCategory::query()->with('images')->find((int) $careerPageGalleryCategoryId)

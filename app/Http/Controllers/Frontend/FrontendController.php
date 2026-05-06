@@ -679,7 +679,7 @@ class FrontendController extends Controller
         $gypsumPageCategoryUrl = $this->categoryUrlForSlugPrefix('gypsum-ceiling-tile');
 
         // Gypsum page gallery slider: `gallery_categories.id` to show (use null to hide).
-        $gypsumPageGalleryCategoryId = 2;
+        $gypsumPageGalleryCategoryId = 18;
 
         $gypsumGallerySliderCategory = $gypsumPageGalleryCategoryId
             ? GalleryCategory::query()->with('images')->find((int) $gypsumPageGalleryCategoryId)
@@ -702,7 +702,7 @@ class FrontendController extends Controller
         $tGridPageCategoryUrl = $this->categoryUrlForSlugPrefix('ceiling-t-grid');
 
         // T-Grid page gallery slider: `gallery_categories.id` (null to hide).
-        $tGridPageGalleryCategoryId =2;
+        $tGridPageGalleryCategoryId =19;
 
         $tGridGallerySliderCategory = $tGridPageGalleryCategoryId
             ? GalleryCategory::query()->with('images')->find((int) $tGridPageGalleryCategoryId)
@@ -726,7 +726,7 @@ class FrontendController extends Controller
         $soffitPageCategoryUrl = $this->categoryUrlForSlugPrefix('soffit-panel');
 
         // Soffit page gallery slider: `gallery_categories.id` (null to hide).
-        $soffitPageGalleryCategoryId = 3;
+        $soffitPageGalleryCategoryId = 17;
 
         $soffitGallerySliderCategory = $soffitPageGalleryCategoryId
             ? GalleryCategory::query()->with('images')->find((int) $soffitPageGalleryCategoryId)
@@ -749,7 +749,7 @@ class FrontendController extends Controller
         $flutedPageCategoryUrl = $this->categoryUrlForSlugPrefix('pvc-fluted-panel');
 
         // Fluted panel page gallery slider: `gallery_categories.id` (null to hide).
-        $flutedPageGalleryCategoryId =4;
+        $flutedPageGalleryCategoryId =16;
 
         $flutedGallerySliderCategory = $flutedPageGalleryCategoryId
             ? GalleryCategory::query()->with('images')->find((int) $flutedPageGalleryCategoryId)
