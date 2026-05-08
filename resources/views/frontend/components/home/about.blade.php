@@ -6,7 +6,7 @@
         asset('images/home/n4.jpg'),
     ];
     // Replace this YouTube video ID any time.
-    $aboutReelVideoId = 'p9znelcArPM';
+    $aboutReelVideoId = 'EDZ2W9hWrPA';
     $aboutReelEmbedUrl = 'https://www.youtube.com/embed/' . $aboutReelVideoId
         . '?autoplay=1&mute=1&loop=1&playlist=' . $aboutReelVideoId
         . '&controls=0&modestbranding=1&rel=0&playsinline=1';
