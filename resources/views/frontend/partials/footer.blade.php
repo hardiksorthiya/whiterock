@@ -81,9 +81,9 @@
                 </ul>
             </div>
             <div class="col-md-3">
-                <h3 class="site-footer__heading">Catalogue</h3>
+                <h3 class="site-footer__heading">Download Catalogue</h3>
                 <a href="{{ route('catalogue') }}" class="btn btn-lg site-footer__cta">
-                   <img src="{{ asset('images/a3.png') }}" alt="Catalogue" width="100" height="100">
+                   <img src="{{ asset('images/dddd.png') }}" alt="Catalogue" class="img-fluid">
                 </a>
             </div>
         </div>
