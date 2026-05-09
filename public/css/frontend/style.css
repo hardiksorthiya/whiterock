@@ -2342,6 +2342,12 @@ nav.products-pager {
     z-index: 2;
     display: flex;
     align-items: center;
+    /* Let prev/next and dots receive clicks; text/buttons stay interactive via .container */
+    pointer-events: none;
+}
+
+.hero-slide-bg__overlay .container {
+    pointer-events: auto;
 }
 
 
@@ -2403,6 +2409,16 @@ nav.products-pager {
 
 .home-premium .hero-slider .hero-slide-bg__overlay .container {
     position: relative;
+}
+
+/* Above .hero-slide-bg__overlay (z-index 2); Bootstrap defaults are 1 / 2 and sit underneath */
+.home-premium .hero-slider.carousel .carousel-control-prev,
+.home-premium .hero-slider.carousel .carousel-control-next {
+    z-index: 5;
+}
+
+.home-premium .hero-slider.carousel .carousel-indicators {
+    z-index: 5;
 }
 
 .home-premium .hero-slider h1 {
