@@ -22,9 +22,9 @@
                 @else
                     <div class="sorath-section-header text-center">
                         <h2 class="sorath-title">{{ $sectionTitle }}</h2>
-                        <p class="sorath-desc">
+                        {{-- <p class="sorath-desc">
                             {{ $sectionDescription }}
-                        </p>
+                        </p> --}}
                     </div>
                 @endif
             </div>
@@ -70,9 +70,9 @@
                             <a href="{{ $detailUrl }}" class="product-visual-block__title-link text-decoration-none">
                                 <h3 class="product-visual-block__title">{{ $product->name }}</h3>
                             </a>
-                            @if (!empty($tagline))
+                            {{-- @if (!empty($tagline))
                                 <p class="product-visual-block__tagline">{{ $tagline }}</p>
-                            @endif
+                            @endif --}}
                         </div>
                     </div>
                 </div>

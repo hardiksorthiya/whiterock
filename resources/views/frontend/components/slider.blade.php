@@ -2,27 +2,37 @@
 
     <!-- Indicators -->
     <div class="carousel-indicators">
-        @foreach($sliders as $key => $slider)
+        @foreach($sliders as $slider)
             <button type="button"
                     data-bs-target="#heroSlider"
-                    data-bs-slide-to="{{ $key }}"
-                    class="{{ $key == 0 ? 'active' : '' }}">
+                    data-bs-slide-to="{{ $loop->index }}"
+                    class="{{ $loop->first ? 'active' : '' }}">
             </button>
         @endforeach
     </div>
 
     <div class="carousel-inner">
 
-        @foreach($sliders as $key => $slider)
+        @foreach($sliders as $slider)
         @php
             $bgDesktop = asset('storage/'.$slider->image);
             $bgMobile = $slider->image_mobile ? asset('storage/'.$slider->image_mobile) : $bgDesktop;
+            $slideAlt = filled($slider->title) ? strip_tags($slider->title) : __('Banner');
         @endphp
-        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+        <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
 
-            <div class="hero-slide-bg"
-                style="--hero-bg-sm: url('{{ $bgMobile }}'); --hero-bg-lg: url('{{ $bgDesktop }}');">
-                <div class="container">
+            <div class="hero-slide-bg">
+                <picture class="hero-slide-bg__media">
+                    <source media="(min-width: 768px)" srcset="{{ $bgDesktop }}">
+                    <img class="hero-slide-bg__img"
+                        src="{{ $bgMobile }}"
+                        alt="{{ $slideAlt }}"
+                        loading="{{ $loop->first ? 'eager' : 'lazy' }}"
+                        @if ($loop->first) fetchpriority="high" @endif
+                        decoding="async">
+                </picture>
+                <div class="hero-slide-bg__overlay">
+                    <div class="container">
 
                     @if (filled($slider->title))
                         <h1>{{ $slider->title }}</h1>
@@ -43,6 +53,7 @@
                         </a>
                     @endif
 
+                    </div>
                 </div>
             </div>
 
