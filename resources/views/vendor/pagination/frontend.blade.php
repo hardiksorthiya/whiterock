@@ -3,8 +3,9 @@
         <div class="d-flex justify-content-between flex-fill d-sm-none align-items-center gap-2">
             <p class="products-pager__summary products-pager__summary--compact mb-0 small">
                 <span class="products-pager__num">{{ $paginator->firstItem() }}</span>–<span class="products-pager__num">{{ $paginator->lastItem() }}</span>
-                <span class="text-muted"> / </span>
+                <span class="text-muted"> of </span>
                 <span class="products-pager__num">{{ $paginator->total() }}</span>
+                <span class="text-muted"> products</span>
             </p>
             <ul class="pagination products-pager__pagination mb-0">
                 @if ($paginator->onFirstPage())

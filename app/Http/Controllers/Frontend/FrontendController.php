@@ -152,9 +152,9 @@ class FrontendController extends Controller
     {
         $setting = Setting::site();
         $sort = $this->requestedProductSort();
-        $perPage = $this->requestedProductPerPage();
         $query = Product::query()->where('is_active', true);
         $this->applyProductListingSort($query, $sort);
+        $perPage = $this->requestedProductPerPage($query->count());
         $products = $query->paginate($perPage)->withQueryString();
         $productCategories = ProductCategory::query()->where('is_active', true)->orderBy('name')->get();
         $latestGalleryImages = GalleryImage::query()->latest()->take(6)->get();
@@ -180,7 +180,6 @@ class FrontendController extends Controller
             ->firstOrFail();
 
         $sort = $this->requestedProductSort();
-        $perPage = $this->requestedProductPerPage();
         $query = Product::query()
             ->where('is_active', true)
             ->where(function ($q) use ($category) {
@@ -189,6 +188,7 @@ class FrontendController extends Controller
                 })->orWhere('category_id', $category->id);
             });
         $this->applyProductListingSort($query, $sort);
+        $perPage = $this->requestedProductPerPage($query->count());
         $products = $query->paginate($perPage)->withQueryString();
 
         $productCategories = ProductCategory::query()->where('is_active', true)->orderBy('name')->get();
@@ -504,11 +504,17 @@ class FrontendController extends Controller
         return in_array($sort, ['latest', 'name_asc', 'name_desc'], true) ? $sort : 'latest';
     }
 
-    private function requestedProductPerPage(): int
+    private function requestedProductPerPage(int $totalCount = 0): int
     {
-        $perPage = (int) request('per_page', 12);
+        $raw = request('per_page');
 
-        return in_array($perPage, [12, 24, 48], true) ? $perPage : 12;
+        if ($raw === 'all') {
+            return max(1, min($totalCount, 500));
+        }
+
+        $perPage = (int) ($raw ?? 24);
+
+        return in_array($perPage, [12, 24, 48], true) ? $perPage : 24;
     }
 
     private function applyProductListingSort(Builder $query, string $sort): void

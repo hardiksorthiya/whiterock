@@ -32,8 +32,9 @@
                 <label class="small text-muted mb-0 text-nowrap">Show</label>
                 <select name="per_page" class="form-select form-select-sm products-toolbar__select" style="width: auto; min-width: 4.5rem;"
                     onchange="this.form.submit()">
+                    <option value="all" @selected(request('per_page') === 'all')>All</option>
                     @foreach ([12, 24, 48] as $n)
-                        <option value="{{ $n }}" @selected((int) $perPage === $n)>{{ $n }}</option>
+                        <option value="{{ $n }}" @selected(request('per_page') !== 'all' && (int) $perPage === $n)>{{ $n }}</option>
                     @endforeach
                 </select>
             </div>

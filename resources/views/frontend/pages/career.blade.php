@@ -201,18 +201,19 @@
                 <p class="sorath-desc mb-0">The principles we live by at work—how we decide, collaborate, and grow together.</p>
             </div>
 
-            <div class="career-core-values__track">
-                <ul class="career-core-values__row list-unstyled mb-0" role="list">
-                    @foreach ($careerCoreValues as $cv)
-                        <li class="career-core-values__item" role="listitem">
-                            <div class="career-core-values__circle" aria-hidden="true">
-                                <i class="bi {{ $cv['icon'] }} career-core-values__icon"></i>
-                            </div>
-                            <p class="career-core-values__label mb-0">{{ $cv['label'] }}</p>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
+            <ul class="row row-cols-2 row-cols-lg-5 g-3 g-md-4 g-lg-5 justify-content-center list-unstyled mb-0 career-core-values__row" role="list">
+                @foreach ($careerCoreValues as $cv)
+                    @php
+                        $soloLast = $loop->last && count($careerCoreValues) % 2 !== 0;
+                    @endphp
+                    <li class="col career-core-values__item d-flex flex-column align-items-center text-center{{ $soloLast ? ' career-core-values__item--solo' : '' }}" role="listitem">
+                        <div class="career-core-values__circle" aria-hidden="true">
+                            <i class="bi {{ $cv['icon'] }} career-core-values__icon"></i>
+                        </div>
+                        <p class="career-core-values__label mb-0">{{ $cv['label'] }}</p>
+                    </li>
+                @endforeach
+            </ul>
         </div>
     </section>
 

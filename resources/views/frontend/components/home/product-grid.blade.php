@@ -8,6 +8,9 @@
     $viewAllUrl = $viewAllUrl ?? null;
     $headerSplit = filter_var($headerSplit ?? false, FILTER_VALIDATE_BOOLEAN);
     $tones = ['a', 'b', 'c', 'd', 'e', 'f'];
+    $productGridCarouselId = ! empty($sectionId)
+        ? 'product-grid-' . \Illuminate\Support\Str::slug($sectionId)
+        : 'product-grid-' . substr(str_replace('.', '', uniqid('', true)), -10);
 @endphp
 <section @if (!empty($sectionId)) id="{{ $sectionId }}" @endif
     class="product-section product-section--visual-grid py-5{{ $headerSplit ? ' product-section--head-split' : '' }}">
@@ -30,7 +33,12 @@
             </div>
         </div>
 
-        <div class="row g-3 g-md-4 justify-content-center product-section--visual-grid__row mb-2">
+        <div class="product-visual-grid__carousel position-relative mb-2">
+            <div id="{{ $productGridCarouselId }}"
+                class="product-section--visual-grid__scroll"
+                role="region"
+                aria-label="{{ strip_tags($sectionTitle) }}">
+                <div class="row g-3 g-md-4 justify-content-center product-section--visual-grid__row">
             @forelse ($products as $product)
                 @php
                     $tone = $tones[$loop->index % 6];
@@ -38,7 +46,7 @@
                     $tagline = $product->short_description ?? null;
                     $tagline = $tagline ? \Illuminate\Support\Str::limit(trim(strip_tags($tagline)), 110) : null;
                 @endphp
-                <div class="col-6 col-md-4 col-lg-3">
+                <div class="col-6 col-md-4 col-lg-3 product-visual-grid__slide">
                     <div class="product-visual-block h-100">
                         <a href="{{ $detailUrl }}"
                             class="product-visual-block__media text-reset text-decoration-none d-block"
@@ -81,6 +89,8 @@
                     No products to show here yet.
                 </div>
             @endforelse
+                </div>
+            </div>
         </div>
 
         <div class="row mb-4">
@@ -112,3 +122,4 @@
 
     </div>
 </section>
+

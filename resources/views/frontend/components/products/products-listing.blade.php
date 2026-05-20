@@ -28,7 +28,7 @@
                 $tagline = $product->short_description ?? null;
                 $tagline = $tagline ? \Illuminate\Support\Str::limit(trim(strip_tags($tagline)), 110) : null;
             @endphp
-                <div class="product-col col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-col col-6 col-md-4 col-lg-3">
                 <div class="product-visual-block product-catalog-card h-100">
                     <a href="{{ $detailUrl }}" class="product-visual-block__media text-reset text-decoration-none d-block"
                         aria-label="View {{ $product->name }}">
@@ -83,7 +83,7 @@
 
             function colsForView(view) {
                 if (view === 'grid-4') {
-                    return ['col-12', 'col-sm-6', 'col-md-4', 'col-lg-3'];
+                    return ['col-6', 'col-md-4', 'col-lg-3'];
                 }
                 if (view === 'grid-2') {
                     return ['col-12', 'col-md-6'];
@@ -91,7 +91,7 @@
                 if (view === 'list') {
                     return ['col-12'];
                 }
-                return ['col-12', 'col-sm-6', 'col-lg-4'];
+                return ['col-6', 'col-md-4', 'col-lg-4'];
             }
 
             function applyView(view) {

@@ -37,7 +37,7 @@
                         <div class="swiper-slide">
                             <article class="about-road-carousel__card {{ $isOdd ? 'is-up' : 'is-down' }}">
                                 @if ($isOdd)
-                                    <p class="about-road-carousel__desc">{{ $item['description'] }}</p>
+                                    {{-- <p class="about-road-carousel__desc">{{ $item['description'] }}</p> --}}
                                     <div class="about-road-carousel__pin-wrap">
                                         <div class="about-road-carousel__pin">
                                             <span class="about-road-carousel__year">{{ $item['year'] }}</span>
@@ -53,7 +53,7 @@
                                             <span class="about-road-carousel__month">{{ $item['month'] }}</span>
                                         </div>
                                     </div>
-                                    <p class="about-road-carousel__desc">{{ $item['description'] }}</p>
+                                    {{-- <p class="about-road-carousel__desc">{{ $item['description'] }}</p> --}}
                                 @endif
                             </article>
                         </div>

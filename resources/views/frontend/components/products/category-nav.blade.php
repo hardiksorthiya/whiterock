@@ -2,7 +2,7 @@
 @if ($productCategories->isNotEmpty())
     <section class="category-nav-section py-4 py-lg-5 border-bottom bg-white">
         <div class="container">
-            <div class="category-nav-scroll d-flex justify-content-center justify-content-lg-start flex-nowrap gap-4 gap-lg-5 pb-1">
+            <div class="category-nav-scroll d-flex justify-content-start flex-nowrap gap-3 gap-md-4 gap-lg-5 pb-1">
                 <a href="{{ route('products') }}"
                     class="category-nav-item text-decoration-none text-center flex-shrink-0 @if ($activeSlug === null) is-active @endif">
                     <div class="category-nav-item__circle category-nav-item__circle--all mx-auto">

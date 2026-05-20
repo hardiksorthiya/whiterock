@@ -33,6 +33,16 @@
 
     @if ($products->hasPages())
         <div class="container pb-5 products-pager-section">
+            @if ($products->hasMorePages())
+                <div class="products-load-more-wrap d-sm-none text-center mb-3">
+                    <a href="{{ $products->nextPageUrl() }}" class="btn btn-outline-dark products-load-more-btn w-100">
+                        Load more products
+                        <span class="text-muted small d-block mt-1">
+                            Showing {{ $products->count() }} of {{ $products->total() }}
+                        </span>
+                    </a>
+                </div>
+            @endif
             {{ $products->links('vendor.pagination.frontend') }}
         </div>
     @endif
