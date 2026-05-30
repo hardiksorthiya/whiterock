@@ -1994,6 +1994,67 @@ img.img-fluid.mb-3.about-logo-hp {
     color: white;
 }
 
+/* Breadcrumb hero — compact on tablet & mobile: full image visible, smaller text */
+@media (max-width: 991.98px) {
+    .breadcrumb-section {
+        height: auto;
+        display: flex;
+        min-height: clamp(12.5rem, 44vw, 20rem);
+        max-height: min(52vh, 24rem);
+        padding-top: clamp(4.5rem, 10vw, 5.25rem);
+        padding-bottom: clamp(0.75rem, 2.5vw, 1.25rem);
+        align-items: center;
+        background-color: #0f172a;
+    }
+
+    .breadcrumb-section__bg {
+        inset: 0;
+        background-size: cover;
+        background-position: center center;
+        transform: none;
+        will-change: auto;
+    }
+
+    .breadcrumb-section .breadcrumb-nav {
+        margin-bottom: 0.4rem !important;
+    }
+
+    .breadcrumb-section .breadcrumb-item,
+    .breadcrumb-section .breadcrumb-item a {
+        font-size: 0.72rem;
+    }
+
+    .breadcrumb-section .breadcrumb-content h1 {
+        font-size: clamp(1.25rem, 4.2vw, 1.85rem);
+        letter-spacing: 0.06em;
+        line-height: 1.15;
+    }
+
+    .breadcrumb-content p {
+        margin-top: 0.25rem;
+        font-size: clamp(0.72rem, 2vw, 0.875rem);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .breadcrumb-section {
+        min-height: clamp(11rem, 48vw, 17.5rem);
+        max-height: min(48vh, 21rem);
+        padding-top: 4.5rem;
+        padding-bottom: 0.65rem;
+    }
+
+    .breadcrumb-section .breadcrumb-content h1 {
+        font-size: clamp(1.05rem, 5vw, 1.35rem);
+        letter-spacing: 0.05em;
+    }
+
+    .breadcrumb-section .breadcrumb-item,
+    .breadcrumb-section .breadcrumb-item a {
+        font-size: 0.68rem;
+    }
+}
+
 /* ——— Product detail ——— */
 .product-detail__title {
     font-size: clamp(1.35rem, 3vw, 2rem);
