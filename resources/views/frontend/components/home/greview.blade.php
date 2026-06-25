@@ -1,6 +1,11 @@
 @php
     $g = $googleReviewsData ?? [];
-    $reviews = array_slice($g['reviews'] ?? [], 0, 15);
+    $reviews = collect($g['reviews'] ?? [])
+        ->where('rating', 5)
+        ->sortByDesc('time')
+        ->take(15)
+        ->values()
+        ->all();
     $n = count($reviews);
     $overall = isset($g['overall_rating']) ? (float) $g['overall_rating'] : null;
     $totalReviews = isset($g['user_ratings_total']) ? (int) $g['user_ratings_total'] : null;
